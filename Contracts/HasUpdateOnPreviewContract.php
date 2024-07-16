@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MoonShine\UI\Contracts\Fields;
+namespace MoonShine\UI\Contracts;
 
 use Closure;
 
-interface HasUpdateOnPreview
+interface HasUpdateOnPreviewContract
 {
     public function isUpdateOnPreview(): bool;
 

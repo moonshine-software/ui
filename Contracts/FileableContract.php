@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MoonShine\UI\Contracts\Fields;
+namespace MoonShine\UI\Contracts;
 
-interface Fileable
+interface FileableContract
 {
     public function disk(string $disk): static;
 

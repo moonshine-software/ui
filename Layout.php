@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace MoonShine\UI;
 
-use MoonShine\AssetManager\AssetManager;
 use MoonShine\AssetManager\Css;
 use MoonShine\AssetManager\Js;
-use MoonShine\ColorManager\ColorManager;
-use MoonShine\Core\Contracts\PageContract;
-use MoonShine\MenuManager\MenuManager;
+use MoonShine\Contracts\AssetManager\AssetManagerContract;
+use MoonShine\Contracts\ColorManager\ColorManagerContract;
+use MoonShine\Contracts\Core\PageContract;
+use MoonShine\Contracts\MenuManager\MenuManagerContract;
 use MoonShine\UI\Components\Layout\{LayoutBuilder};
+use MoonShine\Contracts\UI\LayoutContract;
 
-abstract class MoonShineLayout
+abstract class Layout implements LayoutContract
 {
     public function __construct(
-        private readonly PageContract $page,
-        private readonly AssetManager $assetManager,
-        private readonly ColorManager $colorManager,
-        private readonly MenuManager $menuManager,
+        protected readonly PageContract $page,
+        protected readonly AssetManagerContract $assetManager,
+        protected readonly ColorManagerContract $colorManager,
+        protected readonly MenuManagerContract $menuManager,
     ) {
         $this->assetManager->add(
             $this->assets()
@@ -38,7 +39,7 @@ abstract class MoonShineLayout
         return $this->page;
     }
 
-    protected function colors(ColorManager $colorManager): void
+    protected function colors(ColorManagerContract $colorManager): void
     {
         //
     }

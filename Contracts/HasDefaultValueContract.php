@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MoonShine\UI\Contracts\Fields;
+namespace MoonShine\UI\Contracts;
 
-interface HasDefaultValue
+interface HasDefaultValueContract
 {
     public function default(mixed $default): static;
 

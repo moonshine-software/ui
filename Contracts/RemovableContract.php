@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MoonShine\UI\Contracts\Fields;
+namespace MoonShine\UI\Contracts;
 
 use Closure;
 
