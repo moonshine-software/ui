@@ -1,6 +1,6 @@
 import selectorsParams from '../Support/SelectorsParams.js'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
-import request from '../Request/Core.js'
+import request, {afterResponse, beforeRequest, initCallback} from '../Request/Core.js'
 import {getQueryString} from '../Support/Forms.js'
 
 export default (asyncUpdateRoute = '') => ({
@@ -12,7 +12,7 @@ export default (asyncUpdateRoute = '') => ({
     this.loading = false
     this.withParams = this.$el?.dataset?.asyncWithParams
   },
-  fragmentUpdate() {
+  async fragmentUpdate(events, callback = {}) {
     if (this.asyncUpdateRoute === '') {
       return
     }
@@ -20,6 +20,8 @@ export default (asyncUpdateRoute = '') => ({
     if (this.loading) {
       return
     }
+
+    callback = initCallback(callback)
 
     this.loading = true
 
@@ -38,12 +40,19 @@ export default (asyncUpdateRoute = '') => ({
 
     let componentRequestData = new ComponentRequestData()
     componentRequestData
-      .withAfterCallback(function (data) {
+      .withEvents(events)
+      .withBeforeRequest(callback.beforeRequest)
+      .withBeforeResponse(stopLoading)
+      .withCustomResponse(callback.customResponse)
+      .withAfterResponse(function (data) {
         t.$root.outerHTML = data
+
+        if(callback.afterResponse) {
+          afterResponse(callback.afterResponse, data)
+        }
       })
-      .withBeforeCallback(stopLoading)
       .withErrorCallback(stopLoading)
 
-    request(this, this.asyncUpdateRoute, 'get', body, {}, componentRequestData)
+    request(t, t.asyncUpdateRoute, 'get', body, {}, componentRequestData)
   },
 })

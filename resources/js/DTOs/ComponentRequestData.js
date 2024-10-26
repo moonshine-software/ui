@@ -3,12 +3,13 @@ export class ComponentRequestData {
     this._events = ''
     this._selector = ''
 
-    this._beforeFunction = null
-    this._responseFunction = null
+    this._beforeRequest = null
+    this._customResponse = null
 
-    this._beforeCallback = null
-    this._afterCallback = null
+    this._beforeResponse = null
+    this._afterResponse = null
 
+    // TODO Error request refactoring
     this._errorCallback = null
     this._afterErrorCallback = null
 
@@ -35,58 +36,58 @@ export class ComponentRequestData {
     return this
   }
 
-  get beforeFunction() {
-    return this._beforeFunction
+  get beforeRequest() {
+    return this._beforeRequest
   }
 
-  hasBeforeFunction() {
-    return this._beforeFunction !== null && this._beforeFunction
+  hasBeforeRequest() {
+    return this._beforeRequest !== null && this._beforeRequest
   }
 
-  withBeforeFunction(value) {
-    this._beforeFunction = value
+  withBeforeRequest(value) {
+    this._beforeRequest = value
 
     return this
   }
 
-  get beforeCallback() {
-    return this._beforeCallback
+  get beforeResponse() {
+    return this._beforeResponse
   }
 
-  hasBeforeCallback() {
-    return this._beforeCallback !== null && typeof this._beforeCallback === 'function'
+  hasBeforeResponse() {
+    return this._beforeResponse !== null && typeof this._beforeResponse === 'function'
   }
 
-  withBeforeCallback(value) {
-    this._beforeCallback = value
+  withBeforeResponse(value) {
+    this._beforeResponse = value
 
     return this
   }
 
-  get responseFunction() {
-    return this._responseFunction
+  get customResponse() {
+    return this._customResponse
   }
 
-  hasResponseFunction() {
-    return this._responseFunction !== null && this._responseFunction
+  hasCustomResponse() {
+    return this._customResponse !== null && this._customResponse
   }
 
-  withResponseFunction(value) {
-    this._responseFunction = value
+  withCustomResponse(value) {
+    this._customResponse = value
 
     return this
   }
 
-  get afterCallback() {
-    return this._afterCallback
+  get afterResponse() {
+    return this._afterResponse
   }
 
-  hasAfterCallback() {
-    return this._afterCallback !== null && typeof this._afterCallback === 'function'
+  hasAfterResponse() {
+    return this._afterResponse !== null && typeof this._afterResponse === 'function'
   }
 
-  withAfterCallback(value) {
-    this._afterCallback = value
+  withAfterResponse(value) {
+    this._afterResponse = value
 
     return this
   }
@@ -132,17 +133,17 @@ export class ComponentRequestData {
   fromDataset(dataset = {}) {
     return this.withEvents(dataset.asyncEvents ?? '')
       .withSelector(dataset.asyncSelector ?? '')
-      .withResponseFunction(dataset.asyncCallback ?? null)
-      .withBeforeFunction(dataset.asyncBeforeFunction ?? null)
+      .withCustomResponse(dataset.asyncCallback ?? null)
+      .withBeforeRequest(dataset.asyncBeforeFunction ?? null)
   }
 
   fromObject(object = {}) {
     return this.withEvents(object.events ?? '')
       .withSelector(object.selector ?? '')
-      .withResponseFunction(object.responseFunction ?? null)
-      .withBeforeFunction(object.beforeFunction ?? null)
-      .withBeforeCallback(object.beforeCallback ?? null)
-      .withAfterCallback(object.afterCallback ?? null)
+      .withCustomResponse(object.customResponse ?? null)
+      .withBeforeRequest(object.beforeFunction ?? null)
+      .withBeforeResponse(object.beforeResponse ?? null)
+      .withAfterResponse(object.afterResponse ?? null)
       .withErrorCallback(object.errorCallback ?? null)
       .withAfterErrorCallback(object.afterErrorCallback ?? null)
       .withExtraAttributes(object.extraAttributes ?? null)

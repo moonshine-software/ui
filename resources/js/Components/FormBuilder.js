@@ -1,6 +1,6 @@
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {addInvalidListener, containsAttribute, isTextInput} from '../Support/Forms.js'
-import request, {afterCallback, initCallback} from '../Request/Core.js'
+import request, {afterResponse, initCallback} from '../Request/Core.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {getInputs, showWhenChange, showWhenVisibilityChange} from '../Support/ShowWhen.js'
 import {formToJSON} from 'axios'
@@ -24,7 +24,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
       if (!t.blockWatch) {
         let focused = document.activeElement
 
-        componentRequestData.withAfterCallback(function (data) {
+        componentRequestData.withAfterResponse(function (data) {
           for (let [column, html] of Object.entries(data.fields)) {
             let selectorWrapper = '.field-' + column + '-wrapper'
             let selectorElement = '.field-' + column + '-element'
@@ -192,18 +192,18 @@ export default (name = '', initData = {}, reactive = {}) => ({
     callback = initCallback(callback)
 
     componentRequestData
-      .withBeforeFunction(callback.beforeResponse)
-      .withResponseFunction(callback.responseCallback)
+      .withBeforeRequest(callback.beforeRequest)
+      .withCustomResponse(callback.customResponse)
       .withEvents(events)
-      .withAfterCallback(function (data, type) {
+      .withAfterResponse(function (data, type) {
         if (type !== 'error' && t.inModal && t.autoClose) {
           t.toggleModal()
         }
 
         submitState(form, false, false)
 
-        if(callback.afterCallback) {
-          afterCallback(callback.afterCallback, data, type)
+        if(callback.afterResponse) {
+          afterResponse(callback.afterResponse, data, type)
         }
       })
       .withAfterErrorCallback(function () {
