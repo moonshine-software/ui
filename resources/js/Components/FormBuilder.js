@@ -1,6 +1,6 @@
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {addInvalidListener, containsAttribute, isTextInput} from '../Support/Forms.js'
-import request from '../Request/Core.js'
+import request, {afterCallback, initCallback} from '../Request/Core.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {getInputs, showWhenChange, showWhenVisibilityChange} from '../Support/ShowWhen.js'
 import {formToJSON} from 'axios'
@@ -171,7 +171,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
       this.$el.submit()
     }
   },
-  async(events = '', callbackFunction = '', beforeFunction = '') {
+  async(events = '', callback = {}) {
     const form = this.$el
     submitState(form, true)
     const t = this
@@ -189,9 +189,11 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
     let componentRequestData = new ComponentRequestData()
 
+    callback = initCallback(callback)
+
     componentRequestData
-      .withBeforeFunction(beforeFunction)
-      .withResponseFunction(callbackFunction)
+      .withBeforeFunction(callback.beforeResponse)
+      .withResponseFunction(callback.responseCallback)
       .withEvents(events)
       .withAfterCallback(function (data, type) {
         if (type !== 'error' && t.inModal && t.autoClose) {
@@ -199,6 +201,10 @@ export default (name = '', initData = {}, reactive = {}) => ({
         }
 
         submitState(form, false, false)
+
+        if(callback.afterCallback) {
+          afterCallback(callback.afterCallback, data, type)
+        }
       })
       .withAfterErrorCallback(function () {
         submitState(form, false)
