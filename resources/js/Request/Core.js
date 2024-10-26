@@ -151,7 +151,7 @@ function responseCallback(callback, response, element, events, component) {
   fn(response, element, events, component)
 }
 
-function beforeCallback(callback, element, component) {
+export function beforeCallback(callback, element, component) {
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
@@ -159,6 +159,27 @@ function beforeCallback(callback, element, component) {
   }
 
   fn(element, component)
+}
+
+export function afterCallback(callback, data, messageType) {
+    const fn = MoonShine.callbacks[callback]
+
+    if (typeof fn !== 'function') {
+        throw new Error(callback + ' is not a function!')
+    }
+
+    fn(data, messageType)
+}
+
+export function initCallback(callback) {
+    if(callback === null) {
+        return {
+            responseCallback: '',
+            beforeResponse: '',
+            afterCallback: '',
+        }
+    }
+    return callback
 }
 
 function downloadFile(fileName, data) {
