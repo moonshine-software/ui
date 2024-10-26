@@ -1,4 +1,4 @@
-export function dispatchEvents(events, type, component, extraAttributes = {}) {
+export function dispatchEvents(events, type, component, extraProperties = {}) {
   if (events.includes('{row-id}') && component.$el !== undefined) {
     const tr = component.$el.closest('tr')
     events = events.replace(/{row-id}/g, tr?.dataset?.rowKey ?? 0)
@@ -12,7 +12,7 @@ export function dispatchEvents(events, type, component, extraAttributes = {}) {
 
       let eventName = parts[0]
 
-      let attributes = extraAttributes
+      let attributes = extraProperties
 
       if (Array.isArray(parts) && parts.length > 1) {
         let params = parts[1].split(';')

@@ -206,10 +206,8 @@ export default (name = '', initData = {}, reactive = {}) => ({
           afterResponse(callback.afterResponse, data, type)
         }
       })
-      .withAfterErrorCallback(function () {
-        submitState(form, false)
-      })
       .withErrorCallback(function (data) {
+        submitState(form, false)
         inputsErrors(data, t.$el)
       })
 

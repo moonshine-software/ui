@@ -89,17 +89,13 @@ export default function request(
       const events = data.events ?? componentRequestData.events
 
       if (events) {
-        dispatchEvents(events, type, t, componentRequestData.extraAttributes)
+        dispatchEvents(events, type, t, componentRequestData.extraProperties)
       }
     })
     .catch(errorResponse => {
-      // TODO Error request refactoring
-
       t.loading = false
 
       if (!errorResponse?.response?.data) {
-        console.error(errorResponse)
-
         return
       }
 
@@ -107,22 +103,6 @@ export default function request(
 
       if (componentRequestData.hasErrorCallback()) {
         componentRequestData.errorCallback(data, t)
-      }
-
-      if (componentRequestData.hasCustomResponse()) {
-        customResponse(
-          componentRequestData.customResponse,
-          errorResponse.response,
-          t.$el,
-          componentRequestData.events,
-          t,
-        )
-
-        return
-      }
-
-      if (componentRequestData.hasAfterErrorCallback()) {
-        componentRequestData.afterErrorCallback(data, t)
       }
 
       MoonShine.ui.toast(data.message ?? data, 'error')

@@ -9,11 +9,9 @@ export class ComponentRequestData {
     this._beforeResponse = null
     this._afterResponse = null
 
-    // TODO Error request refactoring
     this._errorCallback = null
-    this._afterErrorCallback = null
 
-    this._extraAttributes = {}
+    this._extraProperties = {}
   }
 
   get events() {
@@ -106,26 +104,12 @@ export class ComponentRequestData {
     return this
   }
 
-  get afterErrorCallback() {
-    return this._afterErrorCallback
+  get extraProperties() {
+    return this._extraProperties
   }
 
-  hasAfterErrorCallback() {
-    return this._afterErrorCallback !== null && typeof this._afterErrorCallback === 'function'
-  }
-
-  withAfterErrorCallback(value) {
-    this._afterErrorCallback = value
-
-    return this
-  }
-
-  get extraAttributes() {
-    return this._extraAttributes
-  }
-
-  withExtraAttributes(value) {
-    this._extraAttributes = value
+  withExtraProperties(value) {
+    this._extraProperties = value
 
     return this
   }
@@ -140,12 +124,11 @@ export class ComponentRequestData {
   fromObject(object = {}) {
     return this.withEvents(object.events ?? '')
       .withSelector(object.selector ?? '')
-      .withCustomResponse(object.customResponse ?? null)
-      .withBeforeRequest(object.beforeFunction ?? null)
+      .withBeforeRequest(object.beforeRequest ?? null)
       .withBeforeResponse(object.beforeResponse ?? null)
+      .withCustomResponse(object.customResponse ?? null)
       .withAfterResponse(object.afterResponse ?? null)
       .withErrorCallback(object.errorCallback ?? null)
-      .withAfterErrorCallback(object.afterErrorCallback ?? null)
-      .withExtraAttributes(object.extraAttributes ?? null)
+      .withExtraProperties(object.extraProperties ?? null)
   }
 }
