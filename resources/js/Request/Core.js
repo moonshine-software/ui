@@ -33,8 +33,8 @@ export default function request(
       const data = response.data
       const contentDisposition = response.headers['content-disposition']
 
-      if (componentRequestData.hasBeforeResponse()) {
-        componentRequestData.beforeResponse(data, t)
+      if (componentRequestData.hasBeforeHandleResponse()) {
+        componentRequestData.beforeHandleResponse(data, t)
       }
 
       if (componentRequestData.hasResponseHandler()) {
@@ -93,6 +93,18 @@ export default function request(
     })
     .catch(errorResponse => {
       t.loading = false
+
+      if (componentRequestData.hasResponseHandler()) {
+        responseHandler(
+          componentRequestData.responseHandler,
+          errorResponse,
+          t.$el,
+          componentRequestData.events,
+          t,
+        )
+
+        return
+      }
 
       if (!errorResponse?.response?.data) {
         return

@@ -6,7 +6,7 @@ export class ComponentRequestData {
     this._beforeRequest = null
     this._responseHandler = null
 
-    this._beforeResponse = null
+    this._beforeHandleResponse = null
     this._afterResponse = null
 
     this._errorCallback = null
@@ -48,16 +48,16 @@ export class ComponentRequestData {
     return this
   }
 
-  get beforeResponse() {
-    return this._beforeResponse
+  get beforeHandleResponse() {
+    return this._beforeHandleResponse
   }
 
-  hasBeforeResponse() {
-    return this._beforeResponse !== null && typeof this._beforeResponse === 'function'
+  hasBeforeHandleResponse() {
+    return this._beforeHandleResponse !== null && typeof this._beforeHandleResponse === 'function'
   }
 
-  withBeforeResponse(value) {
-    this._beforeResponse = value
+  withBeforeHandleResponse(value) {
+    this._beforeHandleResponse = value
 
     return this
   }
@@ -117,15 +117,15 @@ export class ComponentRequestData {
   fromDataset(dataset = {}) {
     return this.withEvents(dataset.asyncEvents ?? '')
       .withSelector(dataset.asyncSelector ?? '')
-      .withResponseHandler(dataset.asyncCallback ?? null)
-      .withBeforeRequest(dataset.asyncBeforeFunction ?? null)
+      .withResponseHandler(dataset.asyncResponseHandler ?? null)
+      .withBeforeRequest(dataset.asyncBeforeRequest ?? null)
   }
 
   fromObject(object = {}) {
     return this.withEvents(object.events ?? '')
       .withSelector(object.selector ?? '')
       .withBeforeRequest(object.beforeRequest ?? null)
-      .withBeforeResponse(object.beforeResponse ?? null)
+      .withBeforeHandleResponse(object.beforeHandleResponse ?? null)
       .withResponseHandler(object.responseHandler ?? null)
       .withAfterResponse(object.afterResponse ?? null)
       .withErrorCallback(object.errorCallback ?? null)

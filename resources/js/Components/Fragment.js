@@ -42,7 +42,7 @@ export default (asyncUpdateRoute = '') => ({
     componentRequestData
       .withEvents(events)
       .withBeforeRequest(callback.beforeRequest)
-      .withBeforeResponse(stopLoading)
+      .withBeforeHandleResponse(stopLoading)
       .withResponseHandler(callback.responseHandler)
       .withAfterResponse(function (data) {
         t.$root.outerHTML = data

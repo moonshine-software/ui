@@ -44,7 +44,7 @@ export function listComponentRequest(component, pushState = false) {
 
   let componentRequestData = new ComponentRequestData()
   componentRequestData
-    .withBeforeResponse(function (data, t) {
+    .withBeforeHandleResponse(function (data, t) {
       const query = url.slice(url.indexOf('?') + 1)
 
       if (pushState) {

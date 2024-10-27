@@ -58,7 +58,7 @@ export default () => ({
     let componentRequestData = new ComponentRequestData()
     componentRequestData
       .fromDataset(this.$el?.dataset ?? {})
-      .withBeforeResponse(stopLoading)
+      .withBeforeHandleResponse(stopLoading)
       .withErrorCallback(stopLoading)
 
     request(this, this.url, this.method, body, {}, componentRequestData)

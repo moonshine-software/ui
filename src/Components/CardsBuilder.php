@@ -18,7 +18,7 @@ use MoonShine\UI\Traits\WithFields;
 use Throwable;
 
 /**
- * @method static static make(iterable $items = [], FieldsContract|array $fields = [])
+ * @method static static make(iterable $items = [], FieldsContract|iterable $fields = [])
  *
  * @implements HasFieldsContract<Fields|FieldsContract>
  */
@@ -82,7 +82,7 @@ final class CardsBuilder extends IterableComponent implements
 
     public function __construct(
         iterable $items = [],
-        FieldsContract|array $fields = [],
+        FieldsContract|iterable $fields = [],
     ) {
         parent::__construct();
 
