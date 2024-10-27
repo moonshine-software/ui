@@ -143,24 +143,24 @@ export function beforeRequest(callback, element, component) {
 }
 
 export function afterResponse(callback, data, messageType) {
-    const fn = MoonShine.callbacks[callback]
+  const fn = MoonShine.callbacks[callback]
 
-    if (typeof fn !== 'function') {
-        throw new Error(callback + ' is not a function!')
-    }
+  if (typeof fn !== 'function') {
+    throw new Error(callback + ' is not a function!')
+  }
 
-    fn(data, messageType)
+  fn(data, messageType)
 }
 
 export function initCallback(callback) {
-    if(callback === null) {
-        return {
-            beforeRequest: '',
-            responseHandler: '',
-            afterResponse: '',
-        }
+  if (callback === null) {
+    return {
+      beforeRequest: '',
+      responseHandler: '',
+      afterResponse: '',
     }
-    return callback
+  }
+  return callback
 }
 
 function downloadFile(fileName, data) {

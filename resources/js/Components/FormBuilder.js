@@ -202,7 +202,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
         submitState(form, false, false)
 
-        if(callback.afterResponse) {
+        if (callback.afterResponse) {
           afterResponse(callback.afterResponse, data, type)
         }
       })

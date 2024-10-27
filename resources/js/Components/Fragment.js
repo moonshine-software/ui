@@ -47,7 +47,7 @@ export default (asyncUpdateRoute = '') => ({
       .withAfterResponse(function (data) {
         t.$root.outerHTML = data
 
-        if(callback.afterResponse) {
+        if (callback.afterResponse) {
           afterResponse(callback.afterResponse, data)
         }
       })
