@@ -43,7 +43,7 @@ export default (asyncUpdateRoute = '') => ({
       .withEvents(events)
       .withBeforeRequest(callback.beforeRequest)
       .withBeforeResponse(stopLoading)
-      .withCustomResponse(callback.customResponse)
+      .withResponseHandler(callback.responseHandler)
       .withAfterResponse(function (data) {
         t.$root.outerHTML = data
 

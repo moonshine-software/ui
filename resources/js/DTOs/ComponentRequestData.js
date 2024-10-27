@@ -4,7 +4,7 @@ export class ComponentRequestData {
     this._selector = ''
 
     this._beforeRequest = null
-    this._customResponse = null
+    this._responseHandler = null
 
     this._beforeResponse = null
     this._afterResponse = null
@@ -62,16 +62,16 @@ export class ComponentRequestData {
     return this
   }
 
-  get customResponse() {
-    return this._customResponse
+  get responseHandler() {
+    return this._responseHandler
   }
 
-  hasCustomResponse() {
-    return this._customResponse !== null && this._customResponse
+  hasResponseHandler() {
+    return this._responseHandler !== null && this._responseHandler
   }
 
-  withCustomResponse(value) {
-    this._customResponse = value
+  withResponseHandler(value) {
+    this._responseHandler = value
 
     return this
   }
@@ -117,7 +117,7 @@ export class ComponentRequestData {
   fromDataset(dataset = {}) {
     return this.withEvents(dataset.asyncEvents ?? '')
       .withSelector(dataset.asyncSelector ?? '')
-      .withCustomResponse(dataset.asyncCallback ?? null)
+      .withResponseHandler(dataset.asyncCallback ?? null)
       .withBeforeRequest(dataset.asyncBeforeFunction ?? null)
   }
 
@@ -126,7 +126,7 @@ export class ComponentRequestData {
       .withSelector(object.selector ?? '')
       .withBeforeRequest(object.beforeRequest ?? null)
       .withBeforeResponse(object.beforeResponse ?? null)
-      .withCustomResponse(object.customResponse ?? null)
+      .withResponseHandler(object.responseHandler ?? null)
       .withAfterResponse(object.afterResponse ?? null)
       .withErrorCallback(object.errorCallback ?? null)
       .withExtraProperties(object.extraProperties ?? null)

@@ -193,7 +193,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
     componentRequestData
       .withBeforeRequest(callback.beforeRequest)
-      .withCustomResponse(callback.customResponse)
+      .withResponseHandler(callback.responseHandler)
       .withEvents(events)
       .withAfterResponse(function (data, type) {
         if (type !== 'error' && t.inModal && t.autoClose) {

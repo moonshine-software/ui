@@ -37,9 +37,9 @@ export default function request(
         componentRequestData.beforeResponse(data, t)
       }
 
-      if (componentRequestData.hasCustomResponse()) {
-        customResponse(
-          componentRequestData.customResponse,
+      if (componentRequestData.hasResponseHandler()) {
+        responseHandler(
+          componentRequestData.responseHandler,
           response,
           t.$el,
           componentRequestData.events,
@@ -121,7 +121,7 @@ export function urlWithQuery(url, append, callback = null) {
   return urlObject.toString() + separator + append
 }
 
-function customResponse(callback, response, element, events, component) {
+function responseHandler(callback, response, element, events, component) {
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
@@ -157,7 +157,7 @@ export function initCallback(callback) {
     if(callback === null) {
         return {
             beforeRequest: '',
-            customResponse: '',
+            responseHandler: '',
             afterResponse: '',
         }
     }
