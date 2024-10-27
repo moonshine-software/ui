@@ -37,10 +37,10 @@
                         <h5 class="notifications-title"></h5>
                         <p class="notifications-text">{{ $notification->getMessage() }}</p>
 
-                        @if($notification->getButton() !== [])
+                        @if(!is_null($notification->getButton()))
                             <div class="notifications-more">
-                                <a href="{{ $notification->getButtonLink() }}">
-                                    {{ $notification->getButtonLabel() }}
+                                <a href="{{ $notification->getButton()->getLink() }}">
+                                    {{ $notification->getButton()->getLabel() }}
                                 </a>
                             </div>
                         @endif
