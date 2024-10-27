@@ -82,14 +82,13 @@ export default function request(
         MoonShine.ui.toast(data.message, type)
       }
 
-      if (componentRequestData.hasAfterResponse()) {
-        componentRequestData.afterResponse(data, type, t)
-      }
-
       const events = data.events ?? componentRequestData.events
-
       if (events) {
         dispatchEvents(events, type, t, componentRequestData.extraProperties)
+      }
+
+      if (componentRequestData.hasAfterResponse()) {
+        componentRequestData.afterResponse(data, type, t)
       }
     })
     .catch(errorResponse => {
