@@ -1,7 +1,7 @@
 @props([
-    'components',
-    'bulkButtons',
-    'asyncUrl',
+    'components' => [],
+    'bulkButtons' => [],
+    'asyncUrl' => '',
     'async' => false,
     'notfound' => false,
     'colSpan' => 12,
