@@ -1,5 +1,5 @@
 export function dispatchEvents(events, type, component, extraProperties = {}) {
-  if(!events) {
+  if (!events) {
     return
   }
 
