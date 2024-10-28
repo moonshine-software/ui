@@ -470,7 +470,7 @@ final class FormBuilder extends MoonShineComponent implements
             );
             $this->customAttributes([
                 'x-on:submit.prevent' => 'async(`' . $this->getAsyncEvents(
-                ) . '`, '. json_encode($this->getAsyncCallback()).')',
+                ) . '`, ' . json_encode($this->getAsyncCallback()) . ')',
             ]);
         }
 
