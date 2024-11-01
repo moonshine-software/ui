@@ -240,34 +240,53 @@ final class TableBuilder extends IterableComponent implements
                 $this->getTrAttributes($casted, $index + ($this->isVertical() ? 0 : 1)),
             );
 
+            $buttons = $this->getButtons($casted);
+            $hasBulk = ! $this->isPreview() && $this->getBulkButtons()->isNotEmpty();
+
             if ($this->isVertical()) {
                 foreach ($fields as $cellIndex => $field) {
                     $attributes = $field->getWrapperAttributes()->jsonSerialize();
 
-                    $builder = $attributes !== [] ? static fn (TableCellContract $td): TableCellContract => $td->customAttributes(
+                    $builder = $attributes !== [] ? static fn(TableCellContract $td): TableCellContract
+                        => $td->customAttributes(
                         $field->getWrapperAttributes()->jsonSerialize(),
                     ) : null;
 
                     $cells = TableCells::make()
                         ->pushCell(
                             $field->getLabel(),
-                            builder: static fn (TableCellContract $td): TableCellContract => $td->customAttributes([
+                            builder: static fn(TableCellContract $td): TableCellContract => $td->customAttributes([
                                 'width' => '20%',
                                 'class' => 'font-semibold',
                             ]),
                         )
-                        ->pushCell((string) $field, builder: $builder);
+                        ->pushCell((string)$field, builder: $builder);
 
                     $rows->pushRow($cells, $key ?? $cellIndex);
                 }
+
+                $rows->pushRow(
+                    TableCells::make()->pushCellWhen(
+                        $hasBulk,
+                        fn(): string => (string)$this->getRowCheckbox($key, $casted),
+                        index: 0,
+                        builder: $tdAttributes,
+                    )->pushCell(
+                        static fn(): string => (string)Flex::make([
+                            ActionGroup::make($buttons->toArray()),
+                        ])->justifyAlign('end'),
+                        index: $hasBulk ? 1 : 0,
+                        builder: $tdAttributes,
+                        attributes: [
+                            'colspan' => $hasBulk ? 2 : 3
+                        ]
+                    ),
+                );
 
                 $index++;
 
                 continue;
             }
-
-            $buttons = $this->getButtons($casted);
-            $hasBulk = ! $this->isPreview() && $this->getBulkButtons()->isNotEmpty();
 
             $cells
                 ->pushCellWhen(
@@ -389,11 +408,23 @@ final class TableBuilder extends IterableComponent implements
     {
         $cells = TableCells::make();
 
-        if (! $this->isVertical()) {
-            $hasBulk = ! $this->isPreview() && $this->getBulkButtons()->isNotEmpty();
-            $index = $hasBulk ? 1 : 0;
-            $tdAttributes = fn ($i): array => $this->getTdAttributes(null, 0, $i);
+        $hasBulk = ! $this->isPreview() && $this->getBulkButtons()->isNotEmpty();
+        $index = $hasBulk ? 1 : 0;
+        $tdAttributes = fn($i): array => $this->getTdAttributes(null, 0, $i);
 
+        if($this->isVertical()) {
+            $cells->pushWhen(
+                $hasBulk,
+                fn(): TableTh
+                    => TableTh::make(
+                    (string)$this->getRowBulkCheckbox(),
+                )
+                    ->customAttributes($tdAttributes(0))
+                    ->class('w-10'),
+            );
+        }
+
+        if (! $this->isVertical()) {
             $cells->pushWhen(
                 $hasBulk,
                 fn (): TableTh => TableTh::make(
