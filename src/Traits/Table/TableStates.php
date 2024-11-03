@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Traits\Table;
 
+use Closure;
 use MoonShine\Contracts\UI\ActionButtonContract;
+use MoonShine\Contracts\UI\ComponentContract;
+use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Support\Enums\ClickAction;
 use MoonShine\UI\Components\ActionButton;
 
@@ -13,6 +16,10 @@ trait TableStates
     protected bool $isPreview = false;
 
     protected bool $isVertical = false;
+
+    protected ?Closure $verticalTitleCallback = null;
+
+    protected ?Closure $verticalValueCallback = null;
 
     protected bool $isEditable = false;
 
@@ -80,9 +87,15 @@ trait TableStates
         return $this->isEditable;
     }
 
-    public function vertical(): static
+    /**
+     * @param  ?Closure(FieldContract $field, ComponentContract $default, static $ctx): ComponentContract  $title
+     * @param  ?Closure(FieldContract $field, ComponentContract $default, static $ctx): ComponentContract  $value
+     */
+    public function vertical(?Closure $title = null, ?Closure $value = null): static
     {
         $this->isVertical = true;
+        $this->verticalTitleCallback = $title;
+        $this->verticalValueCallback = $value;
 
         return $this;
     }

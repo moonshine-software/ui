@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
+use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\HasFieldsContract;
 use MoonShine\Contracts\UI\TableBuilderContract;
@@ -17,6 +18,9 @@ use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Components\ActionButton;
 use MoonShine\UI\Components\FieldsGroup;
 use MoonShine\UI\Components\Icon;
+use MoonShine\UI\Components\Layout\Column;
+use MoonShine\UI\Components\Layout\Div;
+use MoonShine\UI\Components\Layout\LineBreak;
 use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
@@ -381,6 +385,7 @@ class Json extends Field implements
         if ($reorderable) {
             $fields->prepend(
                 Preview::make(
+                    column: '__handle',
                     formatted: static fn () => Icon::make('bars-4')
                 )->customAttributes(['class' => 'handle', 'style' => 'cursor: move'])
             );
@@ -406,7 +411,15 @@ class Json extends Field implements
             )
             ->when(
                 $this->isVertical(),
-                static fn (TableBuilderContract $table): TableBuilderContract => $table->vertical()
+                static fn (TableBuilderContract $table): TableBuilderContract => $table->vertical(
+                    title: $reorderable ? static fn(FieldContract $field, ComponentContract $default) => Column::make([
+                        $field->getColumn() === '__handle' ? $field : Div::make([
+                            $field->getLabel(),
+                            LineBreak::make(),
+                        ])
+                    ])->columnSpan(1) : null,
+                    value: $reorderable ? static fn(FieldContract $field, ComponentContract $default) => $field->getColumn() === '__handle' ? Column::make() : $default : null,
+                )
             )
             ->when(
                 ! \is_null($this->modifyTable),
