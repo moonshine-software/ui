@@ -283,7 +283,7 @@ final class TableBuilder extends IterableComponent implements
                             static fn() => Components::make($components),
                         )->when(
                             true,
-                            static fn (TableCellContract $td) => $tdAttributes($td)
+                            static fn (TableCellContract $td): TableCellContract => $tdAttributes($td)
                         ),
                     ]),
                     key: $key,
