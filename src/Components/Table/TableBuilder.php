@@ -255,13 +255,13 @@ final class TableBuilder extends IterableComponent implements
                 foreach ($fields as $field) {
                     $attributes = $field->getWrapperAttributes()->jsonSerialize();
                     $title = Column::make([
-                        Heading::make($field->getLabel())->h(4)
+                        Heading::make($field->getLabel())->h(4),
                     ])->columnSpan(1);
 
                     $value = Column::make([
                         Div::make([
-                            $field
-                        ])->customAttributes($attributes)
+                            $field,
+                        ])->customAttributes($attributes),
                     ])->columnSpan(11);
 
                     $components[] = Grid::make([
@@ -270,7 +270,7 @@ final class TableBuilder extends IterableComponent implements
                     ]);
                 }
 
-                if($buttons->isNotEmpty()) {
+                if ($buttons->isNotEmpty()) {
                     $components[] = Flex::make([
                         $hasBulk ? $this->getRowCheckbox($key, $casted) : null,
                         ActionGroup::make($buttons->toArray()),
@@ -280,7 +280,7 @@ final class TableBuilder extends IterableComponent implements
                 $rows->pushRow(
                     TableCells::make([
                         TableTd::make(
-                            static fn() => Components::make($components),
+                            static fn () => Components::make($components),
                         )->when(
                             true,
                             static fn (TableCellContract $td): TableCellContract => $tdAttributes($td)
@@ -418,7 +418,7 @@ final class TableBuilder extends IterableComponent implements
 
         $hasBulk = ! $this->isPreview() && $this->getBulkButtons()->isNotEmpty();
         $index = $hasBulk ? 1 : 0;
-        $tdAttributes = fn(int $cell): array => $this->getTdAttributes(null, 0, $cell);
+        $tdAttributes = fn (int $cell): array => $this->getTdAttributes(null, 0, $cell);
 
         $cells->pushWhen(
             $hasBulk,
@@ -426,7 +426,7 @@ final class TableBuilder extends IterableComponent implements
                 (string) $this->getRowBulkCheckbox(),
             )
                 ->customAttributes($tdAttributes(0))
-                ->class(['w-10', 'text-center' => !$this->isVertical()]),
+                ->class(['w-10', 'text-center' => ! $this->isVertical()]),
         );
 
         if (! $this->isVertical()) {

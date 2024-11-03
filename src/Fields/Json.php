@@ -412,13 +412,13 @@ class Json extends Field implements
             ->when(
                 $this->isVertical(),
                 static fn (TableBuilderContract $table): TableBuilderContract => $table->vertical(
-                    title: $reorderable ? static fn(FieldContract $field, ComponentContract $default) => Column::make([
+                    title: $reorderable ? static fn (FieldContract $field, ComponentContract $default) => Column::make([
                         $field->getColumn() === '__handle' ? $field : Div::make([
                             $field->getLabel(),
                             LineBreak::make(),
-                        ])
+                        ]),
                     ])->columnSpan(1) : null,
-                    value: $reorderable ? static fn(FieldContract $field, ComponentContract $default) => $field->getColumn() === '__handle' ? Column::make() : $default : null,
+                    value: $reorderable ? static fn (FieldContract $field, ComponentContract $default) => $field->getColumn() === '__handle' ? Column::make() : $default : null,
                 )
             )
             ->when(
