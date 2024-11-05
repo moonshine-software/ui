@@ -9,7 +9,6 @@ use MoonShine\Contracts\Core\DependencyInjection\CoreContract;
 use MoonShine\Contracts\Core\HasCoreContract;
 use MoonShine\Contracts\Core\ResourceContract;
 use MoonShine\Contracts\UI\ApplyContract;
-use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\FormElementContract;
 use MoonShine\Core\Traits\WithCore;
 
@@ -23,6 +22,9 @@ final class AppliesRegister implements AppliesRegisterContract, HasCoreContract
 
     private string $defaultFor = ResourceContract::class;
 
+    /**
+     * @var non-empty-array<string, array[]|array<class-string<FormElementContract>, class-string<ApplyContract>>>
+     */
     private array $applies = [
         'filters' => [],
         'fields' => [],
@@ -91,6 +93,9 @@ final class AppliesRegister implements AppliesRegisterContract, HasCoreContract
         return $this;
     }
 
+    /**
+     * @param  ?class-string  $for
+     */
     public function findByField(
         FormElementContract $field,
         string $type = 'fields',
@@ -107,7 +112,7 @@ final class AppliesRegister implements AppliesRegisterContract, HasCoreContract
     }
 
     /**
-     * @param  class-string<FieldContract>  $fieldClass
+     * @param  class-string<FormElementContract>  $fieldClass
      * @param  class-string<ApplyContract>  $applyClass
      */
     public function add(string $fieldClass, string $applyClass): static
@@ -117,6 +122,9 @@ final class AppliesRegister implements AppliesRegisterContract, HasCoreContract
         return $this;
     }
 
+    /**
+     * @param  array<class-string<FormElementContract>, class-string<ApplyContract>>  $data
+     */
     public function push(array $data): static
     {
         $this->applies[$this->type][$this->getFor()] = array_merge(
@@ -128,7 +136,7 @@ final class AppliesRegister implements AppliesRegisterContract, HasCoreContract
     }
 
     /**
-     * @param  class-string<FieldContract>  $fieldClass
+     * @param  class-string<FormElementContract>  $fieldClass
      */
     public function get(string $fieldClass, ?ApplyContract $default = null): ?ApplyContract
     {
