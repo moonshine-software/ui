@@ -13,7 +13,8 @@ final class Html extends AbstractWithComponents
     public function __construct(
         iterable $components = [],
         protected bool $withAlpineJs = false,
-        protected bool $withThemes = false
+        protected bool $withThemes = false,
+        protected bool $alwaysDark = false,
     ) {
         parent::__construct($components);
     }
@@ -25,9 +26,10 @@ final class Html extends AbstractWithComponents
         return $this;
     }
 
-    public function withThemes(): self
+    public function withThemes(bool $alwaysDark = false): self
     {
         $this->withThemes = true;
+        $this->alwaysDark = $alwaysDark;
 
         return $this;
     }
@@ -42,7 +44,9 @@ final class Html extends AbstractWithComponents
 
         if ($this->withThemes) {
             $this->customAttributes([
-                ':class' => "\$store.darkMode.on && 'dark'",
+                ':class' => !$this->alwaysDark
+                    ? "\$store.darkMode.on ? 'dark' : ''"
+                    : "'dark'",
             ]);
         }
     }
