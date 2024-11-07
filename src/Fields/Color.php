@@ -20,7 +20,7 @@ class Color extends Field implements HasDefaultValueContract, CanBeString
 
     protected function resolvePreview(): Renderable|string
     {
-        if(is_null($this->getValue())) {
+        if (\is_null($this->getValue())) {
             return '';
         }
 
