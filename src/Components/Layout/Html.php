@@ -44,9 +44,9 @@ final class Html extends AbstractWithComponents
 
         if ($this->withThemes) {
             $this->customAttributes([
-                ':class' => !$this->alwaysDark
-                    ? "\$store.darkMode.on ? 'dark' : ''"
-                    : "'dark'",
+                ':class' => $this->alwaysDark
+                    ? "'dark'"
+                    : "\$store.darkMode.on ? 'dark' : ''",
             ]);
         }
     }
