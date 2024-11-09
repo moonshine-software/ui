@@ -184,17 +184,17 @@ export default (asyncUrl = '') => ({
 
     this.$el.addEventListener('change', () => (this.isLoadedOptions = false), false)
 
-    if (this.associatedWith && asyncUrl) {
-      this.$el.addEventListener(
-        'showDropdown',
-        () => {
+    if (asyncUrl) {
+      this.$el.addEventListener('showDropdown', () => {
           if (!this.isLoadedOptions) {
             this.asyncSearch()
           }
         },
-        false,
-      )
+        false
+      );
+    }
 
+    if (this.associatedWith && asyncUrl) {
       document.querySelector(`[name="${this.associatedWith}"]`).addEventListener(
         'change',
         event => {
@@ -321,9 +321,9 @@ export default (asyncUrl = '') => ({
       })
 
       await this.choicesInstance.setChoices(mappedOptions, 'value', 'label', true)
-    }
 
-    this.isLoadedOptions = true
+      this.isLoadedOptions = true
+    }
   },
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const form = this.$el.closest('form')
