@@ -72,7 +72,7 @@ trait WithSorts
     protected function getSortColumnFromRequest(): ?string
     {
         if ($sort = $this->getCore()->getRequest()->getScalar('sort')) {
-            return ltrim($sort, '-');
+            return ltrim((string) $sort, '-');
         }
 
         return null;
@@ -81,7 +81,7 @@ trait WithSorts
     protected function getSortDirectionFromRequest(): ?string
     {
         if ($sort = $this->getCore()->getRequest()->getScalar('sort')) {
-            return str_starts_with($sort, '-') ? 'desc' : 'asc';
+            return str_starts_with((string) $sort, '-') ? 'desc' : 'asc';
         }
 
         return null;
