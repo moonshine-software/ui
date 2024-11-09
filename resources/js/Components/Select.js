@@ -185,13 +185,15 @@ export default (asyncUrl = '') => ({
     this.$el.addEventListener('change', () => (this.isLoadedOptions = false), false)
 
     if (asyncUrl) {
-      this.$el.addEventListener('showDropdown', () => {
+      this.$el.addEventListener(
+        'showDropdown',
+        () => {
           if (!this.isLoadedOptions) {
             this.asyncSearch()
           }
         },
-        false
-      );
+        false,
+      )
     }
 
     if (this.associatedWith && asyncUrl) {
