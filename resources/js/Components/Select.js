@@ -2,6 +2,8 @@ import Choices from 'choices.js'
 import {createPopper} from '@popperjs/core'
 import debounce from '../Support/Debounce.js'
 import {crudFormQuery} from '../Support/Forms.js'
+import {dispatchEvents as de} from '../Support/DispatchEvents.js'
+import {formToJSON} from 'axios'
 
 export default (asyncUrl = '') => ({
   choicesInstance: null,
@@ -313,12 +315,26 @@ export default (asyncUrl = '') => ({
 
       options = await this.fromUrl(url.toString() + (formQuery.length ? '&' + formQuery : ''))
 
-      await this.choicesInstance.setChoices(options, 'value', 'label', true)
+      const mappedOptions = options.map(item => {
+        const { properties, ...other } = item
+        return {
+          ...other,
+          customProperties: properties
+        }
+      })
+
+      await this.choicesInstance.setChoices(mappedOptions, 'value', 'label', true)
     }
 
     if (!onInit) {
       this.$el.dispatchEvent(new Event('change'))
     }
+  },
+  dispatchEvents(componentEvent, exclude = null, extra = {}) {
+    const form = this.$el.closest('form')
+    extra['_data'] = form ? formToJSON(form) : {value: this.$el.value}
+
+    de(componentEvent, '', this, extra)
   },
   fromUrl(url) {
     return fetch(url)

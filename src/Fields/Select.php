@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use JsonException;
 use MoonShine\Contracts\UI\HasAsyncContract;
 use MoonShine\Contracts\UI\HasReactivityContract;
+use MoonShine\Support\AlpineJs;
 use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeNumeric;
@@ -83,6 +84,16 @@ class Select extends Field implements
     public function asyncOnInit(): static
     {
         return $this->customAttributes(['data-async-on-init' => true]);
+    }
+
+    public function onChangeEvent(array|string $events): static
+    {
+        return $this->customAttributes([
+            '@change' => "dispatchEvents(
+                 `" . AlpineJs::prepareEvents($events) . "`,
+                 `_component_name,_token,_method`
+             )",
+        ]);
     }
 
     protected function asyncWith(): void
