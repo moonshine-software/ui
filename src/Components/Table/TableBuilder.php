@@ -148,8 +148,8 @@ final class TableBuilder extends IterableComponent implements
             $this->getName(),
             additionally: [
                 'filter' => $this->getCore()->getRequest()->get('filter'),
-                'query-tag' => $this->getCore()->getRequest()->get('query-tag'),
-                'search' => $this->getCore()->getRequest()->get('search'),
+                'query-tag' => $this->getCore()->getRequest()->getScalar('query-tag'),
+                'search' => $this->getCore()->getRequest()->getScalar('search'),
             ],
         );
     }

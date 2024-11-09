@@ -313,19 +313,17 @@ export default (asyncUrl = '') => ({
       }
 
       options = await this.fromUrl(url.toString() + (formQuery.length ? '&' + formQuery : ''))
-
-      const mappedOptions = options.map(item => {
+      options = options.map(item => {
         const {properties, ...other} = item
         return {
           ...other,
           customProperties: properties,
         }
       })
-
-      await this.choicesInstance.setChoices(mappedOptions, 'value', 'label', true)
-
-      this.isLoadedOptions = true
     }
+
+    await this.choicesInstance.setChoices(options, 'value', 'label', true)
+    this.isLoadedOptions = true
   },
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const form = this.$el.closest('form')

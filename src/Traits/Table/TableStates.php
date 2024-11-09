@@ -297,7 +297,7 @@ trait TableStates
             'lazy' => $this->isLazy(),
             'columnSelection' => $this->isColumnSelection(),
             'searchable' => $this->isSearchable(),
-            'searchValue' => $this->getCore()->getRequest()->get('search', ''),
+            'searchValue' => $this->getCore()->getRequest()->getScalar('search', ''),
         ];
     }
 }
