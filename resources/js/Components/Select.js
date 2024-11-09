@@ -80,42 +80,42 @@ export default (asyncUrl = '') => ({
       }
     }
 
-      const items = []
+    const items = []
 
-      Array.from(this.$el.options ?? []).forEach(function (option) {
-        items.push({
-          label: option.text,
-          value: option.value,
-          selected: option.selected,
-          customProperties: option.dataset?.properties ? JSON.parse(option.dataset.properties) : {},
-        })
+    Array.from(this.$el.options ?? []).forEach(function (option) {
+      items.push({
+        label: option.text,
+        value: option.value,
+        selected: option.selected,
+        customProperties: option.dataset?.properties ? JSON.parse(option.dataset.properties) : {},
       })
+    })
 
-      this.choicesInstance = new Choices(this.$el, {
-        allowHTML: true,
-        items: items,
-        position: 'bottom',
-        placeholderValue: this.placeholder,
-        searchEnabled: this.searchEnabled,
-        removeItemButton: this.removeItemButton,
-        shouldSort: this.shouldSort,
-        loadingText: translates.loading,
-        noResultsText: translates.choices.no_results,
-        noChoicesText: translates.choices.no_choices,
-        itemSelectText: translates.choices.item_select,
-        uniqueItemText: translates.choices.unique_item,
-        customAddItemText: translates.choices.custom_add_item,
-        addItemText: value => {
-          return translates.choices.add_item.replace(':value', `<b>${value}</b>`)
-        },
-        maxItemText: maxItemCount => {
-          return translates.choices.max_item.replace(':count', maxItemCount)
-        },
-        searchResultLimit: 100,
-        callbackOnCreateTemplates: function (template) {
-          return {
-            item: ({classNames}, data) => {
-              return template(`
+    this.choicesInstance = new Choices(this.$el, {
+      allowHTML: true,
+      items: items,
+      position: 'bottom',
+      placeholderValue: this.placeholder,
+      searchEnabled: this.searchEnabled,
+      removeItemButton: this.removeItemButton,
+      shouldSort: this.shouldSort,
+      loadingText: translates.loading,
+      noResultsText: translates.choices.no_results,
+      noChoicesText: translates.choices.no_choices,
+      itemSelectText: translates.choices.item_select,
+      uniqueItemText: translates.choices.unique_item,
+      customAddItemText: translates.choices.custom_add_item,
+      addItemText: value => {
+        return translates.choices.add_item.replace(':value', `<b>${value}</b>`)
+      },
+      maxItemText: maxItemCount => {
+        return translates.choices.max_item.replace(':count', maxItemCount)
+      },
+      searchResultLimit: 100,
+      callbackOnCreateTemplates: function (template) {
+        return {
+          item: ({classNames}, data) => {
+            return template(`
                 <div class="${classNames.item} ${
                   data.highlighted ? classNames.highlightedState : classNames.itemSelectable
                 } ${data.placeholder ? classNames.placeholder : ''}" data-item data-id="${
@@ -144,9 +144,9 @@ export default (asyncUrl = '') => ({
 
                 </div>
               `)
-            },
-            choice: ({classNames}, data) => {
-              return template(`
+          },
+          choice: ({classNames}, data) => {
+            return template(`
                 <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
                   data.disabled ? classNames.itemDisabled : classNames.itemSelectable
                 } ${data.value == '' ? 'choices__placeholder' : ''}" data-select-text="${
@@ -173,122 +173,122 @@ export default (asyncUrl = '') => ({
                       </div>
                 </div>
             `)
-            },
-          }
-        },
-        callbackOnInit: () => {
-          this.searchTerms = this.$el.closest('.choices').querySelector('[name="search_terms"]')
-        },
-        ...this.customOptions,
-      })
-
-      this.$el.addEventListener('change', () => this.isLoadedOptions = false, false)
-
-      if (this.associatedWith && asyncUrl) {
-        this.$el.addEventListener('showDropdown', () => {
-            if (!this.isLoadedOptions) {
-              this.asyncSearch()
-            }
-          },
-          false
-        );
-
-        document.querySelector(`[name="${this.associatedWith}"]`).addEventListener(
-          'change',
-          event => {
-            this.choicesInstance.clearStore()
-            this.$el.dispatchEvent(new Event('change'))
-            this.isLoadedOptions = false
-          },
-          false,
-        )
-      }
-
-      if (this.$el.dataset.overflow || this.$el.closest('.table-responsive')) {
-        // Modifier "Same width" Popper reference
-        const sameWidth = {
-          name: 'sameWidth',
-          enabled: true,
-          phase: 'beforeWrite',
-          requires: ['computeStyles'],
-          fn: ({state}) => {
-            state.styles.popper.width = `${state.rects.reference.width}px`
-          },
-          effect: ({state}) => {
-            state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`
           },
         }
+      },
+      callbackOnInit: () => {
+        this.searchTerms = this.$el.closest('.choices').querySelector('[name="search_terms"]')
+      },
+      ...this.customOptions,
+    })
 
-        // Create Popper on showDropdown event
-        this.choicesInstance.passedElement.element.addEventListener(
-          'showDropdown',
-          event => {
-            createPopper(
-              this.choicesInstance.containerInner.element,
-              this.choicesInstance.dropdown.element,
-              {
-                placement: 'bottom',
-                strategy: 'fixed',
-                modifiers: [sameWidth],
-              },
-            )
-          },
-          false,
-        )
-      }
+    this.$el.addEventListener('change', () => (this.isLoadedOptions = false), false)
 
-      const form = this.$el.closest('form')
-      if (form !== null) {
-        form.addEventListener('reset', () => {
-          this.choicesInstance.clearChoices()
-          this.choicesInstance.setChoices(items)
-          const activeItem = items.filter(item => item.selected) ?? items[0]
-          this.choicesInstance.setChoiceByValue(activeItem)
-        })
-      }
-
-      if (asyncUrl) {
-        this.searchTerms.addEventListener(
-          'input',
-          debounce(event => this.asyncSearch(), 300),
-          false,
-        )
-      }
-
-      if (this.removeItemButton) {
-        this.$el.parentElement.addEventListener('click', event => {
-          if (event.target.classList.contains('choices__button--remove')) {
-            const choiceElement = event.target.closest('.choices__item')
-            const id = choiceElement.getAttribute('data-id')
-
-            if (
-              this.choicesInstance._isSelectOneElement &&
-              this.choicesInstance._store.placeholderChoice
-            ) {
-              this.choicesInstance.removeActiveItems(id)
-
-              this.choicesInstance._triggerChange(
-                this.choicesInstance._store.placeholderChoice.value,
-              )
-
-              this.choicesInstance._selectPlaceholderChoice(
-                this.choicesInstance._store.placeholderChoice,
-              )
-            } else {
-              const {items} = this.choicesInstance._store
-
-              const itemToRemove = id && items.find(item => item.id === parseInt(id, 10))
-
-              if (!itemToRemove) {
-                return
-              }
-
-              this.choicesInstance._removeItem(itemToRemove)
-              this.choicesInstance._triggerChange(itemToRemove.value)
-            }
+    if (this.associatedWith && asyncUrl) {
+      this.$el.addEventListener(
+        'showDropdown',
+        () => {
+          if (!this.isLoadedOptions) {
+            this.asyncSearch()
           }
-        })
+        },
+        false,
+      )
+
+      document.querySelector(`[name="${this.associatedWith}"]`).addEventListener(
+        'change',
+        event => {
+          this.choicesInstance.clearStore()
+          this.$el.dispatchEvent(new Event('change'))
+          this.isLoadedOptions = false
+        },
+        false,
+      )
+    }
+
+    if (this.$el.dataset.overflow || this.$el.closest('.table-responsive')) {
+      // Modifier "Same width" Popper reference
+      const sameWidth = {
+        name: 'sameWidth',
+        enabled: true,
+        phase: 'beforeWrite',
+        requires: ['computeStyles'],
+        fn: ({state}) => {
+          state.styles.popper.width = `${state.rects.reference.width}px`
+        },
+        effect: ({state}) => {
+          state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`
+        },
       }
+
+      // Create Popper on showDropdown event
+      this.choicesInstance.passedElement.element.addEventListener(
+        'showDropdown',
+        event => {
+          createPopper(
+            this.choicesInstance.containerInner.element,
+            this.choicesInstance.dropdown.element,
+            {
+              placement: 'bottom',
+              strategy: 'fixed',
+              modifiers: [sameWidth],
+            },
+          )
+        },
+        false,
+      )
+    }
+
+    const form = this.$el.closest('form')
+    if (form !== null) {
+      form.addEventListener('reset', () => {
+        this.choicesInstance.clearChoices()
+        this.choicesInstance.setChoices(items)
+        const activeItem = items.filter(item => item.selected) ?? items[0]
+        this.choicesInstance.setChoiceByValue(activeItem)
+      })
+    }
+
+    if (asyncUrl) {
+      this.searchTerms.addEventListener(
+        'input',
+        debounce(event => this.asyncSearch(), 300),
+        false,
+      )
+    }
+
+    if (this.removeItemButton) {
+      this.$el.parentElement.addEventListener('click', event => {
+        if (event.target.classList.contains('choices__button--remove')) {
+          const choiceElement = event.target.closest('.choices__item')
+          const id = choiceElement.getAttribute('data-id')
+
+          if (
+            this.choicesInstance._isSelectOneElement &&
+            this.choicesInstance._store.placeholderChoice
+          ) {
+            this.choicesInstance.removeActiveItems(id)
+
+            this.choicesInstance._triggerChange(this.choicesInstance._store.placeholderChoice.value)
+
+            this.choicesInstance._selectPlaceholderChoice(
+              this.choicesInstance._store.placeholderChoice,
+            )
+          } else {
+            const {items} = this.choicesInstance._store
+
+            const itemToRemove = id && items.find(item => item.id === parseInt(id, 10))
+
+            if (!itemToRemove) {
+              return
+            }
+
+            this.choicesInstance._removeItem(itemToRemove)
+            this.choicesInstance._triggerChange(itemToRemove.value)
+          }
+        }
+      })
+    }
   },
   async asyncSearch() {
     const query = this.searchTerms.value ?? null
