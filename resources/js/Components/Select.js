@@ -316,10 +316,10 @@ export default (asyncUrl = '') => ({
       options = await this.fromUrl(url.toString() + (formQuery.length ? '&' + formQuery : ''))
 
       const mappedOptions = options.map(item => {
-        const { properties, ...other } = item
+        const {properties, ...other} = item
         return {
           ...other,
-          customProperties: properties
+          customProperties: properties,
         }
       })
 
