@@ -35,7 +35,7 @@ trait TableStates
 
     protected ?string $reorderableUrl = null;
 
-    protected string $reorderableKey = 'id';
+    protected ?string $reorderableKey = null;
 
     protected ?string $reorderableGroup = null;
 
@@ -164,7 +164,7 @@ trait TableStates
 
     public function reorderable(
         ?string $url = null,
-        string $key = 'id',
+        ?string $key = null,
         ?string $group = null
     ): static {
         $this->isReorderable = true;

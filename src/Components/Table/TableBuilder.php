@@ -89,6 +89,9 @@ final class TableBuilder extends IterableComponent implements
         $this->footAttributes = new MoonShineComponentAttributeBag();
     }
 
+    /**
+     * @throws Throwable
+     */
     protected function prepareFields(): FieldsContract
     {
         $fields = $this->getFields();
@@ -107,7 +110,7 @@ final class TableBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(mixed $data, int $row, self $table): array  $callback
+     * @param  Closure(?DataWrapperContract $data, int $row, self $table): array  $callback
      */
     public function trAttributes(Closure $callback): self
     {
@@ -116,7 +119,7 @@ final class TableBuilder extends IterableComponent implements
         return $this;
     }
 
-    public function getTrAttributes(mixed $data, int $row): array
+    public function getTrAttributes(?DataWrapperContract $data, int $row): array
     {
         return collect($this->trAttributes)
             /** @phpstan-ignore-next-line  */
@@ -125,7 +128,7 @@ final class TableBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(mixed $data, int $row, int $cell, self $table): array  $callback
+     * @param  Closure(?DataWrapperContract $data, int $row, int $cell, self $table): array  $callback
      */
     public function tdAttributes(Closure $callback): self
     {
@@ -134,7 +137,7 @@ final class TableBuilder extends IterableComponent implements
         return $this;
     }
 
-    public function getTdAttributes(mixed $data, int $row, int $cell): array
+    public function getTdAttributes(?DataWrapperContract $data, int $row, int $cell): array
     {
         return collect($this->tdAttributes)
             /** @phpstan-ignore-next-line  */
@@ -376,8 +379,12 @@ final class TableBuilder extends IterableComponent implements
 
     public function getRowReorderAttributes(): Closure
     {
-        return fn (mixed $data, int $index): array => [
-            'data-id' => data_get($data, $this->reorderableKey ?? 'id', $index),
+        $default = fn(DataWrapperContract $data, int $index) => \is_null($this->reorderableKey)
+            ? $data->getKey()
+            : data_get($data->getOriginal(), $this->reorderableKey, $index);
+
+        return static fn (?DataWrapperContract $data, int $index): array => [
+            'data-id' => \is_null($data) ? $index : $default($data, $index),
         ];
     }
 
