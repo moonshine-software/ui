@@ -379,7 +379,7 @@ final class TableBuilder extends IterableComponent implements
 
     public function getRowReorderAttributes(): Closure
     {
-        $default = fn(DataWrapperContract $data, int $index) => \is_null($this->reorderableKey)
+        $default = fn (DataWrapperContract $data, int $index) => \is_null($this->reorderableKey)
             ? $data->getKey()
             : data_get($data->getOriginal(), $this->reorderableKey, $index);
 
