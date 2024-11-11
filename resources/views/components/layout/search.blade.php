@@ -5,11 +5,10 @@
     'placeholder' => '',
 ])
 @if($enabled)
-    <div {{ $attributes->class(['search']) }} x-data="{ toggleSearch: false }">
+    <div {{ $attributes->class(['search']) }}>
         <form action="{{ $action }}"
               x-ref="searchForm"
-              class="search-form hidden md:block"
-              :class="toggleSearch && '_is-toggled'"
+              class="search-form"
         >
             <x-moonshine::form.input
                 x-data="{}"
@@ -18,33 +17,17 @@
                 @keyup.ctrl.k.window="$refs.searchInput.focus()"
                 @keyup.ctrl.period.window="$refs.searchInput.focus()"
                 type="search"
-                class="search-form-field"
+                class="search-form-field form-input"
                 value="{{ $value }}"
                 placeholder="{{ $placeholder }}"
             />
 
-            <x-moonshine::icon
-                @click.prevent="$refs.searchForm.submit()"
-                class="search-form-icon"
-                icon="magnifying-glass"
-                size="6"
-            />
-
-            <button @click.prevent="toggleSearch = ! toggleSearch"
-                    class="search-form-close block md:hidden"
-                    type="button"
-            >
-                <x-moonshine::icon icon="x-mark" />
+            <button class="search-form-submit" type="submit">
+                <x-moonshine::icon
+                    icon="magnifying-glass"
+                    size="6"
+                />
             </button>
         </form>
-
-        <div class="inline-flex items-center md:hidden">
-            <button @click.prevent="toggleSearch = ! toggleSearch"
-                    type="button"
-                    class="text-slate-600 hover:text-secondary"
-            >
-                <x-moonshine::icon icon="magnifying-glass" size="6" />
-            </button>
-        </div>
     </div>
 @endif
