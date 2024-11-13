@@ -105,6 +105,10 @@ export default (asyncUrl = '') => ({
       itemSelectText: translates.choices.item_select,
       uniqueItemText: translates.choices.unique_item,
       customAddItemText: translates.choices.custom_add_item,
+      fuseOptions: {
+        threshold: 0,
+        ignoreLocation: true
+      },
       addItemText: value => {
         return translates.choices.add_item.replace(':value', `<b>${value}</b>`)
       },
