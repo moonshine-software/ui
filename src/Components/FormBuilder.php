@@ -245,12 +245,19 @@ final class FormBuilder extends MoonShineComponent implements
         return $this->method;
     }
 
-    public function dispatchEvent(array|string $events): self
+    public function dispatchEvent(array|string $events, array $exclude = [], bool $withoutPayload = false): self
     {
+        $excludes = $withoutPayload ? '*' : implode(',', [
+            ...$exclude,
+            '_component_name',
+            '_token',
+            '_method'
+        ]);
+
         return $this->customAttributes([
             '@submit.prevent' => "dispatchEvents(
                 `" . AlpineJs::prepareEvents($events) . "`,
-                `_component_name,_token,_method`
+                `$excludes`
             )",
         ]);
     }

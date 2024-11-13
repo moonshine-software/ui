@@ -172,16 +172,23 @@ class ActionButton extends MoonShineComponent implements
         return $this;
     }
 
-    public function dispatchEvent(array|string $events): static
+    public function dispatchEvent(array|string $events, array $exclude = [], bool $withoutPayload = false): static
     {
         if (! $this->getAttributes()->has('x-data')) {
             $this->xDataMethod('actionButton');
         }
 
+        $excludes = $withoutPayload ? '*' : implode(',', [
+            ...$exclude,
+            '_component_name',
+            '_token',
+            '_method'
+        ]);
+
         return $this->onClick(
             static fn (): string => "dispatchEvents(
                  `" . AlpineJs::prepareEvents($events) . "`,
-                 `_component_name,_token,_method`
+                 `$excludes`
              )",
             'prevent'
         );
