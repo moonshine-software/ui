@@ -328,10 +328,10 @@ export default (asyncUrl = '') => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const form = this.$el.closest('form')
 
-    if(exclude !== '*') {
-      extra['_data'] = form ? formToJSON(
-        prepareFormData(new FormData(form), exclude)
-      ) : {value: this.$el.value}
+    if (exclude !== '*') {
+      extra['_data'] = form
+        ? formToJSON(prepareFormData(new FormData(form), exclude))
+        : {value: this.$el.value}
     }
 
     de(componentEvent, '', this, extra)

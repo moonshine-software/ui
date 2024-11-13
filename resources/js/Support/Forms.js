@@ -131,7 +131,8 @@ export function crudFormQuery(formElements = null) {
 }
 
 export function prepareFormData(formData, exclude = null) {
-  const maxLength = 50, filtered = new FormData()
+  const maxLength = 50,
+    filtered = new FormData()
   for (const [key, value] of formData) {
     if (value.length <= maxLength) {
       filtered.append(key, value)
@@ -150,7 +151,8 @@ export function prepareFormData(formData, exclude = null) {
 }
 
 export function prepareFormQueryString(formData, exclude = null) {
-  const maxLength = 50, filtered = new FormData()
+  const maxLength = 50,
+    filtered = new FormData()
 
   for (const [key, value] of formData) {
     if (value.length <= maxLength) {

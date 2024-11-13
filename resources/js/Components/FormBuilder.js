@@ -242,9 +242,8 @@ export default (name = '', initData = {}, reactive = {}) => ({
   },
 
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
-    extra['_data'] = exclude === '*' ? {} : formToJSON(
-      prepareFormData(new FormData(this.$el), exclude)
-    )
+    extra['_data'] =
+      exclude === '*' ? {} : formToJSON(prepareFormData(new FormData(this.$el), exclude))
 
     de(componentEvent, '', this, extra)
   },
