@@ -125,7 +125,7 @@ body.theme-minimalistic {
       }
 
       &-dropdown {
-        @apply mt-1 border border-dark-200 bg-dark-50 dark:bg-dark-700;
+        @apply mb-1 mt-1 border border-solid border-dark-200 bg-dark-50 pb-0 dark:bg-dark-700;
 
         .menu-inner-divider {
           @apply before:bg-dark-200;
@@ -134,6 +134,12 @@ body.theme-minimalistic {
         .menu-inner-link,
         .menu-inner-button {
           @apply px-1 py-1 text-3xs;
+        }
+
+        .menu-inner-dropdown {
+          .menu-inner-dropdown {
+            @apply !border-l-0 !border-r-0;
+          }
         }
       }
     }
@@ -197,7 +203,7 @@ body.theme-minimalistic {
       }
 
       &-dropdown {
-        @apply mt-1 border border-dark-200 bg-dark-50 shadow-none dark:bg-dark-700;
+        @apply mt-1 border border-solid border-dark-200 bg-dark-50 pb-1 shadow-none dark:bg-dark-700;
 
         .menu-inner-divider {
           @apply pl-0 before:bg-dark-300 dark:before:bg-dark-200;
@@ -206,6 +212,12 @@ body.theme-minimalistic {
         .menu-inner-link,
         .menu-inner-button {
           @apply px-1.5 py-1 text-3xs;
+        }
+
+        .menu-inner-dropdown {
+          .menu-inner-dropdown {
+            @apply !border-l-0 !border-r-0;
+          }
         }
       }
     }

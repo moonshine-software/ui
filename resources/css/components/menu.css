@@ -12,25 +12,42 @@
 
   &._is-minimized {
     @apply lg:pointer-events-auto lg:!w-[4.75rem];
+
     .menu-heading {
       @apply lg:flex-col lg:px-0;
     }
+
+    .menu-heading-actions {
+      @apply lg:flex-col lg:gap-y-2;
+    }
+
+    .menu-inner-link,
+    .menu-inner-button {
+      @apply justify-center;
+    }
+
     .menu-inner-item-char {
       @apply block;
     }
+
     .menu-inner-text,
     .menu-inner-arrow,
     .menu-inner-counter {
       @apply lg:pointer-events-none lg:absolute lg:opacity-0;
     }
+
     .menu-inner-counter {
       @apply lg:absolute lg:-right-2 lg:top-0.5 lg:max-w-[64px] lg:scale-90;
     }
+
     .menu-inner-dropdown {
+      @apply mb-2 p-[1px];
+
       .menu-inner-counter {
         @apply lg:right-0 lg:top-0.5 lg:max-w-[48px];
       }
     }
+
     .menu-inner-divider {
       > span {
         @apply hidden;
@@ -38,6 +55,7 @@
     }
     .profile {
       @apply lg:flex-col;
+
       &-info {
         @apply lg:hidden;
       }
@@ -169,7 +187,7 @@
         }
 
         .menu-inner-dropdown {
-          @apply border border-dark-200 bg-white/[0.0175] dark:bg-black/10;
+          @apply mb-2 border-b border-t border-dashed border-slate-500 px-0;
         }
       }
 
@@ -284,7 +302,7 @@
 
       /* Dropdown Menu */
       &-dropdown {
-        @apply flex flex-col gap-y-1 rounded-lg border border-dark-300 bg-menu-dropdown-bg px-1 py-1.5 shadow-lg md:min-w-[190px] lg:max-h-72 lg:min-w-[240px] lg:overflow-y-auto;
+        @apply fixed z-5 flex flex-col gap-y-1 rounded-lg border border-dark-300 bg-menu-dropdown-bg px-1 py-1.5 shadow-lg md:min-w-[190px] lg:max-h-72 lg:min-w-[240px] lg:overflow-y-auto;
 
         .menu-inner-link,
         .menu-inner-button {
@@ -312,7 +330,7 @@
         }
 
         .menu-inner-dropdown {
-          @apply max-h-full;
+          @apply static mt-1 max-h-full border-b border-l-0 border-r-0 border-t border-dashed border-slate-500 px-0 shadow-none;
         }
       }
 
