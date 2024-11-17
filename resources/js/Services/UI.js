@@ -11,6 +11,10 @@ export class UI {
   }
 
   toggleModal(name) {
-    dispatchEvent(new CustomEvent(`modal_toggled-${name}`))
+    dispatchEvent(new CustomEvent(`modal_toggled:${name}`))
+  }
+
+  toggleOffCanvas(name) {
+    dispatchEvent(new CustomEvent(`off_canvas_toggled:${name}`))
   }
 }

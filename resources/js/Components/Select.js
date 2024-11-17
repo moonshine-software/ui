@@ -1,7 +1,7 @@
 import Choices from 'choices.js'
 import {createPopper} from '@popperjs/core'
 import debounce from '../Support/Debounce.js'
-import {crudFormQuery} from '../Support/Forms.js'
+import {crudFormQuery, prepareFormData} from '../Support/Forms.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {formToJSON} from 'axios'
 
@@ -105,6 +105,10 @@ export default (asyncUrl = '') => ({
       itemSelectText: translates.choices.item_select,
       uniqueItemText: translates.choices.unique_item,
       customAddItemText: translates.choices.custom_add_item,
+      fuseOptions: {
+        threshold: 0,
+        ignoreLocation: true,
+      },
       addItemText: value => {
         return translates.choices.add_item.replace(':value', `<b>${value}</b>`)
       },
@@ -327,7 +331,12 @@ export default (asyncUrl = '') => ({
   },
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const form = this.$el.closest('form')
-    extra['_data'] = form ? formToJSON(form) : {value: this.$el.value}
+
+    if (exclude !== '*') {
+      extra['_data'] = form
+        ? formToJSON(prepareFormData(new FormData(form), exclude))
+        : {value: this.$el.value}
+    }
 
     de(componentEvent, '', this, extra)
   },

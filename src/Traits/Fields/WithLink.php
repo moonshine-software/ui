@@ -25,7 +25,7 @@ trait WithLink
         return $this->isLink;
     }
 
-    public function getLinkValue(mixed $value = null): string|Closure
+    public function getLinkValue(mixed $value = null): string
     {
         return value($this->linkValue, $value ?? $this->toValue(withDefault: false), $this);
     }
@@ -50,6 +50,10 @@ trait WithLink
         return $this->withoutIcon;
     }
 
+    /**
+     * @param  string|(Closure(string $value, static $ctx): string)  $link
+     * @param  string|(Closure(string $value, static $ctx): string)  $name
+     */
     public function link(
         string|Closure $link,
         string|Closure $name = '',

@@ -129,3 +129,44 @@ export function crudFormQuery(formElements = null) {
     .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
     .join('&')
 }
+
+export function prepareFormData(formData, exclude = null) {
+  const maxLength = 50,
+    filtered = new FormData()
+  for (const [key, value] of formData) {
+    if (value.length <= maxLength) {
+      filtered.append(key, value)
+    }
+  }
+
+  if (exclude !== null) {
+    const excludes = exclude.split(',')
+
+    excludes.forEach(function (excludeName) {
+      filtered.delete(excludeName)
+    })
+  }
+
+  return filtered
+}
+
+export function prepareFormQueryString(formData, exclude = null) {
+  const maxLength = 50,
+    filtered = new FormData()
+
+  for (const [key, value] of formData) {
+    if (value.length <= maxLength) {
+      filtered.append(key, value)
+    }
+  }
+
+  if (exclude !== null) {
+    const excludes = exclude.split(',')
+
+    excludes.forEach(function (excludeName) {
+      filtered.delete(excludeName)
+    })
+  }
+
+  return new URLSearchParams(filtered).toString()
+}

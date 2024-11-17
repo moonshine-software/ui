@@ -86,12 +86,19 @@ class Select extends Field implements
         return $this->customAttributes(['data-async-on-init' => true]);
     }
 
-    public function onChangeEvent(array|string $events): static
+    public function onChangeEvent(array|string $events, array $exclude = [], bool $withoutPayload = false): static
     {
+        $excludes = $withoutPayload ? '*' : implode(',', [
+            ...$exclude,
+            '_component_name',
+            '_token',
+            '_method',
+        ]);
+
         return $this->customAttributes([
             '@change' => "dispatchEvents(
                  `" . AlpineJs::prepareEvents($events) . "`,
-                 `_component_name,_token,_method`
+                 `$excludes`
              )",
         ]);
     }

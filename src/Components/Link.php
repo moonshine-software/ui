@@ -32,10 +32,6 @@ final class Link extends MoonShineComponent implements HasIconContract, HasLabel
         parent::__construct();
 
         $this->setLabel($label);
-
-        $this->customAttributes([
-            'href' => $this->href,
-        ]);
     }
 
     public function button(): self
@@ -65,6 +61,13 @@ final class Link extends MoonShineComponent implements HasIconContract, HasLabel
     {
         return 'moonshine::components.link-'
             . ($this->isButton ? 'button' : 'native');
+    }
+
+    protected function prepareBeforeRender(): void
+    {
+        $this->customAttributes([
+            'href' => value($this->href, $this),
+        ]);
     }
 
     /**

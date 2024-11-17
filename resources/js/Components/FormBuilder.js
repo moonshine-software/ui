@@ -1,5 +1,11 @@
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
-import {addInvalidListener, containsAttribute, isTextInput} from '../Support/Forms.js'
+import {
+  addInvalidListener,
+  containsAttribute,
+  isTextInput,
+  prepareFormData,
+  prepareFormQueryString,
+} from '../Support/Forms.js'
 import request, {afterResponse, initCallback} from '../Request/Core.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {getInputs, showWhenChange, showWhenVisibilityChange} from '../Support/ShowWhen.js'
@@ -236,7 +242,8 @@ export default (name = '', initData = {}, reactive = {}) => ({
   },
 
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
-    extra['_data'] = formToJSON(new FormData(this.$el))
+    extra['_data'] =
+      exclude === '*' ? {} : formToJSON(prepareFormData(new FormData(this.$el), exclude))
 
     de(componentEvent, '', this, extra)
   },
@@ -292,27 +299,6 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
   getInputs,
 })
-
-function prepareFormQueryString(formData, exclude = null) {
-  const maxLength = 50
-  const filtered = new FormData()
-
-  for (const [key, value] of formData) {
-    if (value.length <= maxLength) {
-      filtered.append(key, value)
-    }
-  }
-
-  if (exclude !== null) {
-    const excludes = exclude.split(',')
-
-    excludes.forEach(function (excludeName) {
-      filtered.delete(excludeName)
-    })
-  }
-
-  return new URLSearchParams(filtered).toString()
-}
 
 function submitState(form, loading = true, reset = false) {
   if (!loading) {
