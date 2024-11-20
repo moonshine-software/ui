@@ -2,14 +2,10 @@
     'components' => [],
 ])
 <!-- Menu horizontal -->
-<aside {{ $attributes->merge(['class' => 'layout-menu-horizontal']) }}
-       :class="asideMenuOpen && '_is-opened'"
-       x-data="{minimizedMenu: false}"
->
+<aside {{ $attributes->merge(['class' => 'layout-menu-horizontal']) }}>
     <x-moonshine::components
         :components="$components"
     />
-
     {{ $slot ?? '' }}
 </aside>
 <!-- END: Menu horizontal -->

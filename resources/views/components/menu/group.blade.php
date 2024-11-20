@@ -6,28 +6,21 @@
     'isActive' => false,
     'top' => false,
 ])
-<li {{ $attributes->class(['menu-inner-item', 'dropdown' => $top]) }}
+<li {{ $attributes->class(['menu-inner-item']) }}
     @if($top)
-        x-data="dropdown"
-        x-ref="dropdownEl"
-        @click.outside="closeDropdown"
+        x-data="{ dropdown: false }"
+        @click.outside="dropdown = false"
         data-dropdown-placement="bottom-start"
     @else
         x-data="{ dropdown: {{ $isActive ? 'true' : 'false' }} }"
     @endif
 >
     <button
-        @if($top)
-            @click="toggleDropdown"
-            class="menu-inner-button dropdown-btn"
-            :class="open && '_is-active'"
-        @else
-            x-data="navTooltip"
-            @mouseenter="toggleTooltip()"
-            @click.prevent="dropdown = ! dropdown"
-            class="menu-inner-button"
-            :class="dropdown && '_is-active'"
-        @endif
+        x-data="navTooltip"
+        @mouseenter="toggleTooltip()"
+        @click.prevent="dropdown = ! dropdown"
+        class="menu-inner-button"
+        :class="dropdown && '_is-active'"
         type="button"
     >
         @if($icon)
@@ -49,20 +42,12 @@
     </button>
 
     @if($items)
-        @if($top)
-            <x-moonshine::menu
-                :dropdown="true"
-                :items="$items"
-                class="dropdown-body"
-            />
-        @else
-            <x-moonshine::menu
-                :dropdown="true"
-                :items="$items"
-                x-transition.top=""
-                style="display: none"
-                x-show="dropdown"
-            />
-        @endif
+        <x-moonshine::menu
+            :dropdown="true"
+            :items="$items"
+            x-transition.top=""
+            style="display: none"
+            x-show="dropdown"
+        />
     @endif
 </li>

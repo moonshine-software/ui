@@ -72,7 +72,7 @@ body.theme-minimalistic {
     }
 
     .menu {
-      @apply overflow-y-scroll pl-4 pr-2 md:px-6 lg:pl-0 lg:pr-5;
+      @apply overflow-y-scroll px-4 md:px-6 lg:pl-0 lg:pr-5;
     }
 
     .menu-heading {

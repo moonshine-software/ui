@@ -1,9 +1,6 @@
-@props([
-    'top' => false,
-])
 <div class="theme-switcher">
     <button @click.prevent="$dispatch('darkMode:toggle')"
-            {{ $attributes->class(['theme-switcher-btn' => !$top, 'menu-mode-btn' => $top]) }}
+            class="theme-switcher-btn"
             type="button"
             title="Toggle Dark/Light Mode"
     >

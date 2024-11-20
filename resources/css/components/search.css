@@ -3,10 +3,10 @@
   @apply relative flex items-center;
 
   &-form {
-    @apply relative h-12;
+    @apply relative h-12 w-full overflow-hidden xl:max-w-[16rem];
 
     &-field {
-      @apply h-full w-40 rounded-full border-transparent bg-gray-200/50 pr-10 ring-0 transition-all placeholder:text-3xs placeholder:font-normal placeholder:text-slate-600 focus:border-gray-300 focus:bg-white dark:bg-dark-600 dark:placeholder:text-slate-500 focus:dark:border-dark-200 xl:w-60;
+      @apply h-full w-full rounded-full border-transparent bg-gray-200 pr-10 ring-0 transition-all placeholder:text-3xs placeholder:font-normal placeholder:text-slate-600 focus:border-gray-300 focus:bg-white dark:bg-dark-600 dark:placeholder:text-slate-500 focus:dark:border-dark-200;
     }
 
     &-submit {
