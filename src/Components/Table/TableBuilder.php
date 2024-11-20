@@ -225,7 +225,7 @@ final class TableBuilder extends IterableComponent implements
             );
         }
 
-        $index = $this->getHeadRows()->count();
+        $index = 0;
 
         foreach ($this->getItems() as $data) {
             $casted = $this->castData($data);
