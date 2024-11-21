@@ -14,7 +14,7 @@
     {{ $slot ?? '' }}
 
     @if($collapsed)
-        <div {{ $collapseAttributes->merge(['class' => 'border-t border-dark-200']) }}>
+        <div {{ $collapseAttributes->merge(['class' => 'menu-bottom']) }}>
             <ul class="menu-inner mt-2">
                 <li class="menu-inner-item hidden xl:block">
                     <button

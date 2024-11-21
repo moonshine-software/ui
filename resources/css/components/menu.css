@@ -111,7 +111,7 @@
         &._is-active {
           > .menu-inner-link,
           > .menu-inner-button {
-            @apply rounded-lg bg-menu-current-bg font-medium text-white opacity-100 hover:text-menu-current-color dark:font-normal lg:bg-slate-50 lg:text-black lg:hover:text-inherit dark:lg:bg-dark-300 dark:lg:text-white;
+            @apply rounded-lg bg-slate-50 font-medium text-black opacity-100 dark:bg-dark-300 dark:font-normal dark:text-white lg:text-black lg:hover:text-inherit dark:lg:text-white;
           }
         }
       }
@@ -214,12 +214,25 @@
         }
       }
     }
+
+    /* Bottom menu */
+    &-bottom {
+      @apply hidden pr-5 lg:block;
+
+      > *:first-child {
+        @apply border-t border-dark-200 pt-2;
+      }
+    }
+  }
+
+  .profile {
+    @apply flex-row lg:flex-col xl:flex-row;
   }
 }
 
 /* Aside horizontal navigation */
 .layout-menu-horizontal {
-  @apply sticky inset-x-0 top-0 z-[100] flex h-[4.5rem] items-center gap-x-5 bg-body/80 px-6 transition-colors md:px-10 lg:h-24;
+  @apply sticky inset-x-0 top-0 z-[100] flex h-[4.5rem] items-center gap-x-5 overflow-x-auto bg-body/80 px-6 transition-colors md:px-10 lg:h-24;
 
   .menu-inner-item-char {
     @apply hidden;

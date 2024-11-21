@@ -1,6 +1,6 @@
 /* User Profile  */
 .profile {
-  @apply flex flex-row items-center gap-x-2 gap-y-4 lg:flex-col xl:flex-row;
+  @apply flex items-center gap-x-2 gap-y-4  xl:flex-row;
 
   &-main {
     @apply flex min-w-0 grow items-center gap-x-3 text-xs text-inherit;
