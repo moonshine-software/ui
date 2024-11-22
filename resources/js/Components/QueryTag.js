@@ -1,5 +1,7 @@
+import {prepareQueryParams} from '../Support/URLs.js'
+
 export default (activeClass, componentEvent) => ({
-  queryTagRequest(data) {
+  request(data) {
     const queryParams = new URLSearchParams(window.location.search)
 
     if (this.$root.classList.contains(activeClass)) {
@@ -13,19 +15,11 @@ export default (activeClass, componentEvent) => ({
     }
 
     this.$dispatch(componentEvent.toLowerCase(), {
-      queryTag: this.prepareQueryString(queryParams, '_component_name,_token,_method,page'),
+      queryTag: prepareQueryParams(
+        queryParams,
+        '_component_name,_token,_method,page'
+      ).toString(),
     })
-  },
-  prepareQueryString(queryParams, exclude = null) {
-    if (exclude !== null) {
-      const excludes = exclude.split(',')
-
-      excludes.forEach(function (excludeName) {
-        queryParams.delete(excludeName)
-      })
-    }
-
-    return new URLSearchParams(queryParams).toString()
   },
   disableQueryTags() {
     document.querySelectorAll('.js-query-tag-button').forEach(function (element) {

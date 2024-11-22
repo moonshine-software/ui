@@ -1,4 +1,5 @@
 import {inputFieldName, inputGetValue} from './ShowWhen.js'
+import {excludeFromParams, prepareQueryParams} from './URLs.js'
 
 export function filterAttributeStartsWith(data, startsWith) {
   const filtered = {}
@@ -131,28 +132,18 @@ export function crudFormQuery(formElements = null) {
 }
 
 export function prepareFormData(formData, exclude = null) {
-  const maxLength = 50,
-    filtered = new FormData()
-  for (const [key, value] of formData) {
-    if (value.length <= maxLength) {
-      filtered.append(key, value)
-    }
-  }
-
-  if (exclude !== null) {
-    const excludes = exclude.split(',')
-
-    excludes.forEach(function (excludeName) {
-      filtered.delete(excludeName)
-    })
-  }
-
-  return filtered
+  return excludeFromParams(limitFormDataParams(formData), exclude)
 }
 
 export function prepareFormQueryString(formData, exclude = null) {
-  const maxLength = 50,
-    filtered = new FormData()
+  return prepareQueryParams(
+    limitFormDataParams(formData),
+    exclude
+  ).toString()
+}
+
+export function limitFormDataParams(formData, maxLength = 50) {
+  const filtered = new FormData()
 
   for (const [key, value] of formData) {
     if (value.length <= maxLength) {
@@ -160,13 +151,5 @@ export function prepareFormQueryString(formData, exclude = null) {
     }
   }
 
-  if (exclude !== null) {
-    const excludes = exclude.split(',')
-
-    excludes.forEach(function (excludeName) {
-      filtered.delete(excludeName)
-    })
-  }
-
-  return new URLSearchParams(filtered).toString()
+  return filtered
 }

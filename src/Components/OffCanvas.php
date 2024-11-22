@@ -78,6 +78,11 @@ final class OffCanvas extends AbstractWithComponents
         return $this->customAttributes($data);
     }
 
+    public function alwaysLoad(): self
+    {
+        return $this->customAttributes(['data-always-load' => true]);
+    }
+
     /**
      * @return array<string, mixed>
      */

@@ -2,15 +2,18 @@ import selectorsParams from '../Support/SelectorsParams.js'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import request, {afterResponse, beforeRequest, initCallback} from '../Request/Core.js'
 import {getQueryString} from '../Support/Forms.js'
+import {mergeURLString} from '../Support/URLs.js'
 
 export default (asyncUpdateRoute = '') => ({
   asyncUpdateRoute: asyncUpdateRoute,
   withParams: '',
+  withQueryParams: false,
   loading: false,
 
   init() {
     this.loading = false
     this.withParams = this.$el?.dataset?.asyncWithParams
+    this.withQueryParams = this.$el?.dataset?.asyncWithQueryParams ?? false
   },
   async fragmentUpdate(events, callback = {}) {
     if (this.asyncUpdateRoute === '') {
@@ -29,10 +32,22 @@ export default (asyncUpdateRoute = '') => ({
 
     const t = this
 
-    const query = new URLSearchParams(body).toString()
+    const bodyParams = new URLSearchParams(body)
 
-    t.asyncUpdateRoute += t.asyncUpdateRoute.includes('?') ? '&' + query : '?' + query
-    t.asyncUpdateRoute += getQueryString(this.$event.detail)
+    if(this.withQueryParams) {
+      const queryParams = new URLSearchParams(window.location.search)
+      for (const [key, value] of queryParams) {
+        bodyParams.append(key, value)
+      }
+    }
+
+    t.asyncUpdateRoute = mergeURLString(t.asyncUpdateRoute, bodyParams.toString())
+
+    const eventDetailQuery = getQueryString(this.$event.detail)
+
+    if(eventDetailQuery) {
+      t.asyncUpdateRoute = mergeURLString(t.asyncUpdateRoute, eventDetailQuery)
+    }
 
     let stopLoading = function (data, t) {
       t.loading = false
