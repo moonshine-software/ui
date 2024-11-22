@@ -279,6 +279,13 @@ class ActionButton extends MoonShineComponent implements
         );
     }
 
+    public function withQueryParams(): static
+    {
+        return $this->customAttributes(
+            AlpineJs::asyncWithQueryParamsAttributes()
+        );
+    }
+
     public function hasComponent(): bool
     {
         return $this->isInOffCanvas() || $this->isInModal();

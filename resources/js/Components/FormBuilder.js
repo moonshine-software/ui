@@ -231,7 +231,6 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
     return false
   },
-
   showResetButton() {
     const form = this.$el
 

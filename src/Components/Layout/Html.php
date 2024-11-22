@@ -38,7 +38,7 @@ final class Html extends AbstractWithComponents
     {
         if ($this->withAlpineJs) {
             $this->customAttributes([
-                'x-data' => '',
+                'x-data' => 'global',
             ]);
         }
 

@@ -7,6 +7,7 @@ import persist from '@alpinejs/persist'
 import mask from '@alpinejs/mask'
 
 // Alpine components
+import global from './Components/Global'
 import formBuilder from './Components/FormBuilder'
 import tableBuilder from './Components/TableBuilder'
 import cardsBuilder from './Components/CardsBuilder'
@@ -20,13 +21,10 @@ import toasts from './Components/Toast'
 import tooltip from './Components/Tooltip'
 import navTooltip from './Components/NavTooltip'
 import popovers from './Components/Popover'
-import pivot from './Components/Pivot'
-import asyncSearch from './Components/AsyncSearch'
-import interactsWithAsync from './Components/InteractsWithAsync'
+import belongsToMany from './Components/BelongsToMany'
 import range from './Components/Range'
-import tree from './Components/Tree'
 import sortable from './Components/Sortable'
-import asyncLink from './Components/AsyncLink'
+import queryTag from './Components/QueryTag'
 import fragment from './Components/Fragment'
 import tabs from './Components/Tabs.js'
 import collapse from './Components/Collapse.js'
@@ -41,10 +39,11 @@ const alpineExists = !!window.Alpine
 const Alpine = alpineExists ? window.Alpine : AlpineMS
 
 Alpine.data('formBuilder', formBuilder)
+Alpine.data('global', global)
 Alpine.data('tableBuilder', tableBuilder)
 Alpine.data('cardsBuilder', cardsBuilder)
 Alpine.data('carousel', carousel)
-Alpine.data('asyncLink', asyncLink)
+Alpine.data('queryTag', queryTag)
 Alpine.data('actionButton', actionButton)
 Alpine.data('dropdown', dropdown)
 Alpine.data('modal', modal)
@@ -55,11 +54,8 @@ Alpine.data('toasts', toasts)
 Alpine.data('tooltip', tooltip)
 Alpine.data('navTooltip', navTooltip)
 Alpine.data('popover', popovers)
-Alpine.data('pivot', pivot)
-Alpine.data('asyncSearch', asyncSearch)
-Alpine.data('interactsWithAsync', interactsWithAsync)
+Alpine.data('belongsToMany', belongsToMany)
 Alpine.data('range', range)
-Alpine.data('tree', tree)
 Alpine.data('fragment', fragment)
 Alpine.data('tabs', tabs)
 Alpine.data('collapse', collapse)
