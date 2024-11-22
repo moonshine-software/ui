@@ -15,10 +15,7 @@ export default (activeClass, componentEvent) => ({
     }
 
     this.$dispatch(componentEvent.toLowerCase(), {
-      queryTag: prepareQueryParams(
-        queryParams,
-        '_component_name,_token,_method,page'
-      ).toString(),
+      queryTag: prepareQueryParams(queryParams, '_component_name,_token,_method,page').toString(),
     })
   },
   disableQueryTags() {

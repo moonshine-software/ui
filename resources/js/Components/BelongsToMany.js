@@ -12,12 +12,12 @@ export default () => ({
       const formQuery = crudFormQuery(form.querySelectorAll('[name]'))
 
       fetch(route + query + (formQuery.length ? '&' + formQuery : ''))
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        this.match = data
-      })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          this.match = data
+        })
     }
   },
   select(item) {
@@ -42,8 +42,8 @@ export default () => ({
   tree(checked = {}) {
     checked.forEach(value => {
       this.$el
-      .querySelectorAll('input[value="' + value + '"]')
-      .forEach(input => (input.checked = true))
+        .querySelectorAll('input[value="' + value + '"]')
+        .forEach(input => (input.checked = true))
     })
   },
   pivot() {

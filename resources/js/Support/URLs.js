@@ -23,9 +23,7 @@ export function limitQueryParams(params, maxLength = 50) {
 }
 
 export function prepareQueryParams(params, exclude = null) {
-  return new URLSearchParams(
-    excludeFromParams(params, exclude)
-  )
+  return new URLSearchParams(excludeFromParams(params, exclude))
 }
 
 export function mergeURLString(url, merge) {

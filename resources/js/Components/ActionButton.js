@@ -35,9 +35,10 @@ export default () => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const url = new URL(this.$el.href)
 
-    extra['_data'] = exclude === '*' ? {} : Object.fromEntries(
-      prepareQueryParams(new URLSearchParams(url.search), exclude)
-    )
+    extra['_data'] =
+      exclude === '*'
+        ? {}
+        : Object.fromEntries(prepareQueryParams(new URLSearchParams(url.search), exclude))
 
     de(componentEvent, '', this, extra)
   },
@@ -57,7 +58,7 @@ export default () => ({
 
     let body = selectorsParams(this.withParams)
 
-    if(this.withQueryParams) {
+    if (this.withQueryParams) {
       const queryParams = new URLSearchParams(window.location.search)
 
       this.url = mergeURLString(this.url, queryParams)

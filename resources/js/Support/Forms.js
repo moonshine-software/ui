@@ -136,10 +136,7 @@ export function prepareFormData(formData, exclude = null) {
 }
 
 export function prepareFormQueryString(formData, exclude = null) {
-  return prepareQueryParams(
-    limitFormDataParams(formData),
-    exclude
-  ).toString()
+  return prepareQueryParams(limitFormDataParams(formData), exclude).toString()
 }
 
 export function limitFormDataParams(formData, maxLength = 50) {

@@ -7,8 +7,7 @@ export default () => ({
       value = this.$el.value
     }
 
-    if (value === null &&
-      (this.$el.type === 'checkbox' || this.$el.type === 'radio')) {
+    if (value === null && (this.$el.type === 'checkbox' || this.$el.type === 'radio')) {
       value = this.$el.checked
     }
 

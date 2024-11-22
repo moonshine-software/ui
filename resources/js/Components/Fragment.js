@@ -34,7 +34,7 @@ export default (asyncUpdateRoute = '') => ({
 
     const bodyParams = new URLSearchParams(body)
 
-    if(this.withQueryParams) {
+    if (this.withQueryParams) {
       const queryParams = new URLSearchParams(window.location.search)
       for (const [key, value] of queryParams) {
         bodyParams.append(key, value)
@@ -45,7 +45,7 @@ export default (asyncUpdateRoute = '') => ({
 
     const eventDetailQuery = getQueryString(this.$event.detail)
 
-    if(eventDetailQuery) {
+    if (eventDetailQuery) {
       t.asyncUpdateRoute = mergeURLString(t.asyncUpdateRoute, eventDetailQuery)
     }
 
