@@ -1,7 +1,6 @@
 import {crudFormQuery} from '../Support/Forms.js'
 
 export default () => ({
-  items: [],
   match: [],
   query: '',
   async search(route) {

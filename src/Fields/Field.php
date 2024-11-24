@@ -216,7 +216,7 @@ abstract class Field extends FormElement implements FieldContract
      */
     public function onChangeUrl(
         Closure $url,
-        HttpMethod $method = HttpMethod::GET,
+        HttpMethod $method = HttpMethod::PUT,
         array $events = [],
         ?string $selector = null,
         ?AsyncCallback $callback = null,
