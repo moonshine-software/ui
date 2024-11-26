@@ -6,7 +6,6 @@ import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {formToJSON} from 'axios'
 import {DEFAULT_CONFIG} from 'choices.js/src/scripts/defaults'
 
-
 export default (asyncUrl = '') => ({
   choicesInstance: null,
   placeholder: null,
@@ -103,19 +102,25 @@ export default (asyncUrl = '') => ({
       shouldSort: this.shouldSort,
       loadingText: translates?.loading ?? DEFAULT_CONFIG.loadingText,
       noResultsText: translates?.choices?.no_results ?? DEFAULT_CONFIG.noResultsText,
-      noChoicesText: translates?.choices?.no_choices  ?? DEFAULT_CONFIG.noChoicesText,
+      noChoicesText: translates?.choices?.no_choices ?? DEFAULT_CONFIG.noChoicesText,
       itemSelectText: translates?.choices?.item_select ?? DEFAULT_CONFIG.itemSelectText,
-      uniqueItemText: translates?.choices?.unique_item ??  DEFAULT_CONFIG.uniqueItemText,
-      customAddItemText: translates?.choices?.custom_add_item  ?? DEFAULT_CONFIG.customAddItemText,
+      uniqueItemText: translates?.choices?.unique_item ?? DEFAULT_CONFIG.uniqueItemText,
+      customAddItemText: translates?.choices?.custom_add_item ?? DEFAULT_CONFIG.customAddItemText,
       fuseOptions: {
         threshold: 0,
         ignoreLocation: true,
       },
       addItemText: value => {
-        return translates?.choices?.add_item?.replace(':value', `<b>${value}</b>`) ?? DEFAULT_CONFIG.addItemText(value)
+        return (
+          translates?.choices?.add_item?.replace(':value', `<b>${value}</b>`) ??
+          DEFAULT_CONFIG.addItemText(value)
+        )
       },
       maxItemText: maxItemCount => {
-        return translates?.choices?.max_item?.replace(':count', maxItemCount) ?? DEFAULT_CONFIG.maxItemText(maxItemCount)
+        return (
+          translates?.choices?.max_item?.replace(':count', maxItemCount) ??
+          DEFAULT_CONFIG.maxItemText(maxItemCount)
+        )
       },
       searchResultLimit: 100,
       callbackOnCreateTemplates: function (template) {
@@ -142,7 +147,9 @@ export default (asyncUrl = '') => ({
                           ${data.label}
                           ${
                             this.config.removeItemButton
-                              ? `<button type="button" class="choices__button choices__button--remove" data-button="">${translates?.choices?.remove_item ?? 'x'}</button>`
+                              ? `<button type="button" class="choices__button choices__button--remove" data-button="">${
+                                  translates?.choices?.remove_item ?? 'x'
+                                }</button>`
                               : ''
                           }
                         </span>
