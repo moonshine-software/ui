@@ -26,7 +26,7 @@ final class Favicon extends MoonShineComponent
      *     web-manifest: string,
      * }  $assets
      */
-    public function assets(array $assets): self
+    public function customAssets(array $assets): self
     {
         $this->customAssets = $assets;
 

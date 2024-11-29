@@ -38,6 +38,13 @@ abstract class MoonShineComponent extends Component implements
         if (! $this->isConsoleMode()) {
             $this->resolveAssets();
         }
+
+        $this->booted();
+    }
+
+    protected function booted(): void
+    {
+        //
     }
 
     public static function consoleMode(bool $enable = true): void
@@ -71,7 +78,7 @@ abstract class MoonShineComponent extends Component implements
         /** @phpstan-ignore-next-line */
         $this->attributes = $this->attributes ?: $this->newAttributeBag();
         $this->attributes->setAttributes(
-            array_merge($this->attributes->jsonSerialize(), $attributes)
+            array_merge($this->attributes->jsonSerialize(), $attributes),
         );
 
         return $this;
