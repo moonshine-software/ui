@@ -385,7 +385,7 @@ final class FormBuilder extends MoonShineComponent implements
 
             value($after, $values);
         } catch (Throwable $e) {
-            if($throw) {
+            if ($throw) {
                 throw $e;
             }
 
