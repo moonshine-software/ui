@@ -19,7 +19,7 @@ trait WithHeadingGradation
     {
         if ($gradation < 1 || $gradation > 6) {
             throw new InvalidArgumentException(
-                'gradation must be between 1 and 6'
+                'Gradation must be between 1 and 6'
             );
         }
 

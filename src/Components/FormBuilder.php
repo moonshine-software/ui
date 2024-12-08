@@ -385,8 +385,9 @@ final class FormBuilder extends MoonShineComponent implements
 
             value($after, $values);
         } catch (Throwable $e) {
-            report_if(! $throw, $e);
-            throw_if($throw, $e);
+            if($throw) {
+                throw $e;
+            }
 
             return false;
         }
@@ -477,7 +478,7 @@ final class FormBuilder extends MoonShineComponent implements
             );
             $this->customAttributes([
                 'x-on:submit.prevent' => 'async(`' . $this->getAsyncEvents(
-                ) . '`, ' . json_encode($this->getAsyncCallback()) . ')',
+                ) . '`, ' . json_encode($this->getAsyncCallback(), JSON_THROW_ON_ERROR) . ')',
             ]);
         }
 
