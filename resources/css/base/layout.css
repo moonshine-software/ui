@@ -1,7 +1,7 @@
 /* Theme layout */
 .layout {
   &-wrapper {
-    @apply relative flex min-h-screen flex-col gap-y-5 p-3 transition-all md:p-5 lg:flex-row lg:p-6;
+    @apply relative flex min-h-screen flex-col gap-y-5 py-3 transition-all md:p-5 lg:flex-row lg:p-6;
 
     /* MOBILEBAR */
     /* selector :has not supported */
