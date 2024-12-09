@@ -225,7 +225,8 @@ final class TableBuilder extends IterableComponent implements
             );
         }
 
-        $index = $this->getHeadRows()->count();
+        $rowIndex = $this->getHeadRows()->count();
+        $index = 0;
 
         foreach ($this->getItems() as $data) {
             $casted = $this->castData($data);
@@ -242,11 +243,11 @@ final class TableBuilder extends IterableComponent implements
             $key = $casted->getKey();
 
             $tdAttributes = fn (TableCellContract $td): TableCellContract => $td->customAttributes(
-                $this->getTdAttributes($casted, $index, $td->getIndex()),
+                $this->getTdAttributes($casted, $rowIndex, $td->getIndex()),
             );
 
             $trAttributes = fn (TableRowContract $tr): TableRowContract => $tr->customAttributes(
-                $this->getTrAttributes($casted, $index),
+                $this->getTrAttributes($casted, $rowIndex),
             );
 
             $buttons = $this->getButtons($casted);
@@ -294,6 +295,7 @@ final class TableBuilder extends IterableComponent implements
                 );
 
                 $index++;
+                $rowIndex++;
 
                 continue;
             }
@@ -325,6 +327,7 @@ final class TableBuilder extends IterableComponent implements
             );
 
             $index++;
+            $rowIndex++;
         }
 
         /** @var TableRowsContract */

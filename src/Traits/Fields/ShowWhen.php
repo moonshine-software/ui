@@ -135,7 +135,7 @@ trait ShowWhen
             $operator = '=';
         }
 
-        if (\in_array($operator, $this->arrayOperators) && ! \is_array($value)) {
+        if (! \is_array($value) && \in_array($operator, $this->arrayOperators)) {
             throw new InvalidArgumentException(
                 'Illegal operator and value combination. Value must be array type'
             );

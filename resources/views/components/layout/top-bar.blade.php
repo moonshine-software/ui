@@ -6,6 +6,7 @@
     <x-moonshine::components
         :components="$components"
     />
+
     {{ $slot ?? '' }}
 </aside>
 <!-- END: Menu horizontal -->

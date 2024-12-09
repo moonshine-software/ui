@@ -1,4 +1,5 @@
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
+import load from '../Support/AsyncLoadContent.js'
 
 export default (open = false, asyncUrl = '') => ({
   open: open,
@@ -10,7 +11,7 @@ export default (open = false, asyncUrl = '') => ({
     this.id = this.$id('offcanvas-content')
 
     if (this.open && this.asyncUrl) {
-      this.load(asyncUrl, this.id)
+      load(asyncUrl, this.id)
     }
 
     Alpine.bind('dismissCanvas', () => ({
@@ -45,7 +46,7 @@ export default (open = false, asyncUrl = '') => ({
     this.open = !this.open
 
     if (this.open && this.asyncUrl && !this.asyncLoaded) {
-      await this.load(asyncUrl, this.id)
+      await load(asyncUrl, this.id)
 
       this.asyncLoaded = !this.$root.dataset.alwaysLoad
     }

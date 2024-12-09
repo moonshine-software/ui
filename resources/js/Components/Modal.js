@@ -1,4 +1,5 @@
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
+import load from '../Support/AsyncLoadContent.js'
 
 export default (open = false, asyncUrl = '', autoClose = true) => ({
   open: open,
@@ -12,7 +13,7 @@ export default (open = false, asyncUrl = '', autoClose = true) => ({
     this.id = this.$id('modal-content')
 
     if (this.open && this.asyncUrl) {
-      this.load(asyncUrl, this.id)
+      load(asyncUrl, this.id)
     }
 
     Alpine.bind('dismissModal', () => ({
@@ -40,7 +41,7 @@ export default (open = false, asyncUrl = '', autoClose = true) => ({
     this.open = !this.open
 
     if (this.open && this.asyncUrl && !this.asyncLoaded) {
-      await this.load(asyncUrl, this.id)
+      await load(asyncUrl, this.id)
 
       this.asyncLoaded = !this.$root.dataset.alwaysLoad
     }

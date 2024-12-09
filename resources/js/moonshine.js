@@ -1,6 +1,6 @@
 import request from './Request/Core.js'
-import {Iterable} from './Services/Iterable.js'
-import {UI} from './Services/UI.js'
+import {Iterable} from './Support/Iterable.js'
+import {UI} from './Support/UI.js'
 import {ComponentRequestData} from './DTOs/ComponentRequestData.js'
 
 export class MoonShine {

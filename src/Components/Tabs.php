@@ -88,10 +88,9 @@ class Tabs extends AbstractWithComponents
         return tap(
             $this->getComponents(),
             static function (ComponentsContract $tabs): void {
-                throw_if(
-                    $tabs->every(static fn ($tab): bool => ! $tab instanceof Tab),
-                    MoonShineComponentException::onlyTabAllowed()
-                );
+                if ($tabs->every(static fn ($tab): bool => ! $tab instanceof Tab)) {
+                    throw MoonShineComponentException::onlyTabAllowed();
+                }
             }
         );
     }

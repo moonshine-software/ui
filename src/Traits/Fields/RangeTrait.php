@@ -192,14 +192,14 @@ trait RangeTrait
     {
         if ($url) {
             $this->fromAttributes(
-                AlpineJs::requestWithFieldValue(
+                AlpineJs::onChangeSaveField(
                     $url,
                     $this->fromField,
                 )
             );
 
             $this->toAttributes(
-                AlpineJs::requestWithFieldValue(
+                AlpineJs::onChangeSaveField(
                     $url,
                     $this->toField,
                 )

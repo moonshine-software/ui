@@ -42,16 +42,16 @@
                 >
                 </x-moonshine::form.select>
             @elseif($isTreeMode)
-                <div x-data="tree(@json($value))">
+                <div x-data="belongsToMany" x-init='tree(@json($value))'>
                     {!! $treeHtml !!}
                 </div>
             @else
                 @if($isAsyncSearch)
-                    <div x-data="asyncSearch('{{ $asyncSearchUrl }}')">
+                    <div x-data="belongsToMany">
                         <div class="dropdown">
                             <x-moonshine::form.input
                                 x-model="query"
-                                @input.debounce="search"
+                                @input.debounce="search('{{ $asyncSearchUrl }}')"
                                 :placeholder="$translates['search']"
                             />
                             <div class="dropdown-body pointer-events-auto visible opacity-100">
@@ -82,8 +82,8 @@
 
                         <x-moonshine::layout.divider />
 
-                        <div x-data="pivot"
-                             x-init="autoCheck"
+                        <div x-data="belongsToMany"
+                             x-init="pivot"
                              class="js-pivot-table"
                              data-table-name="{{ $componentName }}"
                         >
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 @else
-                    <div x-data="pivot" x-init="autoCheck">
+                    <div x-data="belongsToMany" x-init="pivot">
                         <x-moonshine::action-group
                             class="mb-4"
                             :actions="$buttons"

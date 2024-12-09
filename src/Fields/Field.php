@@ -216,7 +216,7 @@ abstract class Field extends FormElement implements FieldContract
      */
     public function onChangeUrl(
         Closure $url,
-        HttpMethod $method = HttpMethod::GET,
+        HttpMethod $method = HttpMethod::PUT,
         array $events = [],
         ?string $selector = null,
         ?AsyncCallback $callback = null,
@@ -249,7 +249,7 @@ abstract class Field extends FormElement implements FieldContract
 
     protected function getOnChangeEventAttributes(?string $url = null): array
     {
-        return $url ? AlpineJs::requestWithFieldValue($url, $this->getColumn()) : [];
+        return $url ? AlpineJs::onChangeSaveField($url, $this->getColumn()) : [];
     }
 
     protected function isOnChangeCondition(): bool

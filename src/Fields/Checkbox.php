@@ -111,7 +111,7 @@ class Checkbox extends Field implements
         }
 
         if ($url) {
-            return AlpineJs::requestWithFieldValue(
+            return AlpineJs::onChangeSaveField(
                 $url,
                 $this->getColumn(),
                 $this->getOnChangeEvent(),

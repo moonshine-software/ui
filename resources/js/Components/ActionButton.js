@@ -2,11 +2,13 @@ import selectorsParams from '../Support/SelectorsParams.js'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import request from '../Request/Core.js'
+import {mergeURLString, prepareQueryParams} from '../Support/URLs.js'
 
 export default () => ({
   url: '',
   method: 'GET',
   withParams: '',
+  withQueryParams: false,
   loading: false,
   btnText: '',
 
@@ -16,6 +18,7 @@ export default () => ({
     this.method = this.$el?.dataset?.asyncMethod
 
     this.withParams = this.$el?.dataset?.asyncWithParams
+    this.withQueryParams = this.$el?.dataset?.asyncWithQueryParams ?? false
 
     this.loading = false
     const el = this.$el
@@ -32,17 +35,10 @@ export default () => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const url = new URL(this.$el.href)
 
-    let params = new URLSearchParams(url.search)
-
-    if (exclude !== null) {
-      const excludes = exclude.split(',')
-
-      excludes.forEach(function (excludeName) {
-        params.delete(excludeName)
-      })
-    }
-
-    extra['_data'] = exclude === '*' ? {} : Object.fromEntries(params)
+    extra['_data'] =
+      exclude === '*'
+        ? {}
+        : Object.fromEntries(prepareQueryParams(new URLSearchParams(url.search), exclude))
 
     de(componentEvent, '', this, extra)
   },
@@ -61,6 +57,12 @@ export default () => ({
     }
 
     let body = selectorsParams(this.withParams)
+
+    if (this.withQueryParams) {
+      const queryParams = new URLSearchParams(window.location.search)
+
+      this.url = mergeURLString(this.url, queryParams)
+    }
 
     let stopLoading = function (data, t) {
       t.loading = false

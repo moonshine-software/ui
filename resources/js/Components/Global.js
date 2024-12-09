@@ -2,31 +2,7 @@ import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import request from '../Request/Core.js'
 
 export default () => ({
-  async load(url, id) {
-    const {data, status} = await axios.get(url)
-
-    if (status === 200) {
-      let containerElement = document.getElementById(id)
-
-      containerElement.innerHTML = data
-
-      const scriptElements = containerElement.querySelectorAll('script')
-
-      Array.from(scriptElements).forEach(scriptElement => {
-        const clonedElement = document.createElement('script')
-
-        Array.from(scriptElement.attributes).forEach(attribute => {
-          clonedElement.setAttribute(attribute.name, attribute.value)
-        })
-
-        clonedElement.text = scriptElement.text
-
-        scriptElement.parentNode.replaceChild(clonedElement, scriptElement)
-      })
-    }
-  },
-
-  async requestWithFieldValue(route, column, value = null) {
+  saveField(route, column, value = null) {
     if (value === null) {
       value = this.$el.value
     }
