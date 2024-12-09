@@ -28,7 +28,7 @@ trait UpdateOnPreview
     public function readonly(Closure|bool|null $condition = null): static
     {
         $this->updateOnPreview(condition: false);
-        $this->updateInPopover = false;
+        $this->updateOnPreviewPopover = false;
 
         return parent::readonly($condition);
     }
