@@ -242,8 +242,10 @@
   &._is-opened {
     @apply bg-body;
 
-    .menu-navigation {
-      @apply pointer-events-auto visible fixed translate-y-0 opacity-100;
+    @media (max-width: 1023px) {
+      .menu-navigation {
+        @apply pointer-events-auto visible fixed translate-y-0 opacity-100;
+      }
     }
   }
 
@@ -391,8 +393,9 @@
   @media (max-width: 1023.98px) {
     .menu {
       &-navigation {
-        @apply pointer-events-none invisible absolute inset-x-0 top-[4.5rem] -translate-y-2 overflow-x-auto bg-body px-3 pb-8 opacity-0 transition-all md:px-7;
-        height: calc(100vh - 4.5rem);
+        --top-space: 4.5rem;
+        @apply pointer-events-none invisible absolute inset-x-0 top-[--top-space] -translate-y-2 overflow-x-auto bg-body px-3 pb-8 opacity-0 transition-all md:px-7;
+        height: calc(100vh - var(--top-space));
       }
 
       &-inner {
