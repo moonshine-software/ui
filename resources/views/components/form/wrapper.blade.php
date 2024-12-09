@@ -1,5 +1,6 @@
 @props([
     'label' => '',
+    'formName' => '',
     'fieldErrors' => [],
     'beforeLabel' => false,
     'insideLabel' => false,
@@ -7,14 +8,14 @@
     'after',
 ])
 <div {{ $attributes->merge(['class' => 'form-group moonshine-field'])->except('required') }}
-     x-id="['input-wrapper', 'field']" :id="$id('input-wrapper')"
+     x-id="['input-wrapper', 'field-{{ $formName }}']" :id="$id('input-wrapper')"
 >
     {{ $beforeLabel && !$insideLabel ? $slot : '' }}
 
     @if($label)
         <x-moonshine::form.label
             :required="$attributes->get('required', false)"
-            ::for="$id('field')"
+            ::for="$id('field-{{ $formName }}')"
         >
             {{ $beforeLabel && $insideLabel ? $slot : '' }}
             {!! $label !!}
