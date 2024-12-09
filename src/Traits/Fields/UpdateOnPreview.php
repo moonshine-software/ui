@@ -28,15 +28,16 @@ trait UpdateOnPreview
     public function readonly(Closure|bool|null $condition = null): static
     {
         $this->updateOnPreview(condition: false);
-        $this->updateOnPreviewPopover = false;
+        $this->updateInPopover = false;
 
         return parent::readonly($condition);
     }
 
     public function withUpdateRow(
         string $component,
+        mixed $condition = null,
     ): static {
-        if ($this->isRawMode()) {
+        if ($this->isRawMode() || ! value($condition, $this)) {
             return $this;
         }
 
@@ -59,11 +60,12 @@ trait UpdateOnPreview
     }
 
     public function updateInPopover(
-        string $component
+        string $component,
+        mixed $condition = null,
     ): static {
-        $this->updateOnPreviewPopover = true;
+        $this->updateOnPreviewPopover = value($condition, $this) ?? true;
 
-        return $this->withUpdateRow($component);
+        return $this->withUpdateRow($component, $condition);
     }
 
     public function updateOnPreview(
