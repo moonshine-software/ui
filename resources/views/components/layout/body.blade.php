@@ -11,8 +11,8 @@
 
     {{ $slot ?? '' }}
 
-    @include('moonshine::layouts.shared.img-popup')
-    @include('moonshine::layouts.shared.toasts')
+    @include('moonshine::shared.img-popup')
+    @include('moonshine::shared.toasts')
 
     @stack('scripts')
 </body>
