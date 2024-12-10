@@ -62,7 +62,7 @@ trait UpdateOnPreview
     {
         $this->updateOnPreviewPopover = true;
 
-        return $this->withUpdateRow($component, $condition);
+        return $this->withUpdateRow($component);
     }
 
     public function updateOnPreview(
