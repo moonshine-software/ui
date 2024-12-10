@@ -33,15 +33,10 @@ trait UpdateOnPreview
         return parent::readonly($condition);
     }
 
-    public function withUpdateRow(
-        string $component,
-        mixed $condition = null,
-    ): static {
+    public function withUpdateRow(string $component): static
+    {
 
-        if (
-            $this->isRawMode()
-            || ($condition !== null && ! value($condition, $this))
-        ) {
+        if ($this->isRawMode()) {
             return $this;
         }
 
@@ -63,11 +58,9 @@ trait UpdateOnPreview
         );
     }
 
-    public function updateInPopover(
-        string $component,
-        mixed $condition = null,
-    ): static {
-        $this->updateOnPreviewPopover = value($condition, $this) ?? true;
+    public function updateInPopover(string $component): static
+    {
+        $this->updateOnPreviewPopover = true;
 
         return $this->withUpdateRow($component, $condition);
     }
