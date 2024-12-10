@@ -37,7 +37,11 @@ trait UpdateOnPreview
         string $component,
         mixed $condition = null,
     ): static {
-        if ($this->isRawMode() || ! value($condition, $this)) {
+
+        if (
+            $this->isRawMode()
+            || ($condition !== null && ! value($condition, $this))
+        ) {
             return $this;
         }
 
