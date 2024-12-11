@@ -382,12 +382,12 @@ abstract class Field extends FormElement implements FieldContract
                 label: $this->getLinkName($value) ?: $value,
             )
                 ->when(
-                    !$this->isWithoutIcon() && $this->getLinkIcon() !== null,
-                    fn(Link $ctx): Link => $ctx->icon($this->getLinkIcon())
+                    ! $this->isWithoutIcon() && $this->getLinkIcon() !== null,
+                    fn (Link $ctx): Link => $ctx->icon($this->getLinkIcon())
                 )
                 ->when(
                     $this->isLinkBlank(),
-                    fn(Link $ctx): Link => $ctx->blank()
+                    fn (Link $ctx): Link => $ctx->blank()
                 )
                 ->render();
         }
