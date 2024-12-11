@@ -383,11 +383,11 @@ abstract class Field extends FormElement implements FieldContract
             )
                 ->when(
                     !$this->isWithoutIcon() && $this->getLinkIcon() !== null,
-                    fn(Link $ctx) => $ctx->icon($this->getLinkIcon())
+                    fn(Link $ctx): Link => $ctx->icon($this->getLinkIcon())
                 )
                 ->when(
                     $this->isLinkBlank(),
-                    fn(Link $ctx) => $ctx->blank()
+                    fn(Link $ctx): Link => $ctx->blank()
                 )
                 ->render();
         }
