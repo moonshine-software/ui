@@ -14,7 +14,7 @@ use MoonShine\Support\AlpineJs;
 use MoonShine\Support\DTOs\AsyncCallback;
 use MoonShine\Support\Enums\HttpMethod;
 use MoonShine\UI\Components\Badge;
-use MoonShine\UI\Components\Url;
+use MoonShine\UI\Components\Link;
 use MoonShine\UI\Traits\Fields\WithBadge;
 use MoonShine\UI\Traits\Fields\WithHint;
 use MoonShine\UI\Traits\Fields\WithLink;
@@ -377,13 +377,19 @@ abstract class Field extends FormElement implements FieldContract
         if ($this->hasLink()) {
             $href = $this->getLinkValue($value);
 
-            $value = (string) Url::make(
+            $value = (string) Link::make(
                 href: $href,
-                value: $this->getLinkName($value) ?: $value,
-                icon: $this->getLinkIcon(),
-                withoutIcon: $this->isWithoutIcon(),
-                blank: $this->isLinkBlank()
-            )->render();
+                label: $this->getLinkName($value) ?: $value,
+            )
+                ->when(
+                    !$this->isWithoutIcon() && $this->getLinkIcon() !== null,
+                    fn(Link $ctx) => $ctx->icon($this->getLinkIcon())
+                )
+                ->when(
+                    $this->isLinkBlank(),
+                    fn(Link $ctx) => $ctx->blank()
+                )
+                ->render();
         }
 
         if ($this->isBadge()) {

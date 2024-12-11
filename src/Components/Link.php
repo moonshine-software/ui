@@ -57,6 +57,13 @@ final class Link extends MoonShineComponent implements HasIconContract, HasLabel
         return $this;
     }
 
+    public function blank(): self
+    {
+        return $this->customAttributes([
+            'target' => '_blank',
+        ]);
+    }
+
     public function getView(): string
     {
         return 'moonshine::components.link-'

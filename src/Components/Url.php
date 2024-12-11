@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Components;
 
-/** @method static static make(string $href, string $value, ?string $icon = '', bool $withoutIcon = false, bool $blank = false) */
+/**
+ * @method static static make(string $href, string $value, ?string $icon = '', bool $withoutIcon = false, bool $blank = false)
+ * @deprecated use \MoonShine\UI\Components\Link
+ */
 final class Url extends MoonShineComponent
 {
     protected string $view = 'moonshine::components.url';
