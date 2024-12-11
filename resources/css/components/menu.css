@@ -232,7 +232,7 @@
 
 /* Aside horizontal navigation */
 .layout-menu-horizontal {
-  @apply sticky inset-x-0 top-0 z-[100] flex h-[4.5rem] items-center gap-x-5 overflow-x-auto bg-body/80 px-6 transition-colors md:px-10 lg:h-24;
+  @apply sticky inset-x-0 top-0 z-[100] flex h-[4.5rem] items-center gap-x-5 overflow-x-auto overflow-y-hidden bg-body/80 px-6 transition-colors md:px-10 lg:h-24 lg:overflow-y-auto;
 
   .menu-inner-item-char {
     @apply hidden;
@@ -242,8 +242,10 @@
   &._is-opened {
     @apply bg-body;
 
-    .menu-navigation {
-      @apply pointer-events-auto visible translate-y-0 opacity-100;
+    @media (max-width: 1023px) {
+      .menu-navigation {
+        @apply pointer-events-auto visible fixed translate-y-0 opacity-100;
+      }
     }
   }
 
@@ -371,6 +373,10 @@
       .menu-inner-divider {
         @apply mx-1;
       }
+
+      .profile-info {
+        @apply hidden sm:block;
+      }
     }
 
     /* Settings button */
@@ -387,8 +393,9 @@
   @media (max-width: 1023.98px) {
     .menu {
       &-navigation {
-        @apply pointer-events-none invisible absolute inset-x-0 top-[4.5rem] -translate-y-2 overflow-x-auto bg-body px-3 pb-8 opacity-0 transition-all md:px-7;
-        height: calc(100vh - 4.5rem);
+        --top-space: 4.5rem;
+        @apply pointer-events-none invisible absolute inset-x-0 top-[--top-space] -translate-y-2 overflow-x-auto bg-body px-3 pb-8 opacity-0 transition-all md:px-7;
+        height: calc(100vh - var(--top-space));
       }
 
       &-inner {

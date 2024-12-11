@@ -239,6 +239,15 @@ body.theme-minimalistic {
         }
       }
     }
+
+    @media (max-width: 1023.98px) {
+      .menu {
+        &-navigation {
+          --top-space: 4rem;
+          @apply pt-4;
+        }
+      }
+    }
   }
 
   /* Mobile menu */
