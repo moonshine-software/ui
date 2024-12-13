@@ -20,7 +20,7 @@ class Heading extends MoonShineComponent
 
     protected string $view = 'moonshine::components.heading';
 
-    public function __construct(Closure|string $label, ?int $h = null, bool $asClass = true)
+    public function __construct(Closure|string $label = '', ?int $h = null, bool $asClass = true)
     {
         parent::__construct();
 

@@ -4,6 +4,6 @@
 ])
 <div class="heading">
     <{{ $tag }} {{ $attributes }}>
-        {{ $label }}
+        {{ $label !== '' ? $label : ($slot ?? '') }}
     </{{ $tag }}>
 </div>

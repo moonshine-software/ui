@@ -10,31 +10,4 @@ use MoonShine\UI\Components\MoonShineComponent;
 class ThemeSwitcher extends MoonShineComponent
 {
     protected string $view = 'moonshine::components.layout.theme-switcher';
-
-    public function __construct(protected bool $top = false)
-    {
-        parent::__construct();
-    }
-
-    public function top(): static
-    {
-        $this->top = true;
-
-        return $this;
-    }
-
-    public function isTop(): bool
-    {
-        return $this->top;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function viewData(): array
-    {
-        return [
-            'top' => $this->isTop(),
-        ];
-    }
 }
