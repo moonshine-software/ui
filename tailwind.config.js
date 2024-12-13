@@ -31,6 +31,13 @@ const clientSafeList = [
   'pointer-events-auto',
   'opacity-0',
   'opacity-100',
+  'mb-6',
+  'm-1',
+  'mb-4',
+  'w-10',
+  'text-center',
+  'flex-wrap',
+  'w-full',
   {
     pattern: /text-dark-\d/,
     variants: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
