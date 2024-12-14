@@ -3,6 +3,11 @@
   &-wrapper {
     @apply relative flex min-h-screen flex-col gap-y-5 py-3 transition-all md:p-5 lg:flex-row lg:p-6;
 
+    .layout-menu-horizontal ~ .layout-menu,
+    .layout-menu ~ .layout-menu-horizontal {
+      @apply mobile:!hidden;
+    }
+
     /* MOBILEBAR */
     /* selector :has not supported */
 
@@ -76,6 +81,10 @@
         /* .layout-menu {
           @apply invisible lg:visible;
         } */
+      }
+
+      &:has(.layout-menu ~ .layout-menu-horizontal) {
+        @apply mobile:pt-16 !important;
       }
     }
   }
