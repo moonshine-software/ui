@@ -56,7 +56,7 @@
         @if($columnSelection)
             <x-moonshine::layout.flex justify-align="end">
                 <x-moonshine::dropdown>
-                    <div class="p-2">
+                    <div class="p-2 form-group">
                         @foreach($columns as $column => $label)
                             <div class="form-group form-group-inline">
                                 <x-moonshine::form.switcher
