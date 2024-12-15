@@ -45,6 +45,9 @@ final class ActionGroup extends AbstractWithComponents
         return $this;
     }
 
+    /**
+     * @param  list<ActionButtonContract>|ActionButtonsContract  $items
+     */
     public function addMany(iterable $items): self
     {
         foreach ($items as $item) {
