@@ -49,7 +49,7 @@ final readonly class UpdateOnPreviewPopover
                                 ->style('margin: 0!important')
                                 ->setColumn('value')
                                 ->customAttributes([
-                                    'name' => 'value'
+                                    'name' => 'value',
                                 ])
                                 ->withoutWrapper()
                                 ->disableUpdateOnPreview(),
