@@ -260,17 +260,21 @@ final class TableBuilder extends IterableComponent implements
                     $attributes = $field->getWrapperAttributes()->jsonSerialize();
                     $title = Column::make([
                         Heading::make($field->getLabel())->h(4),
-                    ])->columnSpan(1);
+                    ])->columnSpan(is_int($this->verticalTitleCallback) ? $this->verticalTitleCallback : 2);
 
                     $value = Column::make([
                         Div::make([
                             $field,
                         ])->customAttributes($attributes),
-                    ])->columnSpan(11);
+                    ])->columnSpan(is_int($this->verticalTitleCallback) ? $this->verticalTitleCallback : 10);
 
                     $components[] = Grid::make([
-                        \is_null($this->verticalTitleCallback) ? $title : \call_user_func($this->verticalTitleCallback, $field, $title, $this),
-                        \is_null($this->verticalValueCallback) ? $value : \call_user_func($this->verticalValueCallback, $field, $value, $this),
+                        \is_null($this->verticalTitleCallback) || is_int($this->verticalTitleCallback)
+                            ? $title
+                            : \call_user_func($this->verticalTitleCallback, $field, $title, $this),
+                        \is_null($this->verticalValueCallback) || is_int($this->verticalValueCallback)
+                            ? $value
+                            : \call_user_func($this->verticalValueCallback, $field, $value, $this),
                     ]);
                 }
 

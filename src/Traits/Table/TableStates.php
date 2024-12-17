@@ -17,9 +17,9 @@ trait TableStates
 
     protected bool $isVertical = false;
 
-    protected ?Closure $verticalTitleCallback = null;
+    protected null|Closure|int $verticalTitleCallback = null;
 
-    protected ?Closure $verticalValueCallback = null;
+    protected null|Closure|int $verticalValueCallback = null;
 
     protected bool $isEditable = false;
 
@@ -88,10 +88,10 @@ trait TableStates
     }
 
     /**
-     * @param  ?Closure(FieldContract $field, ComponentContract $default, static $ctx): ComponentContract  $title
-     * @param  ?Closure(FieldContract $field, ComponentContract $default, static $ctx): ComponentContract  $value
+     * @param  null|int|Closure(FieldContract $field, ComponentContract $default, static $ctx): ComponentContract  $title
+     * @param  null|int|Closure(FieldContract $field, ComponentContract $default, static $ctx): ComponentContract  $value
      */
-    public function vertical(?Closure $title = null, ?Closure $value = null): static
+    public function vertical(null|Closure|int $title = null, null|Closure|int $value = null): static
     {
         $this->isVertical = true;
         $this->verticalTitleCallback = $title;
