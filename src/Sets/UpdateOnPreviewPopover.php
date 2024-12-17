@@ -13,7 +13,6 @@ use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Components\Popover;
 use MoonShine\UI\Fields\Hidden;
-use MoonShine\UI\Fields\Text;
 
 final readonly class UpdateOnPreviewPopover
 {
@@ -46,13 +45,17 @@ final readonly class UpdateOnPreviewPopover
                         Flex::make([
                             Hidden::make('_method')->setValue('PUT'),
                             Hidden::make('field')->setValue($this->field->getColumn()),
-                            Text::make('Title', 'value')
+                            $this->field
                                 ->style('margin: 0!important')
-                                ->setValue($this->field->toFormattedValue())
-                                ->withoutWrapper(),
+                                ->setColumn('value')
+                                ->customAttributes([
+                                    'name' => 'value'
+                                ])
+                                ->withoutWrapper()
+                                ->disableUpdateOnPreview(),
                         ]),
                     ])
-                    ->submit('OK', ['class' => 'btn-primary'])
+                    ->submit(__('moonshine::ui.save'), ['class' => 'btn-primary'])
             );
     }
 }
