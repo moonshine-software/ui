@@ -12,11 +12,17 @@ use MoonShine\UI\Components\FormBuilder;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Components\Popover;
+use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
 use MoonShine\UI\Fields\Hidden;
 
 final readonly class UpdateOnPreviewPopover
 {
-    public function __construct(private FieldContract $field, private string $component, private string $route)
+    /**
+     * @param  FieldContract&HasUpdateOnPreviewContract  $field
+     * @param  string  $component
+     * @param  string  $route
+     */
+    public function __construct(private HasUpdateOnPreviewContract $field, private string $component, private string $route)
     {
     }
 

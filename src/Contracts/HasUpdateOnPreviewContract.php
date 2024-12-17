@@ -8,6 +8,8 @@ use Closure;
 
 interface HasUpdateOnPreviewContract
 {
+    public function disableUpdateOnPreview(): static;
+
     public function isUpdateOnPreview(): bool;
 
     public function setUpdateOnPreviewUrl(Closure $url): static;
