@@ -33,7 +33,13 @@ export default () => ({
   },
 
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
-    const url = new URL(this.$el.href)
+    let url = new URL(this.$el.href)
+
+    if(this.withQueryParams) {
+      const queryParams = new URLSearchParams(window.location.search)
+
+      url = new URL(mergeURLString(url.toString(), queryParams))
+    }
 
     const preparedURLParams =
       exclude === '*'
