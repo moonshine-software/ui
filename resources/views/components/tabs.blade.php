@@ -31,7 +31,7 @@
         <div class="tabs-content">
             @foreach($tabs as $tab)
                 <div {!! $tab['attributes'] !!}>
-                    <div class="tabs-body">
+                    <div class="tabs-body space-elements">
                         {!! $tab['content'] !!}
                     </div>
                 </div>

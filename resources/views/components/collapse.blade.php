@@ -18,7 +18,6 @@
 >
     <div
         class="accordion-item"
-        :class="open ? 'mt-5' : 'my-5'"
     >
 
         <h2 class="accordion-header">
@@ -44,7 +43,7 @@
              :class="open ? 'block' : 'hidden'"
              class="accordion-body"
         >
-            <div class="accordion-content">
+            <div class="accordion-content space-elements">
                 <x-moonshine::components
                     :components="$components"
                 />

@@ -1,6 +1,6 @@
 /* Accordions */
 .accordion {
-  @apply mb-5 -space-y-[1px];
+  @apply -space-y-[1px];
 
   &-item {
     &:first-child {

@@ -1,5 +1,9 @@
 /* Theme: Minimalistic */
 body.theme-minimalistic {
+  .space-elements {
+    @apply space-y-3;
+  }
+
   *,
   .box-shadow:before {
     @apply !rounded-none;
@@ -581,9 +585,6 @@ body.theme-minimalistic {
     &:not(.form-group-expansion) {
       @apply gap-1;
     }
-    + .form-group {
-      @apply my-3;
-    }
   }
 
   .form-hint {
@@ -733,7 +734,7 @@ body.theme-minimalistic {
       @apply h-10;
     }
     &-content {
-      @apply mt-2.5;
+      @apply mt-3;
     }
   }
 

@@ -4,7 +4,7 @@
     'colSpan' => 12,
 ])
 <div
-    {{ $attributes->class(["col-span-$adaptiveColSpan", "xl:col-span-$colSpan"]) }}
+    {{ $attributes->class(["col-span-$adaptiveColSpan", "xl:col-span-$colSpan", "space-elements"]) }}
 >
     <x-moonshine::components
         :components="$components"
