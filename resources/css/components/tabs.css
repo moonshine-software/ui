@@ -15,6 +15,9 @@
   &-content {
     @apply -mx-1 mt-6 overflow-x-clip px-1;
   }
+  &-body {
+    @apply space-y-5;
+  }
   &-vertical {
     @apply flex gap-3;
     > .tabs-list {

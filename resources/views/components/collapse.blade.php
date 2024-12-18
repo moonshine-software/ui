@@ -18,7 +18,6 @@
 >
     <div
         class="accordion-item"
-        :class="open ? 'mt-5' : 'my-5'"
     >
 
         <h2 class="accordion-header">
