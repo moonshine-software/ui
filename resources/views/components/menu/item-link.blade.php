@@ -5,6 +5,8 @@
     'icon' => '',
     'badge' => false,
     'top' => false,
+    'hasComponent' => false,
+    'component' => null,
 ])
 <a
     href="{{ $url }}"
@@ -24,3 +26,9 @@
         <span class="menu-inner-counter">{{ $badge }}</span>
     @endif
 </a>
+
+@if($hasComponent)
+    <template x-teleport="body">
+        {!! $component !!}
+    </template>
+@endif
