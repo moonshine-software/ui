@@ -185,3 +185,7 @@ div.divider {
     @apply justify-center text-center before:grow after:h-[1px] after:min-w-[16px] after:shrink-0 after:grow after:bg-slate-300 dark:after:bg-dark-100;
   }
 }
+
+.space-elements {
+  @apply space-y-5;
+}

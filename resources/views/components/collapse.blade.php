@@ -43,7 +43,7 @@
              :class="open ? 'block' : 'hidden'"
              class="accordion-body"
         >
-            <div class="accordion-content">
+            <div class="accordion-content space-elements">
                 <x-moonshine::components
                     :components="$components"
                 />

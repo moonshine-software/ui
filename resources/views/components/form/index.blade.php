@@ -6,7 +6,7 @@
     'raw' => false
 ])
 <form
-    {{ $attributes->merge(['class' => 'form', 'method' => 'POST']) }}
+    {{ $attributes->merge(['class' => 'form space-elements', 'method' => 'POST']) }}
     @if(empty($attributes->get('id')))
         x-id="['form']" :id="$id('form')"
     @endif
