@@ -35,7 +35,7 @@ export default () => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     let url = new URL(this.$el.href)
 
-    if(this.withQueryParams) {
+    if (this.withQueryParams) {
       const queryParams = new URLSearchParams(window.location.search)
 
       url = new URL(mergeURLString(url.toString(), queryParams))
