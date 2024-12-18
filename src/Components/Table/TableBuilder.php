@@ -275,7 +275,7 @@ final class TableBuilder extends IterableComponent implements
                         \is_null($this->verticalValueCallback) || \is_int($this->verticalValueCallback)
                             ? $value
                             : \call_user_func($this->verticalValueCallback, $field, $value, $this),
-                    ]);
+                    ])->gap(2);
                 }
 
                 if ($buttons->isNotEmpty()) {
