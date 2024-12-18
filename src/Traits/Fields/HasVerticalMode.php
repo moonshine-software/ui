@@ -18,7 +18,7 @@ trait HasVerticalMode
     {
         $this->isVertical = value($condition, $this) ?? true;
 
-        if($this->isVertical()) {
+        if ($this->isVertical()) {
             $this->verticalTitleSpan = $titleSpan;
             $this->verticalValueSpan = $valueSpan;
         }
