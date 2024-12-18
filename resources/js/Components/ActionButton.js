@@ -35,10 +35,15 @@ export default () => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const url = new URL(this.$el.href)
 
-    extra['_data'] =
-      exclude === '*'
-        ? {}
-        : Object.fromEntries(prepareQueryParams(new URLSearchParams(url.search), exclude))
+    const preparedURLParams = exclude === '*'
+      ? {}
+      : Object.fromEntries(prepareQueryParams(new URLSearchParams(url.search), exclude));
+
+    extra['_data'] = Object.assign(
+      {},
+      preparedURLParams,
+      selectorsParams(this.withParams)
+    );
 
     de(componentEvent, '', this, extra)
   },
