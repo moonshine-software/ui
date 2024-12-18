@@ -12,12 +12,17 @@ use MoonShine\UI\Components\FormBuilder;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Components\Popover;
+use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
 use MoonShine\UI\Fields\Hidden;
-use MoonShine\UI\Fields\Text;
 
 final readonly class UpdateOnPreviewPopover
 {
-    public function __construct(private FieldContract $field, private string $component, private string $route)
+    /**
+     * @param  FieldContract&HasUpdateOnPreviewContract  $field
+     * @param  string  $component
+     * @param  string  $route
+     */
+    public function __construct(private HasUpdateOnPreviewContract $field, private string $component, private string $route)
     {
     }
 
@@ -46,13 +51,17 @@ final readonly class UpdateOnPreviewPopover
                         Flex::make([
                             Hidden::make('_method')->setValue('PUT'),
                             Hidden::make('field')->setValue($this->field->getColumn()),
-                            Text::make('Title', 'value')
+                            $this->field
                                 ->style('margin: 0!important')
-                                ->setValue($this->field->toFormattedValue())
-                                ->withoutWrapper(),
+                                ->setColumn('value')
+                                ->customAttributes([
+                                    'name' => 'value',
+                                ])
+                                ->withoutWrapper()
+                                ->disableUpdateOnPreview(),
                         ]),
                     ])
-                    ->submit('OK', ['class' => 'btn-primary'])
+                    ->submit(__('moonshine::ui.save'), ['class' => 'btn-primary'])
             );
     }
 }

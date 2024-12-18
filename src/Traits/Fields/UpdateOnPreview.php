@@ -33,6 +33,18 @@ trait UpdateOnPreview
         return parent::readonly($condition);
     }
 
+    public function disableUpdateOnPreview(): static
+    {
+        $this->updateOnPreview = false;
+        $this->onChangeUrl = null;
+        $this->updateOnPreviewPopover = false;
+        $this->updateOnPreviewUrl = null;
+
+        $this->removeAttribute('@change');
+
+        return $this;
+    }
+
     public function withUpdateRow(string $component): static
     {
 
