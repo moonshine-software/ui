@@ -22,7 +22,6 @@ input[type='number'] {
   @apply flex flex-col gap-y-5;
 }
 
-
 .form-group {
   @apply flex w-full flex-col gap-2;
 
