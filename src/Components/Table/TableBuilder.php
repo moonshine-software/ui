@@ -266,7 +266,7 @@ final class TableBuilder extends IterableComponent implements
                         Div::make([
                             $field,
                         ])->customAttributes($attributes),
-                    ])->columnSpan(\is_int($this->verticalTitleCallback) ? $this->verticalTitleCallback : 10);
+                    ])->columnSpan(\is_int($this->verticalValueCallback) ? $this->verticalValueCallback : 10);
 
                     $components[] = Grid::make([
                         \is_null($this->verticalTitleCallback) || \is_int($this->verticalTitleCallback)
@@ -275,7 +275,7 @@ final class TableBuilder extends IterableComponent implements
                         \is_null($this->verticalValueCallback) || \is_int($this->verticalValueCallback)
                             ? $value
                             : \call_user_func($this->verticalValueCallback, $field, $value, $this),
-                    ]);
+                    ])->gap(2);
                 }
 
                 if ($buttons->isNotEmpty()) {
@@ -289,7 +289,7 @@ final class TableBuilder extends IterableComponent implements
                     TableCells::make([
                         TableTd::make(
                             static fn () => Components::make($components),
-                        )->when(
+                        )->class('space-elements')->when(
                             true,
                             static fn (TableCellContract $td): TableCellContract => $tdAttributes($td)
                         ),

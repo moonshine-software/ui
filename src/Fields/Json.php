@@ -20,11 +20,11 @@ use MoonShine\UI\Components\FieldsGroup;
 use MoonShine\UI\Components\Icon;
 use MoonShine\UI\Components\Layout\Column;
 use MoonShine\UI\Components\Layout\Div;
-use MoonShine\UI\Components\Layout\LineBreak;
 use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\RemovableContract;
+use MoonShine\UI\Traits\Fields\HasVerticalMode;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\Removable;
 use MoonShine\UI\Traits\WithFields;
@@ -42,6 +42,7 @@ class Json extends Field implements
     use WithFields;
     use Removable;
     use WithDefaultValue;
+    use HasVerticalMode;
 
     protected string $view = 'moonshine::fields.json';
 
@@ -54,8 +55,6 @@ class Json extends Field implements
     protected bool $isGroup = true;
 
     protected bool $hasOld = false;
-
-    protected bool $isVertical = false;
 
     protected bool $isCreatable = true;
 
@@ -147,18 +146,6 @@ class Json extends Field implements
     public function isKeyOrOnlyValue(): bool
     {
         return $this->keyValue || $this->onlyValue;
-    }
-
-    public function vertical(Closure|bool|null $condition = null): static
-    {
-        $this->isVertical = value($condition, $this) ?? true;
-
-        return $this;
-    }
-
-    public function isVertical(): bool
-    {
-        return $this->isVertical;
     }
 
     public function creatable(
@@ -411,14 +398,17 @@ class Json extends Field implements
             )
             ->when(
                 $this->isVertical(),
-                static fn (TableBuilderContract $table): TableBuilderContract => $table->vertical(
-                    title: $reorderable ? static fn (FieldContract $field, ComponentContract $default) => Column::make([
+                fn (TableBuilderContract $table): TableBuilderContract => $table->vertical(
+                    title: $reorderable ? fn (FieldContract $field, ComponentContract $default): Column => Column::make([
                         $field->getColumn() === '__handle' ? $field : Div::make([
                             $field->getLabel(),
-                            LineBreak::make(),
                         ]),
-                    ])->columnSpan(1) : null,
-                    value: $reorderable ? static fn (FieldContract $field, ComponentContract $default) => $field->getColumn() === '__handle' ? Column::make() : $default : null,
+                    ])->columnSpan($this->verticalTitleSpan) : null,
+                    value: $reorderable ? fn (FieldContract $field, ComponentContract $default): Column => $field->getColumn() === '__handle'
+                        ? Column::make()->columnSpan($this->verticalValueSpan)
+                        /** @var Column $default */
+                        /** @phpstan-ignore-next-line  */
+                        : $default->columnSpan($this->verticalValueSpan) : null,
                 )
             )
             ->when(
