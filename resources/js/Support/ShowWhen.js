@@ -184,7 +184,7 @@ function showHideTableInputs(isShow, table, fieldName, showWhenSubmit) {
       if (element.cellIndex !== cellIndexTd) {
         return
       }
-      element.style.display = isShow ? 'block' : 'none'
+      element.style.display = isShow ? null : 'none'
     })
   }
 }
