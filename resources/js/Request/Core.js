@@ -13,6 +13,12 @@ export default function request(
     return
   }
 
+  if (!navigator.onLine) {
+    t.loading = false
+    MoonShine.ui.toast('No internet connection', 'error')
+    return
+  }
+
   if (!(componentRequestData instanceof ComponentRequestData)) {
     componentRequestData = new ComponentRequestData()
   }
@@ -102,11 +108,11 @@ export default function request(
           componentRequestData.events,
           t,
         )
-
         return
       }
 
       if (!errorResponse?.response?.data) {
+        MoonShine.ui.toast('Unknown Error', 'error')
         return
       }
 
