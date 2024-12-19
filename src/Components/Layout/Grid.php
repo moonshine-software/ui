@@ -13,7 +13,10 @@ class Grid extends AbstractWithComponents
 {
     protected string $view = 'moonshine::components.layout.grid';
 
-    public function __construct(iterable $components = [], private int $gap = 6)
+    public function __construct(
+        iterable $components = [],
+        private int $gap = 6
+    )
     {
         parent::__construct($components);
     }
@@ -25,8 +28,10 @@ class Grid extends AbstractWithComponents
         return $this;
     }
 
-    protected function prepareBeforeRender(): void
+    protected function viewData(): array
     {
-        $this->class("gap-$this->gap");
+        return [
+            'gap' => $this->gap,
+        ];
     }
 }
