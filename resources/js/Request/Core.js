@@ -13,7 +13,7 @@ export default function request(
     return
   }
 
-  if(!navigator.onLine) {
+  if (!navigator.onLine) {
     t.loading = false
     MoonShine.ui.toast('No internet connection', 'error')
     return
