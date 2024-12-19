@@ -43,7 +43,7 @@ const clientSafeList = [
     variants: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
   },
   {
-    pattern: /gap(-x|-y)-\d/,
+    pattern: /gap(|-x|-y)-\d/,
     variants: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
   },
   {

@@ -399,14 +399,16 @@ class Json extends Field implements
             ->when(
                 $this->isVertical(),
                 fn (TableBuilderContract $table): TableBuilderContract => $table->vertical(
-                    title: $reorderable ? fn (FieldContract $field, ComponentContract $default) => Column::make([
+                    title: $reorderable ? fn (FieldContract $field, ComponentContract $default): Column => Column::make([
                         $field->getColumn() === '__handle' ? $field : Div::make([
                             $field->getLabel(),
                         ]),
                     ])->columnSpan($this->verticalTitleSpan) : null,
-                    value: $reorderable ? fn (FieldContract $field, ComponentContract $default) => $field->getColumn() === '__handle'
+                    value: $reorderable ? fn (FieldContract $field, ComponentContract $default): Column => $field->getColumn() === '__handle'
                         ? Column::make()->columnSpan($this->verticalValueSpan)
-                        : $default : null,
+                        /** @var Column $default */
+                        /** @phpstan-ignore-next-line  */
+                        : $default->columnSpan($this->verticalValueSpan) : null,
                 )
             )
             ->when(
