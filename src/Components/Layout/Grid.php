@@ -16,8 +16,7 @@ class Grid extends AbstractWithComponents
     public function __construct(
         iterable $components = [],
         private int $gap = 6
-    )
-    {
+    ) {
         parent::__construct($components);
     }
 
