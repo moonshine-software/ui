@@ -108,11 +108,11 @@ export default function request(
           componentRequestData.events,
           t,
         )
-        MoonShine.ui.toast('Unknown Error', 'error')
         return
       }
 
       if (!errorResponse?.response?.data) {
+        MoonShine.ui.toast('Unknown Error', 'error')
         return
       }
 
