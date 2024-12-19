@@ -118,6 +118,10 @@ export default (
     })
   },
   initColumnSelection() {
+    if (!this.table) {
+      return
+    }
+
     if (!this.block) {
       return
     }
