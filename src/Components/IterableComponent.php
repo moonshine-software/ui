@@ -51,7 +51,7 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
 
     public function getItems(): Collection
     {
-        return collect($this->items)->filter();
+        return $this->items = collect($this->items)->filter();
     }
 
     public function paginator(PaginatorContract $paginator): static
