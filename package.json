@@ -15,7 +15,7 @@
         "@types/alpinejs__mask": "^3.13.2",
         "@types/alpinejs__persist": "^3.13.2",
         "autoprefixer": "^10.4.16",
-        "axios": "^1.6.0",
+        "axios": "^1.7.9",
         "concurrently": "^8.2.2",
         "laravel-vite-plugin": "^1.0.0",
         "lodash": "^4.17.21",
