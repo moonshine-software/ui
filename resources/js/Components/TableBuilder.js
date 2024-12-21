@@ -28,6 +28,7 @@ export default (
     this.container = this.$root.closest('.js-table-builder-container')
 
     const removeAfterClone = this.table?.dataset?.removeAfterClone
+    const thead = this.table?.querySelector('thead')
     const tbody = this.table?.querySelector('tbody')
     const tfoot = this.table?.querySelector('tfoot')
 
@@ -37,8 +38,14 @@ export default (
 
     this.lastRow = tbody?.lastElementChild?.cloneNode(true)
 
-    if (this.creatable || removeAfterClone) {
+    if (removeAfterClone) {
       tbody?.lastElementChild?.remove()
+    }
+
+    const stayEmpty = (this.creatable || removeAfterClone) && tbody?.childElementCount === 0
+
+    if (stayEmpty) {
+      thead.style.display = 'none'
     }
 
     if (this.reindex && this.table) {
@@ -80,6 +87,8 @@ export default (
     if (!this.table) {
       return
     }
+
+    this.table.querySelector('thead').style.display = 'table-header-group'
 
     const total = this.table.querySelectorAll('tbody > tr').length
     const limit = this.table.dataset?.creatableLimit

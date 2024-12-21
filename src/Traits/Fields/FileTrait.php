@@ -270,6 +270,6 @@ trait FileTrait
             $this->toValue(withDefault: false)
         );
 
-        $values->diff($this->getRemainingValues())->each(fn (string $file) => $this->deleteFile($file));
+        $values->diff($this->getRemainingValues())->each(fn (?string $file) => $file !== null ? $this->deleteFile($file) : null);
     }
 }

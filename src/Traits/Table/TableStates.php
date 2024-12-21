@@ -263,6 +263,9 @@ trait TableStates
         ]);
     }
 
+    /**
+     * Remove empty table row after clone
+     */
     public function removeAfterClone(): static
     {
         return $this->customAttributes([
