@@ -10,6 +10,7 @@ use MoonShine\Contracts\Core\PageContract;
 use MoonShine\Contracts\Core\ResourceContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ActionButtonContract;
+use MoonShine\Contracts\UI\Collection\ComponentsContract;
 use MoonShine\Core\Collections\Components;
 use MoonShine\Support\AlpineJs;
 use MoonShine\Support\DTOs\AsyncCallback;
@@ -315,6 +316,11 @@ class ActionButton extends MoonShineComponent implements
     public function hasComponents(): bool
     {
         return $this->hasComponent();
+    }
+
+    public function getComponents(): ComponentsContract
+    {
+        return $this->getPreparedComponents();
     }
 
     protected function prepareComponents(): Components
