@@ -58,7 +58,6 @@ final class FormBuilder extends MoonShineComponent implements
     protected iterable $buttons = [];
 
     protected array $excludeFields = [
-        '_force_redirect',
         '_redirect',
         '_method',
         '_component_name',
