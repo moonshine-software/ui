@@ -257,7 +257,7 @@ class Fields extends BaseCollection implements FieldsContract
                     ->setParent($parent);
             }
 
-            if ($parent && !$field->hasWrapper()) {
+            if ($parent && ! $field->hasWrapper()) {
                 $field->customAttributes([
                     'x-id' => "[`field-{$parent->getFormName()}`]",
                 ]);
