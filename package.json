@@ -33,7 +33,6 @@
         "@popperjs/core": "^2.11",
         "alpinejs": "^3.13",
         "choices.js": "^10.2",
-        "codeflask": "^1.4",
         "sortablejs": "^1.15",
         "tippy.js": "^6.3"
     }
