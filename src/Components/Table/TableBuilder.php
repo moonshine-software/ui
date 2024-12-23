@@ -453,10 +453,10 @@ final class TableBuilder extends IterableComponent implements
                     )
                         ->when(
                             $field->isSortActive(),
-                            static fn (Link $link): Link =>$link->icon(
+                            static fn (Link $link): Link => $link->icon(
                                 $field->sortDirectionIs('desc') ? 'bars-arrow-down' : 'bars-arrow-up',
                             ),
-                            static fn (Link $link): Link =>$link->icon('arrows-up-down'),
+                            static fn (Link $link): Link => $link->icon('arrows-up-down'),
                         )
                         ->customAttributes([
                             'class' => $field->isSortActive() ? 'text-primary' : '',
