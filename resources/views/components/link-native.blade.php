@@ -3,7 +3,7 @@
     'filled' => false,
     'badge' => false,
 ])
-<a {{ $attributes->class(['inline-flex items-center gap-1 text-2xs hover:text-primary', 'text-primary' => $filled]) }}>
+<a {{ $attributes->class(['flex items-center gap-1 hover:text-primary', 'text-primary' => $filled]) }}>
     {{ $icon ?? '' }}
     {{ $slot ?? '' }}
     @if($badge !== false)

@@ -337,17 +337,15 @@ class Json extends Field implements
      */
     protected function resolveValue(): mixed
     {
-        $emptyRow = [null];
-
         $value = $this->isPreviewMode()
             ? $this->toFormattedValue()
             : $this->toValue();
 
-        $values = is_iterable($value)
-            ? $value
-            : [$value ?? $emptyRow];
-
-        $values = collect($values);
+        $values = Collection::make(
+            is_iterable($value)
+                ? $value
+                : []
+        );
 
         $fields = $this->getPreparedFields();
 
@@ -363,11 +361,10 @@ class Json extends Field implements
 
         $values = $values->when(
             ! $this->isPreviewMode() && ! $this->isCreatable() && blank($values),
-            static fn ($values): Collection => $values->push($emptyRow)
+            static fn ($values): Collection => $values->push([null])
         );
 
-        $reorderable = ! $this->isPreviewMode()
-            && $this->isReorderable();
+        $reorderable = ! $this->isPreviewMode() && $this->isReorderable();
 
         if ($reorderable) {
             $fields->prepend(
@@ -415,36 +412,6 @@ class Json extends Field implements
                 ! \is_null($this->modifyTable),
                 fn (TableBuilder $tableBuilder) => value($this->modifyTable, $tableBuilder, $this->isPreviewMode())
             );
-    }
-
-    /**
-     * @return array<string, mixed>
-     * @throws Throwable
-     */
-    protected function viewData(): array
-    {
-        $value = $this->getValue();
-
-        if ($this->isObjectMode()) {
-            return [
-                'component' => $value,
-            ];
-        }
-
-        return [
-            'component' => $value
-                ->editable()
-                ->reindex(prepared: true)
-                ->when(
-                    $this->isCreatable(),
-                    fn (TableBuilderContract $table): TableBuilderContract => $table->creatable(
-                        limit: $this->getCreateLimit(),
-                        button: $this->getCreateButton()
-                    )
-                )
-                ->buttons($this->getButtons())
-                ->simple(),
-        ];
     }
 
     /**
@@ -578,5 +545,36 @@ class Json extends Field implements
         }
 
         return $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     * @throws Throwable
+     */
+    protected function viewData(): array
+    {
+        /** @var TableBuilderContract $value */
+        $value = $this->getValue();
+
+        if ($this->isObjectMode()) {
+            return [
+                'component' => $value,
+            ];
+        }
+
+        return [
+            'component' => $value
+                ->editable()
+                ->reindex(prepared: true)
+                ->when(
+                    $this->isCreatable(),
+                    fn (TableBuilderContract $table): TableBuilderContract => $table->creatable(
+                        limit: $this->getCreateLimit(),
+                        button: $this->getCreateButton()
+                    )->removeAfterClone()
+                )
+                ->buttons($this->getButtons())
+                ->simple(),
+        ];
     }
 }

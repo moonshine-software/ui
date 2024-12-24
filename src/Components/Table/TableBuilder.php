@@ -451,11 +451,15 @@ final class TableBuilder extends IterableComponent implements
                         $field->getSortQuery($this->getAsyncUrl()),
                         $field->getLabel(),
                     )
-                        ->icon(
-                            $field->isSortActive() && $field->sortDirectionIs('desc') ? 'bars-arrow-down'
-                                : 'bars-arrow-up',
+                        ->when(
+                            $field->isSortActive(),
+                            static fn (Link $link): Link => $link->icon(
+                                $field->sortDirectionIs('desc') ? 'bars-arrow-down' : 'bars-arrow-up',
+                            ),
+                            static fn (Link $link): Link => $link->icon('arrows-up-down'),
                         )
                         ->customAttributes([
+                            'class' => $field->isSortActive() ? 'text-primary' : '',
                             '@click.prevent' => $this->isAsync() ? 'asyncRequest' : null,
                         ])
                     : $field->getLabel();
