@@ -528,6 +528,13 @@ body.theme-minimalistic {
     @apply dark:bg-dark-800;
   }
 
+  /* Sticky Columns */
+  th {
+    &.sticky-col--right, &.sticky-col--left {
+      @apply bg-dark-50 dark:bg-dark-800;
+    }
+  }
+
   /* Alerts */
   .alert {
     @apply gap-x-2 rounded-md p-2;
