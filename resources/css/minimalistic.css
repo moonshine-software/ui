@@ -530,7 +530,8 @@ body.theme-minimalistic {
 
   /* Sticky Columns */
   th {
-    &.sticky-col--right, &.sticky-col--left {
+    &.sticky-col--right,
+    &.sticky-col--left {
       @apply bg-dark-50 dark:bg-dark-800;
     }
   }

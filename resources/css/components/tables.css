@@ -125,8 +125,10 @@ table {
 }
 
 /* Sticky Columns */
-th, td {
-  &.sticky-col--right, &.sticky-col--left {
+th,
+td {
+  &.sticky-col--right,
+  &.sticky-col--left {
     @apply sticky bg-white dark:bg-dark-600;
   }
   &.sticky-col--right {
@@ -138,7 +140,8 @@ th, td {
 }
 
 th {
-  &.sticky-col--right, &.sticky-col--left {
+  &.sticky-col--right,
+  &.sticky-col--left {
     @apply bg-slate-50 p-4 dark:bg-dark-700;
   }
 }
