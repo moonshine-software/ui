@@ -3,6 +3,10 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
     return
   }
 
+  if (typeof events !== 'string') {
+    return
+  }
+
   if (events.includes('{row-id}') && component.$el !== undefined) {
     const tr = component.$el.closest('tr')
     events = events.replace(/{row-id}/g, tr?.dataset?.rowKey ?? 0)

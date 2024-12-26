@@ -15,7 +15,11 @@ export default (asyncUpdateRoute = '') => ({
     this.withParams = this.$el?.dataset?.asyncWithParams
     this.withQueryParams = this.$el?.dataset?.asyncWithQueryParams ?? false
   },
-  async fragmentUpdate(events, callback = {}) {
+  async fragmentUpdate(events = '', callback = {}) {
+    if (typeof events !== 'string') {
+      events = ''
+    }
+
     if (this.asyncUpdateRoute === '') {
       return
     }
