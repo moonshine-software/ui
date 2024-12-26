@@ -322,7 +322,7 @@ final class TableBuilder extends IterableComponent implements
                     ])->justifyAlign('end'),
                     index: $fields->count() + ($hasBulk ? 1 : 0),
                     builder: fn (TableCellContract $td): TableCellContract => $tdAttributes(
-                        $td->customAttributes(['class' => $this->calculateStickyClass(afterCenter: true)])
+                        $td->customAttributes(['class' => $this->isStickyButtons() ? $this->calculateStickyClass(afterCenter: true) : ''])
                     ),
                 );
 
