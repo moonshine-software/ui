@@ -58,8 +58,8 @@ final class FormBuilder extends MoonShineComponent implements
     protected iterable $buttons = [];
 
     protected array $excludeFields = [
-        '_force_redirect',
         '_redirect',
+        '_without-redirect',
         '_method',
         '_component_name',
         '_async_field',
@@ -236,6 +236,13 @@ final class FormBuilder extends MoonShineComponent implements
             $this->additionalFields[] = Hidden::make('_redirect')
                 ->setValue($uri);
         }
+
+        return $this;
+    }
+
+    public function withoutRedirect(): self
+    {
+        $this->additionalFields[] = Hidden::make('_without-redirect')->setValue(true);
 
         return $this;
     }
