@@ -24,7 +24,7 @@ final class TableCells extends Collection implements TableCellsContract
                 $field->getWrapperAttributes()->jsonSerialize()
             ) : $initialBuilder;
 
-            $stickyClass = $index > ($fields->count()/2) ? 'sticky-col--right' : 'sticky-col--left';
+            $stickyClass = $index > ($fields->count() / 2) ? 'sticky-col--right' : 'sticky-col--left';
 
             $this->pushCell(
                 (string) $field,
@@ -32,7 +32,7 @@ final class TableCells extends Collection implements TableCellsContract
                 $builder,
                 [
                     'data-column-selection' => $field->getIdentity(),
-                    'class' => $field->isStickyColumn() ? $stickyClass : ''
+                    'class' => $field->isStickyColumn() ? $stickyClass : '',
                 ]
             );
 
