@@ -17,18 +17,23 @@ final class TableCells extends Collection implements TableCellsContract
     {
         $initialBuilder = $builder;
 
-        foreach ($fields as $field) {
+        foreach ($fields as $index => $field) {
             $attributes = $field->getWrapperAttributes()->jsonSerialize();
 
             $builder = $attributes !== [] ? static fn (TableCellContract $td): TableCellContract => $td->customAttributes(
                 $field->getWrapperAttributes()->jsonSerialize()
             ) : $initialBuilder;
 
+            $stickyClass = $index > ($fields->count()/2) ? 'sticky-col--right' : 'sticky-col--left';
+
             $this->pushCell(
                 (string) $field,
                 $startIndex,
                 $builder,
-                ['data-column-selection' => $field->getIdentity()]
+                [
+                    'data-column-selection' => $field->getIdentity(),
+                    'class' => $field->isStickyColumn() ? $stickyClass : ''
+                ]
             );
 
             $builder = null;

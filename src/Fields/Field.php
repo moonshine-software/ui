@@ -52,6 +52,8 @@ abstract class Field extends FormElement implements FieldContract
 
     protected bool $columnSelection = true;
 
+    protected bool $stickyColumn = false;
+
     protected bool $nullable = false;
 
     protected bool $isBeforeLabel = false;
@@ -122,6 +124,18 @@ abstract class Field extends FormElement implements FieldContract
     public function isColumnSelection(): bool
     {
         return $this->columnSelection;
+    }
+
+    public function sticky(): static
+    {
+        $this->stickyColumn = true;
+
+        return $this;
+    }
+
+    public function isStickyColumn(): bool
+    {
+        return $this->stickyColumn;
     }
 
     public function nullable(Closure|bool|null $condition = null): static

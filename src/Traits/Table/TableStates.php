@@ -45,6 +45,8 @@ trait TableStates
 
     protected bool $isSticky = false;
 
+    protected bool $isStickyButtons = false;
+
     protected bool $isLazy = false;
 
     protected bool $isColumnSelection = false;
@@ -216,6 +218,23 @@ trait TableStates
         return $this->isSticky;
     }
 
+    public function stickyButtons(): static
+    {
+        $this->isStickyButtons = true;
+
+        return $this;
+    }
+
+    public function isStickyButtons(): bool
+    {
+        return $this->isStickyButtons;
+    }
+
+    public function calculateStickyClass(bool $afterCenter = false): string
+    {
+        return $afterCenter ? 'sticky-col--right' : 'sticky-col--left';
+    }
+
     public function lazy(): static
     {
         $this->isLazy = true;
@@ -282,6 +301,7 @@ trait TableStates
      *     reorderable: bool,
      *     simple: bool,
      *     sticky: bool,
+     *     stickyButtons: bool,
      *     searchable: bool,
      *     searchValue: string,
      *     columnSelection: bool,
@@ -297,6 +317,7 @@ trait TableStates
             'reorderable' => $this->isReorderable(),
             'simple' => $this->isSimple(),
             'sticky' => $this->isSticky(),
+            'stickyButtons' => $this->isStickyButtons(),
             'lazy' => $this->isLazy(),
             'columnSelection' => $this->isColumnSelection(),
             'searchable' => $this->isSearchable(),
