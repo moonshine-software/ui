@@ -85,6 +85,11 @@ table {
     }
   }
 
+  td,
+  th {
+    @apply bg-inherit;
+  }
+
   &[data-click-action] {
     tbody {
       tr {
@@ -129,19 +134,12 @@ th,
 td {
   &.sticky-col--right,
   &.sticky-col--left {
-    @apply sticky bg-white dark:bg-dark-600;
+    @apply sticky backdrop-blur;
   }
   &.sticky-col--right {
     @apply right-0;
   }
   &.sticky-col--left {
     @apply left-0;
-  }
-}
-
-th {
-  &.sticky-col--right,
-  &.sticky-col--left {
-    @apply bg-slate-50 p-4 dark:bg-dark-700;
   }
 }
