@@ -132,14 +132,7 @@ table {
 /* Sticky Columns */
 th,
 td {
-  &.sticky-col--right,
-  &.sticky-col--left {
+  &.sticky-col {
     @apply sticky backdrop-blur;
-  }
-  &.sticky-col--right {
-    @apply right-0;
-  }
-  &.sticky-col--left {
-    @apply left-0;
   }
 }

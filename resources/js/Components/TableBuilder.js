@@ -22,6 +22,7 @@ export default (
   creatable: creatable,
   reindex: reindex,
   loading: false,
+  stickyColClass: 'sticky-col',
   init() {
     this.block = this.$root
     this.table = this.$root.querySelector('table')
@@ -70,6 +71,12 @@ export default (
 
     if (this.table) {
       this.actions('row', this.table.id)
+
+      if (this.table.querySelectorAll(`.${this.stickyColClass}`)?.length) {
+        this.$nextTick().then(() => this.updateStickyColumns())
+
+        this.initStickyColumnsEvents()
+      }
     }
 
     if (this.container?.dataset?.lazy) {
@@ -286,5 +293,84 @@ export default (
           ?.click()
         break
     }
+  },
+
+  /**
+   * Initializes event listeners for updating sticky columns.
+   *
+   * Sets up event listeners to update the positions of sticky columns
+   * when the window is resized or when the content of the table changes.
+   *
+   * @method initStickyColumnsEvents
+   */
+  initStickyColumnsEvents() {
+    const observer = new MutationObserver(this.updateStickyColumns.bind(this))
+    observer.observe(this.table, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+    })
+  },
+
+  /**
+   * Updates the positions of sticky columns.
+   *
+   * Calculates the left offset for each sticky column and updates their
+   * positions accordingly. It is called whenever the window is resized
+   * or the content of the table changes.
+   *
+   */
+  updateStickyColumns() {
+    const headerRow = this.table?.querySelector('thead tr')
+    const headerCells = headerRow?.querySelectorAll('th')
+    const bodyRows = this.table?.querySelectorAll('tbody tr')
+    if (!headerRow || !headerCells || !bodyRows) {
+      return
+    }
+
+    const stickyHeaders = Array.from(headerCells).filter(cell =>
+      cell.classList.contains(this.stickyColClass),
+    )
+    const centerIndex = Math.floor(headerCells.length / 2)
+
+    let leftOffset = 0
+    let rightOffset = 0
+
+    // Calculate left offsets
+    stickyHeaders.forEach(header => {
+      const index = Array.from(headerCells).indexOf(header)
+
+      if (index <= centerIndex) {
+        header.style.left = `${leftOffset}px`
+        leftOffset += header.offsetWidth
+      }
+    })
+
+    // Calculate right offsets
+    for (let i = stickyHeaders.length - 1; i >= 0; i--) {
+      const header = stickyHeaders[i]
+      const index = Array.from(headerCells).indexOf(header)
+      if (index > centerIndex) {
+        header.style.right = `${rightOffset}px`
+        rightOffset += header.offsetWidth
+      }
+    }
+
+    // Apply the same values to TD cells
+    bodyRows.forEach(row => {
+      const cells = row.querySelectorAll('td')
+      stickyHeaders.forEach(header => {
+        const index = Array.from(headerCells).indexOf(header)
+        const cell = cells[index]
+        if (cell) {
+          if (index < centerIndex) {
+            cell.style.left = header.style.left
+          } else {
+            cell.style.right = header.style.right
+          }
+        }
+      })
+    })
   },
 })
