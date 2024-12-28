@@ -73,9 +73,9 @@ export default (
       this.actions('row', this.table.id)
 
       if (this.table.querySelectorAll(`.${this.stickyColClass}`)?.length) {
-        this.$nextTick().then(() => this.updateStickyColumns())
-
-        this.initStickyColumnsEvents()
+        this.$nextTick().then(() => {
+          this.initStickyColumns()
+        })
       }
     }
 
@@ -296,14 +296,15 @@ export default (
   },
 
   /**
-   * Initializes event listeners for updating sticky columns.
+   * Initializes sticky columns and event listeners for updating sticky columns.
    *
    * Sets up event listeners to update the positions of sticky columns
    * when the window is resized or when the content of the table changes.
    *
-   * @method initStickyColumnsEvents
    */
-  initStickyColumnsEvents() {
+  initStickyColumns() {
+    this.updateStickyColumns()
+
     const observer = new MutationObserver(this.updateStickyColumns.bind(this))
     observer.observe(this.table, {
       childList: true,
