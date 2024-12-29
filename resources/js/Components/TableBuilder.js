@@ -323,24 +323,25 @@ export default (
    *
    */
   updateStickyColumns() {
-    const headerRow = this.table?.querySelector('thead tr')
-    const headerCells = headerRow?.querySelectorAll('th')
-    const bodyRows = this.table?.querySelectorAll('tbody tr')
-    if (!headerRow || !headerCells || !bodyRows) {
-      return
-    }
+    const trs = Array.from(this.table?.querySelectorAll('tr') || [])
+    const trsWithStickyCol = trs.filter(tr => tr.querySelector(`.${this.stickyColClass}`))
+    if(trsWithStickyCol.length < 1) return
 
-    const stickyHeaders = Array.from(headerCells).filter(cell =>
+    const refRow = trsWithStickyCol[0]
+    const refRowCells = Array.from(refRow.querySelectorAll('td,th') || [])
+    const otherRows = trs.filter(tr => tr !== refRow);
+
+    const stickyCells = refRowCells.filter(cell =>
       cell.classList.contains(this.stickyColClass),
     )
-    const centerIndex = Math.floor(headerCells.length / 2)
+    const centerIndex = Math.floor(refRowCells.length / 2)
 
     let leftOffset = 0
     let rightOffset = 0
 
     // Calculate left offsets
-    stickyHeaders.forEach(header => {
-      const index = Array.from(headerCells).indexOf(header)
+    stickyCells.forEach(header => {
+      const index = refRowCells.indexOf(header)
 
       if (index <= centerIndex) {
         header.style.left = `${leftOffset}px`
@@ -349,26 +350,26 @@ export default (
     })
 
     // Calculate right offsets
-    for (let i = stickyHeaders.length - 1; i >= 0; i--) {
-      const header = stickyHeaders[i]
-      const index = Array.from(headerCells).indexOf(header)
+    for (let i = stickyCells.length - 1; i >= 0; i--) {
+      const ref = stickyCells[i]
+      const index = refRowCells.indexOf(ref)
       if (index > centerIndex) {
-        header.style.right = `${rightOffset}px`
-        rightOffset += header.offsetWidth
+        ref.style.right = `${rightOffset}px`
+        rightOffset += ref.offsetWidth
       }
     }
 
     // Apply the same values to TD cells
-    bodyRows.forEach(row => {
+    otherRows.forEach(row => {
       const cells = row.querySelectorAll('td')
-      stickyHeaders.forEach(header => {
-        const index = Array.from(headerCells).indexOf(header)
+      stickyCells.forEach(stCell => {
+        const index = refRowCells.indexOf(stCell)
         const cell = cells[index]
         if (cell) {
           if (index < centerIndex) {
-            cell.style.left = header.style.left
+            cell.style.left = stCell.style.left
           } else {
-            cell.style.right = header.style.right
+            cell.style.right = stCell.style.right
           }
         }
       })
