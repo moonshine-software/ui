@@ -123,7 +123,7 @@ trait ShowWhen
         return $this->showWhen($column, $operator, $value);
     }
 
-    public function showWhenRange(
+    protected function showWhenRange(
         string $column,
         mixed $operator = null,
         mixed $value = null
