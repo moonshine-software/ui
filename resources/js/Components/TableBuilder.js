@@ -325,15 +325,13 @@ export default (
   updateStickyColumns() {
     const trs = Array.from(this.table?.querySelectorAll('tr') || [])
     const trsWithStickyCol = trs.filter(tr => tr.querySelector(`.${this.stickyColClass}`))
-    if(trsWithStickyCol.length < 1) return
+    if (trsWithStickyCol.length < 1) return
 
     const refRow = trsWithStickyCol[0]
     const refRowCells = Array.from(refRow.querySelectorAll('td,th') || [])
-    const otherRows = trs.filter(tr => tr !== refRow);
+    const otherRows = trs.filter(tr => tr !== refRow)
 
-    const stickyCells = refRowCells.filter(cell =>
-      cell.classList.contains(this.stickyColClass),
-    )
+    const stickyCells = refRowCells.filter(cell => cell.classList.contains(this.stickyColClass))
     const centerIndex = Math.floor(refRowCells.length / 2)
 
     let leftOffset = 0
