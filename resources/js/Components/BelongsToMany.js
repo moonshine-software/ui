@@ -38,7 +38,7 @@ export default () => ({
       this.$dispatch('table_reindex:' + tableName)
     }
   },
-  tree(checked = {}) {
+  tree(checked = []) {
     checked.forEach(value => {
       this.$el
         .querySelectorAll('input[value="' + value + '"]')
