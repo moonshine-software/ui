@@ -11,4 +11,7 @@ use MoonShine\Contracts\UI\FieldContract;
  */
 interface RangeFieldContract
 {
+    public function getFromField(): string;
+
+    public function getToField(): string;
 }

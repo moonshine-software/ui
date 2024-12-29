@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits\Fields;
 
 use InvalidArgumentException;
+use MoonShine\UI\Contracts\RangeFieldContract;
 
 trait ShowWhen
 {
@@ -55,11 +56,33 @@ trait ShowWhen
         return $this;
     }
 
+    public function modifyShowFieldRangeName(): static
+    {
+        if(! $this instanceof RangeFieldContract) {
+            return $this;
+        }
+
+        $this->showWhenCondition = array_map(function (array $item) {
+            $item['showField'] = $item['range_type'] === 'from'
+                ? $this->getNameAttribute($this->getFromField())
+                : $this->getNameAttribute($this->getToField());
+
+            return $item;
+        }, $this->showWhenCondition);
+
+        return $this;
+    }
+
     public function showWhen(
         string $column,
         mixed $operator = null,
         mixed $value = null
     ): static {
+        if($this instanceof RangeFieldContract) {
+            $this->showWhenRange($column, $operator, $value);
+            return $this;
+        }
+
         $this->showWhenData = $this->makeCondition(...\func_get_args());
         [$column, $value, $operator] = $this->showWhenData;
         $this->showWhenState = true;
@@ -98,6 +121,36 @@ trait ShowWhen
         }
 
         return $this->showWhen($column, $operator, $value);
+    }
+
+    public function showWhenRange(
+        string $column,
+        mixed $operator = null,
+        mixed $value = null
+    ): static {
+        if(! $this instanceof RangeFieldContract) {
+            return $this;
+        }
+
+        $this->showWhenData = $this->makeCondition(...\func_get_args());
+        [$column, $value, $operator] = $this->showWhenData;
+        $this->showWhenState = true;
+
+        $showWhenCondition = [
+            'object_id' => (string) spl_object_id($this),
+            'showField' => $this->getNameAttribute($this->getFromField()),
+            'changeField' => $this->getDotNestedToName($column),
+            'operator' => $operator,
+            'value' => $value,
+            'range_type' => 'from'
+        ];
+        $this->showWhenCondition[] = $showWhenCondition;
+
+        $showWhenCondition['showField'] = $this->getNameAttribute($this->getToField());
+        $showWhenCondition['range_type'] = 'to';
+        $this->showWhenCondition[] = $showWhenCondition;
+
+        return $this;
     }
 
     protected function makeCondition(
