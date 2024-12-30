@@ -22,6 +22,16 @@ trait RangeTrait
 
     protected ?ComponentAttributesBagContract $toAttributes = null;
 
+    public function getFromField(): string
+    {
+        return $this->fromField;
+    }
+
+    public function getToField(): string
+    {
+        return $this->toField;
+    }
+
     public function fromAttributes(array $attributes): static
     {
         $this->fromAttributes = $this->getAttributes()
@@ -80,6 +90,8 @@ trait RangeTrait
     {
         $this->fromField = $fromField;
         $this->toField = $toField;
+
+        $this->modifyShowFieldRangeName();
 
         return $this;
     }
