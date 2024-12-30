@@ -58,7 +58,7 @@ trait ShowWhen
 
     public function modifyShowFieldRangeName(): static
     {
-        if(! $this instanceof RangeFieldContract) {
+        if (! $this instanceof RangeFieldContract) {
             return $this;
         }
 
@@ -78,8 +78,9 @@ trait ShowWhen
         mixed $operator = null,
         mixed $value = null
     ): static {
-        if($this instanceof RangeFieldContract) {
+        if ($this instanceof RangeFieldContract) {
             $this->showWhenRange($column, $operator, $value);
+
             return $this;
         }
 
@@ -128,7 +129,7 @@ trait ShowWhen
         mixed $operator = null,
         mixed $value = null
     ): static {
-        if(! $this instanceof RangeFieldContract) {
+        if (! $this instanceof RangeFieldContract) {
             return $this;
         }
 
@@ -142,7 +143,7 @@ trait ShowWhen
             'changeField' => $this->getDotNestedToName($column),
             'operator' => $operator,
             'value' => $value,
-            'range_type' => 'from'
+            'range_type' => 'from',
         ];
         $this->showWhenCondition[] = $showWhenCondition;
 
