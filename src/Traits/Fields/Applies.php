@@ -6,6 +6,7 @@ namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
 use MoonShine\Contracts\Core\DependencyInjection\AppliesRegisterContract;
+use MoonShine\Contracts\UI\ApplyContract;
 use MoonShine\Contracts\UI\FieldContract;
 
 trait Applies
@@ -57,6 +58,16 @@ trait Applies
     }
 
     /**
+     * @param  ?class-string  $for
+     */
+    public function getApplyClass(string $type = 'fields', ?string $for = null): ?ApplyContract
+    {
+        return $this->getCore()
+            ->getContainer(AppliesRegisterContract::class)
+            ?->findByField($this, $type, $for);
+    }
+
+    /**
      * @template D
      * @param  Closure(D $data, mixed $value, static $ctx): D  $default
      * @param  D  $data
@@ -70,9 +81,7 @@ trait Applies
         }
 
         if (\is_null($this->onApply) && ! $this->isConsoleMode()) {
-            $classApply = $this->getCore()
-                ->getContainer(AppliesRegisterContract::class)
-                ->findByField($this);
+            $classApply = $this->getApplyClass();
 
             $this->when(
                 ! \is_null($classApply),
