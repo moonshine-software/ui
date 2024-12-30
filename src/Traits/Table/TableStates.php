@@ -230,9 +230,9 @@ trait TableStates
         return $this->isStickyButtons;
     }
 
-    public function calculateStickyClass(bool $afterCenter = false): string
+    public function getStickyClass(): string
     {
-        return $afterCenter ? 'sticky-col--right' : 'sticky-col--left';
+        return 'sticky-col';
     }
 
     public function lazy(): static

@@ -17,14 +17,14 @@ final class TableCells extends Collection implements TableCellsContract
     {
         $initialBuilder = $builder;
 
-        foreach ($fields as $index => $field) {
+        foreach ($fields as $field) {
             $attributes = $field->getWrapperAttributes()->jsonSerialize();
 
             $builder = $attributes !== [] ? static fn (TableCellContract $td): TableCellContract => $td->customAttributes(
                 $field->getWrapperAttributes()->jsonSerialize()
             ) : $initialBuilder;
 
-            $stickyClass = $index > ($fields->count() / 2) ? 'sticky-col--right' : 'sticky-col--left';
+            $stickyClass = 'sticky-col';
 
             $this->pushCell(
                 (string) $field,

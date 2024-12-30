@@ -322,7 +322,7 @@ final class TableBuilder extends IterableComponent implements
                     ])->justifyAlign('end'),
                     index: $fields->count() + ($hasBulk ? 1 : 0),
                     builder: fn (TableCellContract $td): TableCellContract => $tdAttributes(
-                        $td->customAttributes(['class' => $this->isStickyButtons() ? $this->calculateStickyClass(afterCenter: true) : ''])
+                        $td->customAttributes(['class' => $this->isStickyButtons() ? $this->getStickyClass() : ''])
                     ),
                 );
 
@@ -470,7 +470,7 @@ final class TableBuilder extends IterableComponent implements
                 $cells->push(
                     TableTh::make($thContent, $index)
                         ->customAttributes(['data-column-selection' => $field->getIdentity()])
-                        ->customAttributes(['class' => $field->isStickyColumn() ? $this->calculateStickyClass(afterCenter: $index > ($fields->count() / 2)) : ''])
+                        ->customAttributes(['class' => $field->isStickyColumn() ? $this->getStickyClass() : ''])
                         ->customAttributes($tdAttributes($index)),
                 );
 
@@ -481,7 +481,7 @@ final class TableBuilder extends IterableComponent implements
                 $this->hasButtons(),
                 fn (): TableTh => TableTh::make('', $index)
                     ->customAttributes($tdAttributes($index))
-                    ->customAttributes(['class' => $this->isStickyButtons() ? $this->calculateStickyClass(afterCenter: true) : '']),
+                    ->customAttributes(['class' => $this->isStickyButtons() ? $this->getStickyClass() : '']),
             );
         }
 
