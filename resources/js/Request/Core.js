@@ -36,7 +36,7 @@ export default function request(
     .then(function (response) {
       t.loading = false
 
-      const data = response.data
+      const data = response.data ?? {}
       const contentDisposition = response.headers['content-disposition']
 
       if (componentRequestData.hasBeforeHandleResponse()) {
