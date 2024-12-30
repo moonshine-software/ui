@@ -64,7 +64,7 @@ trait RangeTrait
 
     public function getFromAttributes(): ComponentAttributesBagContract
     {
-        return $this->reformatAttributes($this->fromAttributes, $this->fromField);
+        return $this->reformatAttributes($this->fromAttributes, $this->getFromField());
     }
 
     public function toAttributes(array $attributes): static
@@ -83,7 +83,7 @@ trait RangeTrait
 
     public function getToAttributes(): ComponentAttributesBagContract
     {
-        return $this->reformatAttributes($this->toAttributes, $this->toField);
+        return $this->reformatAttributes($this->toAttributes, $this->getToField());
     }
 
     public function fromTo(string $fromField, string $toField): static
@@ -98,12 +98,12 @@ trait RangeTrait
 
     public function getNameDotFrom(): string
     {
-        return "{$this->getNameDot()}.$this->fromField";
+        return "{$this->getNameDot()}.{$this->getFromField()}";
     }
 
     public function getNameDotTo(): string
     {
-        return "{$this->getNameDot()}.$this->toField";
+        return "{$this->getNameDot()}.{$this->getToField()}";
     }
 
     protected function reformatFilledValue(mixed $data): mixed
@@ -123,7 +123,7 @@ trait RangeTrait
                 : $raw;
         }
 
-        if (empty($values[$this->fromField]) && empty($values[$this->toField])) {
+        if (empty($values[$this->getFromField()]) && empty($values[$this->getToField()])) {
             return new FieldEmptyValue();
         }
 
@@ -133,8 +133,8 @@ trait RangeTrait
     protected function extractFromTo(array $data): array
     {
         return [
-            $this->fromField => $data[$this->fromField] ?? data_get($this->getDefault(), $this->fromField, $this->min),
-            $this->toField => $data[$this->toField] ?? data_get($this->getDefault(), $this->toField, $this->max),
+            $this->getFromField() => $data[$this->getFromField()] ?? data_get($this->getDefault(), $this->getFromField(), $this->min),
+            $this->getToField() => $data[$this->getToField()] ?? data_get($this->getDefault(), $this->getToField(), $this->max),
         ];
     }
 
@@ -164,8 +164,8 @@ trait RangeTrait
             return '';
         }
 
-        $from = $value[$this->fromField] ?? $this->min;
-        $to = $value[$this->toField] ?? $this->max;
+        $from = $value[$this->getFromField()] ?? $this->min;
+        $to = $value[$this->getToField()] ?? $this->max;
 
         if ($this->isRawMode()) {
             return "$from - $to";
@@ -193,8 +193,8 @@ trait RangeTrait
                 return $item;
             }
 
-            data_set($item, $this->fromField, $values[$this->fromField] ?? '');
-            data_set($item, $this->toField, $values[$this->toField] ?? '');
+            data_set($item, $this->getFromField(), $values[$this->getFromField()] ?? '');
+            data_set($item, $this->getToField(), $values[$this->getToField()] ?? '');
 
             return $item;
         };
@@ -206,14 +206,14 @@ trait RangeTrait
             $this->fromAttributes(
                 AlpineJs::onChangeSaveField(
                     $url,
-                    $this->fromField,
+                    $this->getFromField(),
                 )
             );
 
             $this->toAttributes(
                 AlpineJs::onChangeSaveField(
                     $url,
-                    $this->toField,
+                    $this->getToField(),
                 )
             );
         }
@@ -227,10 +227,10 @@ trait RangeTrait
 
         $this
             ->fromAttributes([
-                'name' => $this->getNameAttribute($this->fromField),
+                'name' => $this->getNameAttribute($this->getFromField()),
             ])
             ->toAttributes([
-                'name' => $this->getNameAttribute($this->toField),
+                'name' => $this->getNameAttribute($this->getToField()),
             ]);
     }
 

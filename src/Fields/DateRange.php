@@ -64,11 +64,11 @@ class DateRange extends Field implements HasDefaultValueContract, CanBeArray, Ra
     private function extractDates(array $value, string $format): array
     {
         return [
-            $this->fromField => isset($value[$this->fromField])
-                ? Carbon::parse($value[$this->fromField])->format($format)
+            $this->getFromField() => isset($value[$this->getFromField()])
+                ? Carbon::parse($value[$this->getFromField()])->format($format)
                 : '',
-            $this->toField => isset($value[$this->toField])
-                ? Carbon::parse($value[$this->toField])->format($format)
+            $this->getToField() => isset($value[$this->getToField()])
+                ? Carbon::parse($value[$this->getToField()])->format($format)
                 : '',
         ];
     }
@@ -77,8 +77,8 @@ class DateRange extends Field implements HasDefaultValueContract, CanBeArray, Ra
     {
         if ($this->isNullRange()) {
             return [
-                $this->fromField => null,
-                $this->toField => null,
+                $this->getFromField() => null,
+                $this->getToField() => null,
             ];
         }
 
@@ -93,7 +93,7 @@ class DateRange extends Field implements HasDefaultValueContract, CanBeArray, Ra
 
         $value = $this->toValue(withDefault: false);
 
-        return "{$value[$this->fromField]} - {$value[$this->toField]}";
+        return "{$value[$this->getFromField()]} - {$value[$this->getToField()]}";
     }
 
     protected function resolvePreview(): string
@@ -106,20 +106,20 @@ class DateRange extends Field implements HasDefaultValueContract, CanBeArray, Ra
 
         $dates = $this->extractDates($value, $this->getFormat());
 
-        return "{$dates[$this->fromField]} - {$dates[$this->toField]}";
+        return "{$dates[$this->getFromField()]} - {$dates[$this->getToField()]}";
     }
 
     protected function viewData(): array
     {
         return [
-            'fromField' => $this->fromField,
-            'toField' => $this->toField,
+            'fromField' => $this->getFromField(),
+            'toField' => $this->getToField(),
             'min' => $this->min,
             'max' => $this->max,
             'fromColumn' => "date_range_from_{$this->getIdentity()}",
             'toColumn' => "date_range_to_{$this->getIdentity()}",
-            'fromValue' => data_get($this->getValue(), $this->fromField, $this->min),
-            'toValue' => data_get($this->getValue(), $this->toField, $this->max),
+            'fromValue' => data_get($this->getValue(), $this->getFromField(), $this->min),
+            'toValue' => data_get($this->getValue(), $this->getToField(), $this->max),
             'fromAttributes' => $this->getFromAttributes(),
             'toAttributes' => $this->getToAttributes(),
         ];
