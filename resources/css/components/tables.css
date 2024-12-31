@@ -133,6 +133,6 @@ table {
 th,
 td {
   &.sticky-col {
-    @apply lg:sticky lg:backdrop-blur;
+    @apply md:sticky md:backdrop-blur;
   }
 }
