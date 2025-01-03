@@ -199,7 +199,7 @@ abstract class Field extends FormElement implements FieldContract
         string $method,
         array|Closure $params = [],
         ?string $message = null,
-        ?string $selector = null,
+        null|string|array $selector = null,
         array $events = [],
         ?AsyncCallback $callback = null,
         ?PageContract $page = null,
@@ -232,7 +232,7 @@ abstract class Field extends FormElement implements FieldContract
         Closure $url,
         HttpMethod $method = HttpMethod::PUT,
         array $events = [],
-        ?string $selector = null,
+        null|string|array $selector = null,
         ?AsyncCallback $callback = null,
     ): static {
         $this->onChangeUrl = $url;
@@ -248,7 +248,7 @@ abstract class Field extends FormElement implements FieldContract
     protected function onChangeAttributes(
         HttpMethod $method = HttpMethod::GET,
         array $events = [],
-        ?string $selector = null,
+        null|string|array $selector = null,
         ?AsyncCallback $callback = null
     ): static {
         return $this->customAttributes(

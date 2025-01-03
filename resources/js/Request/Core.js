@@ -52,9 +52,13 @@ export default function request(
       }
 
       if (componentRequestData.selector) {
-        const elements = document.querySelectorAll(componentRequestData.selector)
-        elements.forEach(element => {
-          element.innerHTML = data.html ? data.html : data
+        const selectors = componentRequestData.selector.split(',')
+
+        selectors.forEach(function (selector) {
+          let elements = document.querySelectorAll(selector)
+          elements.forEach(element => {
+            element.innerHTML = data.html[selector] ?? (data.html ? data.html : data)
+          })
         })
       }
 
