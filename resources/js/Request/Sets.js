@@ -36,6 +36,8 @@ export function listComponentRequest(component, pushState = false) {
     delete eventData.sort
   }
 
+  const originalUrl = url
+
   url = urlWithQuery(url, getQueryString(eventData))
 
   let stopLoading = function (data, t) {
@@ -45,7 +47,7 @@ export function listComponentRequest(component, pushState = false) {
   let componentRequestData = new ComponentRequestData()
   componentRequestData
     .withBeforeHandleResponse(function (data, t) {
-      const query = url.slice(url.indexOf('?') + 1)
+      const query = originalUrl.slice(originalUrl.indexOf('?') + 1)
 
       if (pushState) {
         history.pushState({}, '', query ? '?' + query : location.pathname)
