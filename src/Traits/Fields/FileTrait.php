@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Support\Collection;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Support\Components\MoonShineComponentAttributeBag;
+use MoonShine\Support\DTOs\FileItemExtra;
 use MoonShine\UI\Traits\WithStorage;
 
 trait FileTrait
@@ -26,8 +27,11 @@ trait FileTrait
     /** @var ?Closure(string, int): string */
     protected ?Closure $names = null;
 
-    /** @var ?Closure(string, int): string */
+    /** @var ?Closure(string, int): array */
     protected ?Closure $itemAttributes = null;
+
+    /** @var ?Closure(string, int): ?FileItemExtra */
+    protected ?Closure $extraAttributes = null;
 
     /** @var ?Closure(static): Collection */
     protected ?Closure $remainingValuesResolver = null;
@@ -57,7 +61,7 @@ trait FileTrait
     }
 
     /**
-     * @param  Closure(string $filename, int $index): string  $callback
+     * @param  Closure(string $filename, int $index): array  $callback
      */
     public function itemAttributes(Closure $callback): static
     {
@@ -79,6 +83,30 @@ trait FileTrait
             return new MoonShineComponentAttributeBag(
                 (array) \call_user_func($this->itemAttributes, $filename, $index)
             );
+        };
+    }
+
+    /**
+     * @param  Closure(string $filename, int $index): ?FileItemExtra  $callback
+     */
+    public function extraAttributes(Closure $callback): static
+    {
+        $this->extraAttributes = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @return Closure(string $filename, int $index): ?FileItemExtra
+     */
+    public function resolveExtraAttributes(): Closure
+    {
+        return function (string $filename, int $index = 0): ?FileItemExtra {
+            if (\is_null($this->extraAttributes)) {
+                return null;
+            }
+
+            return \call_user_func($this->extraAttributes, $filename, $index);
         };
     }
 
