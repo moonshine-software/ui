@@ -1,7 +1,11 @@
 import Choices from 'choices.js'
 import {createPopper} from '@popperjs/core'
 import debounce from '../Support/Debounce.js'
-import {crudFormQuery, prepareFormData} from '../Support/Forms.js'
+import {
+  crudFormQuery,
+  getQueryString,
+  prepareFormData,
+} from '../Support/Forms.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {formToJSON} from 'axios'
 import {DEFAULT_CONFIG} from 'choices.js/src/scripts/defaults'
@@ -195,7 +199,13 @@ export default (asyncUrl = '') => ({
       ...this.customOptions,
     })
 
-    this.$el.addEventListener('change', () => (this.isLoadedOptions = false), false)
+    this.$el.addEventListener('change', () => {
+      this.isLoadedOptions = false
+
+      if(this.$el.getAttribute('multiple')) {
+        this.$el.setAttribute('data-choices-value', this.choicesInstance.getValue(true).join(','))
+      }
+    }, false)
 
     if (asyncUrl) {
       this.$el.addEventListener(
@@ -274,6 +284,8 @@ export default (asyncUrl = '') => ({
 
     if (this.removeItemButton) {
       this.$el.parentElement.addEventListener('click', event => {
+        event.target.closest('.choices')?.querySelector('select')?.focus()
+
         if (event.target.classList.contains('choices__button--remove')) {
           const choiceElement = event.target.closest('.choices__item')
           const id = choiceElement.getAttribute('data-id')
@@ -325,6 +337,10 @@ export default (asyncUrl = '') => ({
         formQuery = crudFormQuery(inputs)
       }
 
+      if(form === null) {
+        formQuery = getQueryString({value: this.choicesInstance.getValue(true)})
+      }
+
       options = await this.fromUrl(url.toString() + (formQuery.length ? '&' + formQuery : ''))
       options = options.map(item => {
         const {properties, ...other} = item
@@ -344,7 +360,7 @@ export default (asyncUrl = '') => ({
     if (exclude !== '*') {
       extra['_data'] = form
         ? formToJSON(prepareFormData(new FormData(form), exclude))
-        : {value: this.$el.value}
+        : {value: this.choicesInstance.getValue(true)}
     }
 
     de(componentEvent, '', this, extra)
