@@ -1,11 +1,7 @@
 import Choices from 'choices.js'
 import {createPopper} from '@popperjs/core'
 import debounce from '../Support/Debounce.js'
-import {
-  crudFormQuery,
-  getQueryString,
-  prepareFormData,
-} from '../Support/Forms.js'
+import {crudFormQuery, getQueryString, prepareFormData} from '../Support/Forms.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {formToJSON} from 'axios'
 import {DEFAULT_CONFIG} from 'choices.js/src/scripts/defaults'
@@ -199,13 +195,17 @@ export default (asyncUrl = '') => ({
       ...this.customOptions,
     })
 
-    this.$el.addEventListener('change', () => {
-      this.isLoadedOptions = false
+    this.$el.addEventListener(
+      'change',
+      () => {
+        this.isLoadedOptions = false
 
-      if(this.$el.getAttribute('multiple')) {
-        this.$el.setAttribute('data-choices-value', this.choicesInstance.getValue(true).join(','))
-      }
-    }, false)
+        if (this.$el.getAttribute('multiple')) {
+          this.$el.setAttribute('data-choices-value', this.choicesInstance.getValue(true).join(','))
+        }
+      },
+      false,
+    )
 
     if (asyncUrl) {
       this.$el.addEventListener(
@@ -337,7 +337,7 @@ export default (asyncUrl = '') => ({
         formQuery = crudFormQuery(inputs)
       }
 
-      if(form === null) {
+      if (form === null) {
         formQuery = getQueryString({value: this.choicesInstance.getValue(true)})
       }
 
