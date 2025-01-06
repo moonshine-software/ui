@@ -195,14 +195,14 @@ export default (asyncUrl = '') => ({
       ...this.customOptions,
     })
 
+    this.setDataValues()
+
     this.$el.addEventListener(
       'change',
       () => {
         this.isLoadedOptions = false
 
-        if (this.$el.getAttribute('multiple')) {
-          this.$el.setAttribute('data-choices-value', this.choicesInstance.getValue(true).join(','))
-        }
+        this.setDataValues()
       },
       false,
     )
@@ -315,6 +315,11 @@ export default (asyncUrl = '') => ({
           }
         }
       })
+    }
+  },
+  setDataValues() {
+    if (this.$el.getAttribute('multiple')) {
+      this.$el.setAttribute('data-choices-value', this.choicesInstance.getValue(true).join(','))
     }
   },
   async asyncSearch() {
