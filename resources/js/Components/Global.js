@@ -30,9 +30,7 @@ export default () => ({
     let extra = {}
 
     if (form) {
-      extra = formToJSON(
-        prepareFormData(new FormData(form), '_component_name,_token,_method,page'),
-      )
+      extra = formToJSON(prepareFormData(new FormData(form), '_component_name,_token,_method,page'))
     }
 
     request(
@@ -42,7 +40,7 @@ export default () => ({
       {
         value: value,
         field: column,
-        _data: extra
+        _data: extra,
       },
       {},
       componentRequestData,
