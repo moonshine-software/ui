@@ -1,5 +1,7 @@
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import request from '../Request/Core.js'
+import {formToJSON} from 'axios'
+import {prepareFormData} from '../Support/Forms.js'
 
 export default () => ({
   saveField(route, column, value = null) {
@@ -24,6 +26,15 @@ export default () => ({
     const componentRequestData = new ComponentRequestData()
     componentRequestData.fromDataset(this.$el?.dataset ?? {})
 
+    const form = this.$el.closest('form')
+    let extra = {}
+
+    if (form) {
+      extra = formToJSON(
+        prepareFormData(new FormData(form), '_component_name,_token,_method,page'),
+      )
+    }
+
     request(
       this,
       route,
@@ -31,6 +42,7 @@ export default () => ({
       {
         value: value,
         field: column,
+        _data: extra
       },
       {},
       componentRequestData,
