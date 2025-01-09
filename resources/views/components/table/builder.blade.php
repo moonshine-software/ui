@@ -32,11 +32,10 @@
     {{ (int) $async }},
     '{{ $asyncUrl }}'
 )"
-         data-pushstate="{{ $attributes->get('data-pushstate', false)}}"
         @defineEvent('table_row_added', $name, 'add(true)')
         @defineEvent('table_reindex', $name, 'resolveReindex')
         @defineEventWhen($async, 'table_updated', $name, 'asyncRequest')
-        {{ $attributes->only(['data-events'])}}
+        {{ $attributes }}
     >
         @if($async && $searchable)
             <div class="flex items-center gap-2">

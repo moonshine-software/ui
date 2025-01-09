@@ -20,7 +20,8 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
 
       let eventName = parts[0]
 
-      let attributes = extraProperties
+      const attributes = {}
+      Object.assign(attributes, extraProperties)
 
       if (Array.isArray(parts) && parts.length > 1) {
         let params = parts[1].split(';')

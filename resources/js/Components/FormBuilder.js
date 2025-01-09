@@ -27,6 +27,8 @@ export default (name = '', initData = {}, reactive = {}) => ({
     t.reactiveUrl = t.initData.reactiveUrl
 
     this.$watch('reactive', async function (value) {
+      let values = JSON.parse(JSON.stringify(value))
+
       if (!t.blockWatch) {
         let focused = document.activeElement
 
@@ -73,13 +75,23 @@ export default (name = '', initData = {}, reactive = {}) => ({
           t.$nextTick(() => (t.blockWatch = false))
         })
 
+        const choices = focused.closest('.choices')
+        const select = choices?.querySelector('select')
+
+        if (select && select.multiple) {
+          await t.$nextTick(() => {
+            values[select.getAttribute('data-reactive-column')] =
+              select.dataset.choicesValue.split(',')
+          })
+        }
+
         request(
           t,
           t.reactiveUrl,
           'post',
           {
             _component_name: t.name,
-            values: value,
+            values: values,
           },
           {},
           componentRequestData,

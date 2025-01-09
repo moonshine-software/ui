@@ -27,5 +27,9 @@ export function prepareQueryParams(params, exclude = null) {
 }
 
 export function mergeURLString(url, merge) {
+  if (merge === '') {
+    return url
+  }
+
   return url + (url.includes('?') ? '&' + merge : '?' + merge)
 }
