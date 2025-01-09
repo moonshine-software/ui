@@ -79,6 +79,7 @@ class File extends Field implements FileableContract, RemovableContract
                     rawValue: data_get($this->toValue(), $index, $this->toValue()),
                     name: (string) \call_user_func($this->resolveNames(), $path, $index, $this),
                     attributes: \call_user_func($this->resolveItemAttributes(), $path, $index, $this),
+                    extra: \call_user_func($this->resolveExtraAttributes(), $path, $index, $this),
                 ),
             ]);
     }

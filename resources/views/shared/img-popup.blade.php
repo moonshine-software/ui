@@ -1,6 +1,6 @@
-<div x-data="{ open : false, src : ''}">
+<div x-data="{ open : false, src : '', auto: true, wide: false, styles: ''}">
     <template
-        @img-popup.window="open = true; src = $event.detail.src;"
+        @img-popup.window="open = true; src = $event.detail.src; auto = $event.detail.auto; wide = $event.detail.wide; styles = $event.detail.styles"
         x-if="open"
         x-teleport="body"
     >
@@ -18,7 +18,9 @@
                 role="dialog"
                 @click.self="open=false"
             >
-                <div class="modal-dialog modal-dialog-auto">
+                <div class="modal-dialog"
+                    :class="{'modal-dialog-auto': auto, 'modal-dialog-xl': wide}"
+                >
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button"
@@ -36,6 +38,7 @@
                             <img @click.outside="open = false"
                                  src=""
                                  :src="src"
+                                 :style="styles"
                                  alt=""
                             />
                         </div>

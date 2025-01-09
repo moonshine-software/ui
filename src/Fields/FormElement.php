@@ -150,7 +150,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         return $this;
     }
 
-    public function getIdentity(string $index = null): string
+    public function getIdentity(?string $index = null): string
     {
         return (string) str($this->getNameAttribute($index))
             ->replace(['[', ']'], '_')

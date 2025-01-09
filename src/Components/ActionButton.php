@@ -203,7 +203,7 @@ class ActionButton extends MoonShineComponent implements
         string $method,
         array|Closure $params = [],
         ?string $message = null,
-        ?string $selector = null,
+        null|string|array $selector = null,
         array $events = [],
         ?AsyncCallback $callback = null,
         ?PageContract $page = null,
@@ -253,7 +253,7 @@ class ActionButton extends MoonShineComponent implements
 
     public function async(
         HttpMethod $method = HttpMethod::GET,
-        ?string $selector = null,
+        null|string|array $selector = null,
         array $events = [],
         ?AsyncCallback $callback = null
     ): static {
