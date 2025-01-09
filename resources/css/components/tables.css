@@ -134,5 +134,9 @@ th,
 td {
   &.sticky-col {
     @apply md:sticky md:backdrop-blur;
+
+    &:has(.dropdown-body.visible) {
+      @apply z-1;
+    }
   }
 }

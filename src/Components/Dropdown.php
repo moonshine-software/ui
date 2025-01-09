@@ -26,6 +26,7 @@ final class Dropdown extends MoonShineComponent
         protected Closure|string $searchPlaceholder = '',
         public string $placement = 'bottom-start',
         public Closure|string $footer = '',
+        public string $strategy = 'fixed',
     ) {
         parent::__construct();
     }
@@ -89,6 +90,14 @@ final class Dropdown extends MoonShineComponent
         return $this;
     }
 
+
+    public function strategy(string $strategy): self
+    {
+        $this->strategy = $strategy;
+
+        return $this;
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -101,6 +110,7 @@ final class Dropdown extends MoonShineComponent
             'searchable' => $this->searchable,
             'searchPlaceholder' => value($this->searchPlaceholder, $this),
             'items' => value($this->items, $this),
+            'strategy' => $this->strategy,
         ];
     }
 }

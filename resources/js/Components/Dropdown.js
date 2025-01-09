@@ -21,10 +21,11 @@ export default () => ({
     }
 
     const dropdownPlacement = this.$root.dataset.dropdownPlacement
+    const dropdownStrategy = this.$root.dataset.dropdownStrategy
 
     this.popperInstance = createPopper(this.dropdownBtn, this.dropdownBody, {
       placement: dropdownPlacement ? dropdownPlacement : 'auto',
-      strategy: 'fixed',
+      strategy: dropdownStrategy ? dropdownStrategy : 'fixed',
       modifiers: [
         {
           name: 'offset',

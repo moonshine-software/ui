@@ -6,9 +6,11 @@
     'searchable' => false,
     'searchPlaceholder' => '',
     'footer' => null,
+    'strategy' => 'fixed',
 ])
 <div x-data="dropdown"
      @click.outside="closeDropdown"
+     data-dropdown-strategy="{{ $strategy }}"
      data-dropdown-placement="{{ $placement }}"
      data-searchable="{{$searchable}}"
      class="dropdown"

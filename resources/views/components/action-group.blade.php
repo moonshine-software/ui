@@ -4,7 +4,7 @@
 @if(count($actions))
     <div {{ $attributes->merge(['class' => 'flex items-center gap-2']) }}>
         @if($actions->inDropdown()->isNotEmpty())
-            <x-moonshine::dropdown>
+            <x-moonshine::dropdown strategy="absolute">
                 <x-slot:toggler class="btn">
                     <x-moonshine::icon icon="ellipsis-vertical" />
                 </x-slot:toggler>
