@@ -318,7 +318,7 @@ class Fields extends BaseCollection implements FieldsContract
      */
     public function findByColumn(
         string $column,
-        FieldContract $default = null
+        ?FieldContract $default = null
     ): ?FieldContract {
         return $this->first(
             static fn (FieldContract $field): bool => $field->getColumn() === $column,
@@ -328,7 +328,7 @@ class Fields extends BaseCollection implements FieldsContract
 
     public function findByClass(
         string $class,
-        FieldContract $default = null
+        ?FieldContract $default = null
     ): ?FieldContract {
         return $this->first(
             static fn (FieldContract $field): bool => $field::class === $class,

@@ -25,7 +25,7 @@ trait WithQuickFormElementAttributes
         return $this;
     }
 
-    public function getNameAttribute(string $index = null): string
+    public function getNameAttribute(?string $index = null): string
     {
         return $this->prepareNameAttribute($index);
     }
