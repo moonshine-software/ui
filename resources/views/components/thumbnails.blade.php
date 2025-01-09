@@ -11,7 +11,13 @@
             <img class="h-full w-full object-cover"
                  src="{{ $value['full_path'] }}"
                  alt="{{ $value['name'] ?? $alt }}"
-                 @click.stop="$dispatch('img-popup', {open: true, src: '{{ $value['full_path']  }}' })"
+                 @click.stop="$dispatch('img-popup', {
+                    open: true,
+                    src: '{{ $value['full_path']  }}',
+                    wide: {{ isset($value['extra']['wide']) && $value['extra']['wide'] ? 'true' : 'false'  }},
+                    auto: {{ isset($value['extra']['auto']) && $value['extra']['auto'] ? 'true' : 'false'  }},
+                    styles: '{{ $value['extra']['content_styles'] ?? ''  }}'
+                 })"
             >
         </div>
     </div>
@@ -25,7 +31,13 @@
                     class="h-full w-full object-cover"
                     src="{{ $value['full_path'] }}"
                     alt="{{ $value['name'] ?? $alt }}"
-                    @click.stop="$dispatch('img-popup', {open: true, src: '{{ $value['full_path']  }}' })"
+                    @click.stop="$dispatch('img-popup', {
+                        open: true,
+                        src: '{{ $value['full_path']  }}',
+                        wide: {{ isset($value['extra']['wide']) && $value['extra']['wide'] ? 'true' : 'false'  }},
+                        auto: {{ isset($value['extra']['auto']) && $value['extra']['auto'] ? 'true' : 'false'  }},
+                        styles: '{{ $value['extra']['content_styles'] ?? ''  }}'
+                    })"
                 />
             </div>
         @endforeach
