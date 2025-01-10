@@ -57,9 +57,10 @@ export default function request(
         selectors.forEach(function (selector) {
           let elements = document.querySelectorAll(selector)
           elements.forEach(element => {
-            element.innerHTML = data.html && typeof data.html === 'object'
-              ? data.html[selector] ?? data.html
-              : data.html ?? data;
+            element.innerHTML =
+              data.html && typeof data.html === 'object'
+                ? (data.html[selector] ?? data.html)
+                : (data.html ?? data)
           })
         })
       }
