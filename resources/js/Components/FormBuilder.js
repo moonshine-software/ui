@@ -210,6 +210,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
     callback = initCallback(callback)
 
     componentRequestData
+      .withSelector(form.dataset.asyncSelector ?? '')
       .withBeforeRequest(callback.beforeRequest)
       .withResponseHandler(callback.responseHandler)
       .withEvents(events)

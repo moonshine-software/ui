@@ -206,6 +206,13 @@ final class FormBuilder extends MoonShineComponent implements
         );
     }
 
+    public function asyncSelector(string|array $selector): self
+    {
+        return $this->customAttributes([
+            'data-async-selector' => \is_array($selector) ? implode(',', $selector) : $selector
+        ]);
+    }
+
     public function reactiveUrl(Closure|string $reactiveUrl): self
     {
         $this->reactiveUrl = $reactiveUrl;
