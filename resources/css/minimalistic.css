@@ -1,23 +1,19 @@
 /* Theme: Minimalistic */
+:root {
+  --radius: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-full: 0;
+}
+
+/* Theme: Minimalistic */
 body.theme-minimalistic {
   .space-elements {
     @apply space-y-3;
-  }
-
-  .btn,
-  .box,
-  .box-shadow:before,
-  .report-card,
-  .choices, .choices *,
-  .accordion-item:first-child .accordion-btn, .accordion-item:last-child .accordion-btn:not(._is-active), .accordion-item:last-child .accordion-content,
-  .form-input, .form-textarea, .form-select, .form-multiselect, .form-file-upload,
-  .form-group-expansion .expansion,
-  .form-checkbox,
-  .dropdown-body,
-  .dropzone,
-  .modal-content
-  {
-    @apply rounded-none;
   }
 
   h1 {
@@ -110,18 +106,18 @@ body.theme-minimalistic {
       @apply gap-y-1;
 
       &-item {
-        @apply rounded-none before:hidden after:hidden;
+        @apply rounded-md before:hidden after:hidden;
         &._is-active {
           .menu-inner-link,
           .menu-inner-button {
-            @apply rounded-none bg-dark-200 text-black dark:text-white;
+            @apply bg-dark-200 text-black dark:text-white;
           }
         }
       }
 
       &-link,
       &-button {
-        @apply gap-x-2 rounded-none bg-transparent px-2 py-1.5 text-2xs text-dark-600 hover:bg-dark-200 hover:text-black current:bg-dark-200 dark:text-slate-200 dark:hover:text-white dark:current:bg-primary;
+        @apply gap-x-2 rounded-md bg-transparent px-2 py-1.5 text-2xs text-dark-600 hover:bg-dark-200 hover:text-black current:bg-dark-200 dark:text-slate-200 dark:hover:text-white dark:current:bg-primary;
         > svg {
           @apply h-5 w-5;
         }
@@ -135,10 +131,6 @@ body.theme-minimalistic {
         @apply my-1 text-3xs text-dark-400 before:bg-dark-200 dark:text-slate-500;
       }
 
-      &-counter {
-        @apply rounded-[0.25rem];
-      }
-
       &-dropdown {
         @apply mb-1 mt-1 border border-solid border-dark-200 bg-dark-50 dark:bg-dark-700;
 
@@ -148,7 +140,7 @@ body.theme-minimalistic {
 
         .menu-inner-link,
         .menu-inner-button {
-          @apply rounded-none px-1 py-1 text-3xs;
+          @apply px-1 py-1 text-3xs;
         }
 
         .menu-inner-dropdown {
@@ -156,10 +148,6 @@ body.theme-minimalistic {
             @apply !border-l-0 !border-r-0;
           }
         }
-      }
-
-      .menu-inner-dropdown {
-        @apply rounded-none;
       }
     }
 
@@ -192,18 +180,18 @@ body.theme-minimalistic {
       @apply gap-y-1;
 
       &-item {
-        @apply rounded-none before:hidden after:hidden;
+        @apply rounded-md before:hidden after:hidden;
         &._is-active {
           .menu-inner-link,
           .menu-inner-button {
-            @apply rounded-none bg-dark-200 text-black dark:text-white;
+            @apply bg-dark-200 text-black dark:text-white;
           }
         }
       }
 
       &-link,
       &-button {
-        @apply gap-x-2 rounded-none bg-transparent px-2 py-1.5 text-2xs text-dark-600 hover:bg-dark-200 hover:text-black current:bg-dark-200 dark:text-slate-200 dark:hover:text-white dark:current:bg-primary;
+        @apply gap-x-2 rounded-md bg-transparent px-2 py-1.5 text-2xs text-dark-600 hover:bg-dark-200 hover:text-black current:bg-dark-200 dark:text-slate-200 dark:hover:text-white dark:current:bg-primary;
         > svg {
           @apply h-5 w-5;
         }
@@ -217,10 +205,6 @@ body.theme-minimalistic {
         @apply m-0 text-3xs text-dark-200 before:bg-dark-300 dark:text-slate-500;
       }
 
-      &-counter {
-        @apply rounded-[0.25rem];
-      }
-
       &-dropdown {
         @apply mt-1 border border-solid border-dark-200 bg-dark-50 pb-1 shadow-none dark:bg-dark-700;
 
@@ -230,7 +214,7 @@ body.theme-minimalistic {
 
         .menu-inner-link,
         .menu-inner-button {
-          @apply rounded-none px-1.5 py-1 text-3xs;
+          @apply px-1.5 py-1 text-3xs;
         }
 
         .menu-inner-dropdown {
@@ -238,10 +222,6 @@ body.theme-minimalistic {
             @apply !border-l-0 !border-r-0;
           }
         }
-      }
-
-      .menu-inner-dropdown {
-        @apply rounded-none;
       }
     }
 
@@ -295,18 +275,18 @@ body.theme-minimalistic {
       @apply gap-y-1 pt-4;
 
       &-item {
-        @apply rounded-none before:hidden after:hidden;
+        @apply rounded-md before:hidden after:hidden;
         &._is-active {
           .menu-inner-link,
           .menu-inner-button {
-            @apply rounded-none bg-dark-200 text-black dark:text-white;
+            @apply bg-dark-200 text-black dark:text-white;
           }
         }
       }
 
       &-link,
       &-button {
-        @apply gap-x-2 rounded-none bg-transparent px-2 py-1.5 text-2xs text-dark-600 hover:bg-dark-200 hover:text-black current:bg-dark-200 dark:text-slate-200 dark:hover:text-white dark:current:bg-primary;
+        @apply gap-x-2 rounded-md bg-transparent px-2 py-1.5 text-2xs text-dark-600 hover:bg-dark-200 hover:text-black current:bg-dark-200 dark:text-slate-200 dark:hover:text-white dark:current:bg-primary;
         > svg {
           @apply h-5 w-5;
         }
@@ -320,10 +300,6 @@ body.theme-minimalistic {
         @apply m-0 text-3xs text-dark-200 before:bg-dark-300 dark:text-slate-500;
       }
 
-      &-counter {
-        @apply rounded-[0.25rem];
-      }
-
       &-dropdown {
         @apply mt-1 border border-dark-200 bg-dark-50 shadow-none dark:bg-dark-700;
 
@@ -333,7 +309,7 @@ body.theme-minimalistic {
 
         .menu-inner-link,
         .menu-inner-button {
-          @apply rounded-none px-1.5 py-1 text-3xs;
+          @apply px-1.5 py-1 text-3xs;
         }
       }
     }
@@ -549,7 +525,7 @@ body.theme-minimalistic {
 
   /* Alerts */
   .alert {
-    @apply gap-x-2 rounded-none p-2;
+    @apply gap-x-2 rounded-md p-2;
     &-icon {
       > svg {
         @apply h-5 w-5;
@@ -563,7 +539,7 @@ body.theme-minimalistic {
   /* Badges */
   .badge,
   a.badge {
-    @apply rounded-[0.25rem] px-1.5 text-[0.825rem] leading-[1.25];
+    @apply px-1.5 text-[0.825rem] leading-[1.25];
   }
 
   /* Poppovers */
@@ -662,7 +638,7 @@ body.theme-minimalistic {
   }
 
   .choices .choices__list--multiple .choices__item {
-    @apply -mb-0.5 -mt-1 mr-1 rounded-[0.25rem] px-1.5 py-0;
+    @apply -mb-0.5 -mt-1 mr-1 px-1.5 py-0;
   }
 
   .choices__list--single {
@@ -701,7 +677,7 @@ body.theme-minimalistic {
       }
     }
     &-item-file {
-      @apply gap-x-1.5 rounded-[0.25rem] px-1.5 py-1;
+      @apply gap-x-1.5 px-1.5 py-1;
     }
   }
 
