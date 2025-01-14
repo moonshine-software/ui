@@ -7,6 +7,7 @@ namespace MoonShine\UI\Components\Table;
 use Closure;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
+use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
 use MoonShine\Contracts\UI\Collection\TableRowsContract;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Contracts\UI\FieldContract;
@@ -544,14 +545,26 @@ final class TableBuilder extends IterableComponent implements
 
     private function resolveFootRow(): ?TableRowContract
     {
+        return $this->getBulkRow()?->customAttributes(
+            $this->getTrAttributes(null, $this->getItems()->count() + $this->getHeadRows()->count())
+        );
+    }
+
+    /**
+     * @param  ?Closure(ActionButtonsContract): ActionButtonsContract  $modifyButtons
+     */
+    public function getBulkRow(?Closure $modifyButtons = null): ?TableRowContract
+    {
         if ($this->getBulkButtons()->isEmpty()) {
             return null;
         }
 
+        $buttons = is_null($modifyButtons) ? $this->getBulkButtons() : $modifyButtons($this->getBulkButtons());
+
         $cells = TableCells::make()->pushCellWhen(
             ! $this->isPreview(),
             fn (): string => (string) Flex::make([
-                ActionGroup::make($this->getBulkButtons()->toArray()),
+                ActionGroup::make($buttons->toArray()),
             ])->justifyAlign('start'),
             builder: fn (TableCellContract $td): TableCellContract => $td->customAttributes([
                 'colspan' => $this->getCellsCount(),
@@ -562,8 +575,6 @@ final class TableBuilder extends IterableComponent implements
         return TableRow::make($cells)->mergeAttribute(
             ':class',
             "actionsOpen ? 'translate-y-none ease-out' : '-translate-y-full ease-in hidden'",
-        )->customAttributes(
-            $this->getTrAttributes(null, $this->getItems()->count() + $this->getHeadRows()->count())
         );
     }
 
