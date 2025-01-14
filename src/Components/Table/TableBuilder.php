@@ -559,7 +559,7 @@ final class TableBuilder extends IterableComponent implements
             return null;
         }
 
-        $buttons = is_null($modifyButtons) ? $this->getBulkButtons() : $modifyButtons($this->getBulkButtons());
+        $buttons = \is_null($modifyButtons) ? $this->getBulkButtons() : $modifyButtons($this->getBulkButtons());
 
         $cells = TableCells::make()->pushCellWhen(
             ! $this->isPreview(),
