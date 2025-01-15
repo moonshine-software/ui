@@ -1,12 +1,19 @@
 /* Theme: Minimalistic */
+:root {
+  --radius: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-full: 0;
+}
+
+/* Theme: Minimalistic */
 body.theme-minimalistic {
   .space-elements {
     @apply space-y-3;
-  }
-
-  *,
-  .box-shadow:before {
-    @apply !rounded-none;
   }
 
   h1 {
@@ -124,10 +131,6 @@ body.theme-minimalistic {
         @apply my-1 text-3xs text-dark-400 before:bg-dark-200 dark:text-slate-500;
       }
 
-      &-counter {
-        @apply rounded-[0.25rem];
-      }
-
       &-dropdown {
         @apply mb-1 mt-1 border border-solid border-dark-200 bg-dark-50 dark:bg-dark-700;
 
@@ -200,10 +203,6 @@ body.theme-minimalistic {
 
       &-divider {
         @apply m-0 text-3xs text-dark-200 before:bg-dark-300 dark:text-slate-500;
-      }
-
-      &-counter {
-        @apply rounded-[0.25rem];
       }
 
       &-dropdown {
@@ -299,10 +298,6 @@ body.theme-minimalistic {
 
       &-divider {
         @apply m-0 text-3xs text-dark-200 before:bg-dark-300 dark:text-slate-500;
-      }
-
-      &-counter {
-        @apply rounded-[0.25rem];
       }
 
       &-dropdown {
@@ -544,7 +539,7 @@ body.theme-minimalistic {
   /* Badges */
   .badge,
   a.badge {
-    @apply rounded-[0.25rem] px-1.5 text-[0.825rem] leading-[1.25];
+    @apply px-1.5 text-[0.825rem] leading-[1.25];
   }
 
   /* Poppovers */
@@ -613,7 +608,6 @@ body.theme-minimalistic {
       width: 2.25rem;
 
       &::after {
-        border-radius: 0 !important;
         height: 1rem;
         width: 1rem;
       }
@@ -644,7 +638,7 @@ body.theme-minimalistic {
   }
 
   .choices .choices__list--multiple .choices__item {
-    @apply -mb-0.5 -mt-1 mr-1 rounded-[0.25rem] px-1.5 py-0;
+    @apply -mb-0.5 -mt-1 mr-1 px-1.5 py-0;
   }
 
   .choices__list--single {
@@ -683,7 +677,7 @@ body.theme-minimalistic {
       }
     }
     &-item-file {
-      @apply gap-x-1.5 rounded-[0.25rem] px-1.5 py-1;
+      @apply gap-x-1.5 px-1.5 py-1;
     }
   }
 
