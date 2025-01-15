@@ -142,6 +142,17 @@ export default {
       borderWidth: {
         '3': '3px',
       },
+      borderRadius: {
+        'none': '0',
+        DEFAULT: 'var(--radius, 0.25rem)',
+        'sm': 'var(--radius-sm, 0.125rem)',
+        'md': 'var(--radius-md, 0.375rem)',
+        'lg': 'var(--radius-lg, 0.5rem)',
+        'xl': 'var(--radius-xl, 0.75rem)',
+        '2xl': 'var(--radius-2xl, 1rem)',
+        '3xl': 'var(--radius-3xl, 1.5rem)',
+        'full': 'var(--radius-full, 9999px)',
+      },
       transitionProperty: {
         colors:
           'color, background-color, border-color, text-decoration-color, box-shadow, fill, stroke',
