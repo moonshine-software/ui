@@ -6,7 +6,7 @@ import {
   prepareFormData,
   prepareFormQueryString,
 } from '../Support/Forms.js'
-import request, {afterResponse, initCallback} from '../Request/Core.js'
+import request, {initCallback} from '../Request/Core.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {getInputs, showWhenChange, showWhenVisibilityChange} from '../Support/ShowWhen.js'
 import {formToJSON} from 'axios'
@@ -221,9 +221,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
         submitState(form, false, false)
 
-        if (callback.afterResponse) {
-          afterResponse(callback.afterResponse, data, type)
-        }
+        return callback.afterResponse
       })
       .withErrorCallback(function (data) {
         submitState(form, false)

@@ -1,6 +1,6 @@
 import selectorsParams from '../Support/SelectorsParams.js'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
-import request, {afterResponse, beforeRequest, initCallback} from '../Request/Core.js'
+import request, {initCallback} from '../Request/Core.js'
 import {getQueryString} from '../Support/Forms.js'
 import {mergeURLString} from '../Support/URLs.js'
 
@@ -66,9 +66,7 @@ export default (asyncUpdateRoute = '') => ({
       .withAfterResponse(function (data) {
         t.$root.outerHTML = data
 
-        if (callback.afterResponse) {
-          afterResponse(callback.afterResponse, data)
-        }
+        return callback.afterResponse
       })
       .withErrorCallback(stopLoading)
 

@@ -98,7 +98,8 @@ export default function request(
       }
 
       if (componentRequestData.hasAfterResponse()) {
-        componentRequestData.afterResponse(data, type, t)
+        const afterResponseCallback = componentRequestData.afterResponse(data, type, t)
+        afterResponse(afterResponseCallback, data, type, t)
       }
     })
     .catch(errorResponse => {
@@ -145,6 +146,10 @@ export function urlWithQuery(url, append, callback = null) {
 }
 
 function responseHandler(callback, response, element, events, component) {
+  if(callback === '') {
+    return
+  }
+
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
@@ -157,6 +162,10 @@ function responseHandler(callback, response, element, events, component) {
 }
 
 export function beforeRequest(callback, element, component) {
+  if(callback === '') {
+    return
+  }
+
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
@@ -166,14 +175,18 @@ export function beforeRequest(callback, element, component) {
   fn(element, component)
 }
 
-export function afterResponse(callback, data, messageType) {
+export function afterResponse(callback, data, messageType, component) {
+  if(callback === '') {
+    return
+  }
+
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
     throw new Error(callback + ' is not a function!')
   }
 
-  fn(data, messageType)
+  fn(data, messageType, component)
 }
 
 export function initCallback(callback) {

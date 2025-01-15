@@ -54,7 +54,7 @@ export default () => ({
   request() {
     this.url = this.$el.href
 
-    if (this.loading) {
+    if (this.loading || this.$el.dataset?.stopAsync) {
       return
     }
 
@@ -79,6 +79,7 @@ export default () => ({
     let componentRequestData = new ComponentRequestData()
     componentRequestData
       .fromDataset(this.$el?.dataset ?? {})
+      .withAfterResponse(() => this.$el?.dataset.asyncAfterResponse)
       .withBeforeHandleResponse(stopLoading)
       .withErrorCallback(stopLoading)
 
