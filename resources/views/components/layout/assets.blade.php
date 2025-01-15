@@ -7,7 +7,9 @@
 @stack('styles')
 
 {!! $colors !!}
+@fragment('moonshine-assets')
 {!! $assets !!}
+@endfragment
 
 {{ $slot ?? '' }}
 
