@@ -146,7 +146,7 @@ export function urlWithQuery(url, append, callback = null) {
 }
 
 function responseHandler(callback, response, element, events, component) {
-  if (callback === '') {
+  if(typeof callback !== 'string') {
     return
   }
 
@@ -162,7 +162,7 @@ function responseHandler(callback, response, element, events, component) {
 }
 
 export function beforeRequest(callback, element, component) {
-  if (callback === '') {
+  if(typeof callback !== 'string') {
     return
   }
 
@@ -176,7 +176,7 @@ export function beforeRequest(callback, element, component) {
 }
 
 export function afterResponse(callback, data, messageType, component) {
-  if (callback === '') {
+  if(typeof callback !== 'string') {
     return
   }
 
