@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
+use MoonShine\UI\Contracts\HasDefaultValueContract;
 
 trait CanBeMultiple
 {
@@ -14,7 +15,7 @@ trait CanBeMultiple
     {
         $this->multiple = value($condition, $this) ?? true;
 
-        if (\is_null($this->getDefault())) {
+        if ($this instanceof HasDefaultValueContract && \is_null($this->getDefault())) {
             $this->default([]);
         }
 
