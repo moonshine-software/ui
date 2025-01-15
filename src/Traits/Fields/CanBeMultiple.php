@@ -14,7 +14,7 @@ trait CanBeMultiple
     {
         $this->multiple = value($condition, $this) ?? true;
 
-        if(\is_null($this->getDefault())) {
+        if (\is_null($this->getDefault())) {
             $this->default([]);
         }
 
