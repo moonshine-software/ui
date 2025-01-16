@@ -192,7 +192,7 @@ export default (asyncUrl = '') => ({
       callbackOnInit: () => {
         this.searchTerms = this.$el.closest('.choices').querySelector('[name="search_terms"]')
 
-        if (this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown && !this.associatedWith && !this.isLoadedOptions) {
+        if (asyncUrl && this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown) {
           this.asyncSearch()
         }
       },
@@ -211,7 +211,7 @@ export default (asyncUrl = '') => ({
       false,
     )
 
-    if (asyncUrl && this.$el.dataset.asyncOnInitDropdown) {
+    if (asyncUrl) {
       this.$el.addEventListener(
         'showDropdown',
         () => {
