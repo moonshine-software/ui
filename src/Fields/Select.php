@@ -85,7 +85,7 @@ class Select extends Field implements
     {
         return $this->customAttributes([
             'data-async-on-init' => true,
-            'data-async-on-init-dropdown' => $whenOpen
+            'data-async-on-init-dropdown' => $whenOpen,
         ]);
     }
 
