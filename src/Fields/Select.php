@@ -81,9 +81,12 @@ class Select extends Field implements
         return (string) data_get($this->getValues()->flatten(), "$value.label", '');
     }
 
-    public function asyncOnInit(): static
+    public function asyncOnInit(bool $whenOpen = true): static
     {
-        return $this->customAttributes(['data-async-on-init' => true]);
+        return $this->customAttributes([
+            'data-async-on-init' => true,
+            'data-async-on-init-dropdown' => $whenOpen
+        ]);
     }
 
     public function onChangeEvent(array|string $events, array $exclude = [], bool $withoutPayload = false): static

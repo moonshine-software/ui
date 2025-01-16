@@ -191,6 +191,10 @@ export default (asyncUrl = '') => ({
       },
       callbackOnInit: () => {
         this.searchTerms = this.$el.closest('.choices').querySelector('[name="search_terms"]')
+
+        if (this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown && !this.associatedWith && !this.isLoadedOptions) {
+          this.asyncSearch()
+        }
       },
       ...this.customOptions,
     })
@@ -207,7 +211,7 @@ export default (asyncUrl = '') => ({
       false,
     )
 
-    if (asyncUrl) {
+    if (asyncUrl && this.$el.dataset.asyncOnInitDropdown) {
       this.$el.addEventListener(
         'showDropdown',
         () => {
