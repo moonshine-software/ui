@@ -150,6 +150,10 @@ function responseHandler(callback, response, element, events, component) {
     return
   }
 
+  if (callback.trim() === '') {
+    return
+  }
+
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
@@ -166,6 +170,10 @@ export function beforeRequest(callback, element, component) {
     return
   }
 
+  if (callback.trim() === '') {
+    return
+  }
+
   const fn = MoonShine.callbacks[callback]
 
   if (typeof fn !== 'function') {
@@ -177,6 +185,10 @@ export function beforeRequest(callback, element, component) {
 
 export function afterResponse(callback, data, messageType, component) {
   if (typeof callback !== 'string') {
+    return
+  }
+
+  if (callback.trim() === '') {
     return
   }
 
