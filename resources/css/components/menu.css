@@ -95,7 +95,7 @@
         @apply flex items-center justify-end gap-x-3;
       }
       &-burger {
-        @apply text-slate-300 inline-flex items-center lg:hidden;
+        @apply inline-flex items-center text-slate-300 lg:hidden;
       }
     }
 
