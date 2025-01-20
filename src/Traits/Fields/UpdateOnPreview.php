@@ -77,6 +77,9 @@ trait UpdateOnPreview
         return $this->withUpdateRow($component);
     }
 
+    /**
+     * @param  ?Closure(mixed $data, mixed $value, static $field): string  $url
+     */
     public function updateOnPreview(
         ?Closure $url = null,
         ?ResourceContract $resource = null,
@@ -111,7 +114,7 @@ trait UpdateOnPreview
     }
 
     /**
-     * @param  Closure(mixed $data, mixed $value, self $field): string  $url
+     * @param  Closure(mixed $data, mixed $value, FieldContract $field): string  $url
      */
     public function setUpdateOnPreviewUrl(Closure $url, array $events = []): static
     {
