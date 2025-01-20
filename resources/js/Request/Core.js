@@ -142,7 +142,7 @@ export function urlWithQuery(url, append, callback = null) {
 
   let separator = urlObject.searchParams.size ? '&' : '?'
 
-  return urlObject.toString() + separator + append
+  return (urlObject.toString() + separator + append).replace(/[?&]+$/, '')
 }
 
 function responseHandler(callback, response, element, events, component) {
