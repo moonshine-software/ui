@@ -81,7 +81,8 @@ class Preview extends Field
         return static fn ($item) => $item;
     }
 
-    public function isCanApply(): bool {
+    public function isCanApply(): bool
+    {
         return false;
     }
 }
