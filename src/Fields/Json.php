@@ -460,6 +460,10 @@ class Json extends Field implements
 
         foreach ($requestValues as $index => $values) {
             foreach ($this->resetPreparedFields()->getPreparedFields() as $field) {
+                if(!$field->isCanApply()) {
+                    continue;
+                }
+
                 if (! $this->isObjectMode()) {
                     $field->setNameIndex($index);
                 }
