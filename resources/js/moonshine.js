@@ -2,6 +2,7 @@ import request from './Request/Core.js'
 import {Iterable} from './Support/Iterable.js'
 import {UI} from './Support/UI.js'
 import {ComponentRequestData} from './DTOs/ComponentRequestData.js'
+import {dispatchEvents} from './Support/DispatchEvents.js'
 
 export class MoonShine {
   constructor() {
@@ -22,5 +23,9 @@ export class MoonShine {
     }
 
     request(t, url, method, body, headers, data)
+  }
+
+  dispatchEvents(events, type, component, extraProperties = {}) {
+    dispatchEvents(events, type, component, extraProperties)
   }
 }
