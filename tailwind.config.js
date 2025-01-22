@@ -28,6 +28,7 @@ const clientSafeList = [
   'visible',
   '!hidden',
   '!block',
+  'overflow-auto',
   'pointer-events-auto',
   'opacity-0',
   'opacity-100',
