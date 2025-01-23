@@ -317,7 +317,7 @@ final class TableBuilder extends IterableComponent implements
                     startIndex: $hasBulk ? 1 : 0,
                 )
                 ->pushCellWhen(
-                    $buttons->isNotEmpty(),
+                    $this->hasButtons() || $buttons->isNotEmpty(),
                     static fn (): string => (string) Flex::make([
                         ActionGroup::make($buttons->toArray()),
                     ])->justifyAlign('end'),
