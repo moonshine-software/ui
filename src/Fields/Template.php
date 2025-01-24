@@ -20,15 +20,21 @@ class Template extends Field implements HasFieldsContract
 {
     use WithFields;
 
-    protected ?Closure $renderCallback = null;
-
     protected function prepareFields(): FieldsContract
     {
         return tap(
             $this->getFields()->wrapNames($this->getColumn()),
-            fn () => $this->getFields()
+            fn()
+                => $this
+                ->getFields()
                 ->onlyFields()
-                ->map(fn (FieldContract $field): FieldContract => $field->setParent($this)->formName($this->getFormName()))
+                ->map(
+                    fn(FieldContract $field): FieldContract
+                        => $field
+                        ->setParent($this)
+                        ->formName($this->getFormName())
+                        ->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")),
+                ),
         );
     }
 
@@ -43,21 +49,21 @@ class Template extends Field implements HasFieldsContract
             return \call_user_func(
                 $this->fillCallback,
                 \is_null($casted) ? $raw : $casted->getOriginal(),
-                $this
+                $this,
             );
         }
 
         return '';
     }
 
-    /**
-     * @param  Closure(mixed $value, static $ctx): string  $callback
-     */
-    public function changeRender(Closure $callback): static
+    public function getReactiveValue(): mixed
     {
-        $this->renderCallback = $callback;
+        $value = $this->toValue();
 
-        return $this;
+        return filled($value) ? $value : $this
+            ->getPreparedFields()
+            ->onlyFields()
+            ->mapWithKeys(fn(FieldContract $field) => [$field->getColumn() => null]);
     }
 
     public function render(): string
@@ -66,11 +72,11 @@ class Template extends Field implements HasFieldsContract
             return '';
         }
 
-        return (string) \call_user_func($this->renderCallback, $this->toValue(), $this);
+        return (string)\call_user_func($this->renderCallback, $this->toValue(), $this);
     }
 
     protected function resolveOnApply(): ?Closure
     {
-        return static fn ($item) => $item;
+        return static fn($item) => $item;
     }
 }
