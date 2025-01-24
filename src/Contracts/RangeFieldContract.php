@@ -14,4 +14,8 @@ interface RangeFieldContract
     public function getFromField(): string;
 
     public function getToField(): string;
+
+    public function fromAttributes(array $attributes): static;
+
+    public function toAttributes(array $attributes): static;
 }

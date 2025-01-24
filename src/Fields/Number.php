@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace MoonShine\UI\Fields;
 
 use Illuminate\Contracts\Support\Renderable;
-use MoonShine\Contracts\UI\HasReactivityContract;
-use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Components\Rating;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeNumeric;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
@@ -14,22 +12,17 @@ use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
 use MoonShine\UI\InputExtensions\InputNumberUpDown;
 use MoonShine\UI\Traits\Fields\HasPlaceholder;
 use MoonShine\UI\Traits\Fields\NumberTrait;
-use MoonShine\UI\Traits\Fields\Reactivity;
 use MoonShine\UI\Traits\Fields\UpdateOnPreview;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\Fields\WithInputExtensions;
 
-/**
- * @implements HasReactivityContract<Fields>
- */
-class Number extends Field implements HasDefaultValueContract, CanBeNumeric, HasUpdateOnPreviewContract, HasReactivityContract
+class Number extends Field implements HasDefaultValueContract, CanBeNumeric, HasUpdateOnPreviewContract
 {
     use NumberTrait;
     use WithInputExtensions;
     use WithDefaultValue;
     use HasPlaceholder;
     use UpdateOnPreview;
-    use Reactivity;
 
     protected string $view = 'moonshine::fields.input';
 
