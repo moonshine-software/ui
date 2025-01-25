@@ -36,6 +36,13 @@ export function listComponentRequest(component, pushState = false) {
     delete eventData.sort
   }
 
+  let events = ''
+
+  if (eventData && eventData.events) {
+    events = eventData.events
+    delete eventData.events
+  }
+
   const originalUrl = url
 
   url = urlWithQuery(url, getQueryString(eventData))
@@ -85,6 +92,7 @@ export function listComponentRequest(component, pushState = false) {
       t.$root.outerHTML = tempElement.firstElementChild.innerHTML
       t.loading = false
     })
+    .withEvents(events)
     .withErrorCallback(stopLoading)
 
   request(component, url, 'get', {}, {}, componentRequestData)

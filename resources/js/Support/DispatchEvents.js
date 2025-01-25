@@ -32,7 +32,14 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
         }
       }
 
-      component.$dispatch(eventName.replaceAll(/\s/g, '').toLowerCase(), attributes)
+      dispatchEvent(
+        new CustomEvent(eventName.replaceAll(/\s/g, '').toLowerCase(), {
+          attributes,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      )
     })
   }
 }
