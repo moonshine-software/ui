@@ -38,7 +38,7 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
           bubbles: true,
           composed: true,
           cancelable: true,
-        })
+        }),
       )
     })
   }

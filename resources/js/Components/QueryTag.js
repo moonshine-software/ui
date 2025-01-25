@@ -16,7 +16,7 @@ export default (activeClass, componentEvent) => ({
 
     this.$dispatch(componentEvent.toLowerCase(), {
       queryTag: prepareQueryParams(queryParams, '_component_name,_token,_method,page').toString(),
-      events: this.$el.dataset.asyncEvents
+      events: this.$el.dataset.asyncEvents,
     })
   },
   disableQueryTags() {
