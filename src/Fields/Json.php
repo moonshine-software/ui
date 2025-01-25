@@ -263,7 +263,7 @@ class Json extends Field implements
         if ($this->isObjectMode()) {
             return $this->getFields()
                 ->wrapNames($this->getColumn())
-                ->map(fn($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")))
+                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")))
             ;
         }
 
@@ -556,13 +556,13 @@ class Json extends Field implements
 
     public function getReactiveValue(): mixed
     {
-        if(!$this->isObjectMode()) {
+        if (! $this->isObjectMode()) {
             throw FieldException::reactivityNotSupported(static::class, 'without object mode');
         }
 
         return $this->toValue() ?? $this->getPreparedFields()
             ->onlyFields()
-            ->mapWithKeys(fn(FieldContract $field) => [$field->getColumn() => null]);
+            ->mapWithKeys(fn (FieldContract $field) => [$field->getColumn() => null]);
     }
 
     /**

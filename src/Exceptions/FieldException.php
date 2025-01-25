@@ -31,7 +31,7 @@ final class FieldException extends MoonShineException
     public static function reactivityNotSupported(string $fieldClass, ?string $note = null): self
     {
         return new self(
-            sprintf("The %s%s does not support reactivity", $fieldClass, \is_null($note) ? '' : "($note)")
+            \sprintf("The %s%s does not support reactivity", $fieldClass, \is_null($note) ? '' : "($note)")
         );
     }
 }

@@ -63,15 +63,15 @@ trait Reactivity
         $attribute = str('x-model')
             ->when(
                 $lazy,
-                static fn(Stringable $str) => $str->append('.lazy'),
+                static fn (Stringable $str) => $str->append('.lazy'),
             )
             ->when(
                 $debounce,
-                static fn(Stringable $str) => $str->append(".debounce.{$debounce}ms"),
+                static fn (Stringable $str) => $str->append(".debounce.{$debounce}ms"),
             )
             ->when(
                 $throttle,
-                static fn(Stringable $str) => $str->append(".throttle.{$throttle}ms"),
+                static fn (Stringable $str) => $str->append(".throttle.{$throttle}ms"),
             )
             ->value();
 
@@ -79,14 +79,14 @@ trait Reactivity
             'class' => "field-{$this->getColumn()}-wrapper",
         ]);
 
-        $this->reactiveAttributes = static fn(string $dot, string $class): array => [
+        $this->reactiveAttributes = static fn (string $dot, string $class): array => [
             $attribute => "reactive.$dot",
             'class' => "field-$class-element",
             'data-column' => $dot,
             'data-reactive-column' => $dot,
         ];
 
-        if($this instanceof HasFieldsContract) {
+        if ($this instanceof HasFieldsContract) {
             return $this;
         }
 
@@ -105,14 +105,14 @@ trait Reactivity
 
     public function getReactiveAttributes(?string $dot = null, ?string $class = null): array
     {
-        if(!$this->isReactive()) {
+        if (! $this->isReactive()) {
             return [];
         }
 
         $dot ??= $this->getColumn();
         $class ??= str_replace('.', '-', $dot);
 
-        return call_user_func($this->reactiveAttributes, $dot, $class);
+        return \call_user_func($this->reactiveAttributes, $dot, $class);
     }
 
     public function getReactiveValue(): mixed

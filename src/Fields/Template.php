@@ -24,12 +24,12 @@ class Template extends Field implements HasFieldsContract
     {
         return tap(
             $this->getFields()->wrapNames($this->getColumn()),
-            fn()
+            fn ()
                 => $this
                 ->getFields()
                 ->onlyFields()
                 ->map(
-                    fn(FieldContract $field): FieldContract
+                    fn (FieldContract $field): FieldContract
                         => $field
                         ->setParent($this)
                         ->formName($this->getFormName())
@@ -63,7 +63,7 @@ class Template extends Field implements HasFieldsContract
         return filled($value) ? $value : $this
             ->getPreparedFields()
             ->onlyFields()
-            ->mapWithKeys(fn(FieldContract $field) => [$field->getColumn() => null]);
+            ->mapWithKeys(fn (FieldContract $field) => [$field->getColumn() => null]);
     }
 
     public function render(): string
@@ -77,6 +77,6 @@ class Template extends Field implements HasFieldsContract
 
     protected function resolveOnApply(): ?Closure
     {
-        return static fn($item) => $item;
+        return static fn ($item) => $item;
     }
 }
