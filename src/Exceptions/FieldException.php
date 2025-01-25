@@ -28,10 +28,10 @@ final class FieldException extends MoonShineException
     /**
      * @param  class-string<FieldContract>  $fieldClass
      */
-    public static function reactivityNotSupported(string $fieldClass): self
+    public static function reactivityNotSupported(string $fieldClass, ?string $note = null): self
     {
         return new self(
-            sprintf("The %s does not support reactivity", $fieldClass)
+            sprintf("The %s%s does not support reactivity", $fieldClass, \is_null($note) ? '' : "($note)")
         );
     }
 }

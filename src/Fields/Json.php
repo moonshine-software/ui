@@ -557,7 +557,7 @@ class Json extends Field implements
     public function getReactiveValue(): mixed
     {
         if(!$this->isObjectMode()) {
-            throw FieldException::reactivityNotSupported(static::class);
+            throw FieldException::reactivityNotSupported(static::class, 'without object mode');
         }
 
         return $this->toValue() ?? $this->getPreparedFields()

@@ -10,11 +10,9 @@ use MoonShine\Contracts\Core\PageContract;
 use MoonShine\Contracts\Core\ResourceContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\FieldContract;
-use MoonShine\Contracts\UI\HasReactivityContract;
 use MoonShine\Support\AlpineJs;
 use MoonShine\Support\DTOs\AsyncCallback;
 use MoonShine\Support\Enums\HttpMethod;
-use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Components\Badge;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Traits\Fields\Reactivity;
@@ -30,9 +28,8 @@ use Psr\Container\NotFoundExceptionInterface;
  *
  * @method static static make(Closure|string|null $label = null, ?string $column = null, ?Closure $formatted = null)
  *
- * @implements HasReactivityContract<Fields>
  */
-abstract class Field extends FormElement implements FieldContract, HasReactivityContract
+abstract class Field extends FormElement implements FieldContract
 {
     use WithSorts;
     use WithHint;

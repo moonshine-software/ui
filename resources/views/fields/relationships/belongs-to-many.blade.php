@@ -83,7 +83,7 @@
                         <x-moonshine::layout.divider />
 
                         <div x-data="belongsToMany"
-                             x-init="pivot"
+                             x-init='pivot(@json($keys))'
                              class="js-pivot-table"
                              data-table-name="{{ $componentName }}"
                         >
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 @else
-                    <div x-data="belongsToMany" x-init="pivot">
+                    <div x-data="belongsToMany" x-init='pivot(@json($keys))'>
                         <x-moonshine::action-group
                             class="mb-4"
                             :actions="$buttons"
