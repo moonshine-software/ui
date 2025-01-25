@@ -314,7 +314,7 @@ function submitState(form, loading = true, reset = false) {
   const button = form.querySelector('.js-form-submit-button')
   const loader = form.querySelector('.js-form-submit-button-loader')
 
-  if(!button) {
+  if (!button) {
     return
   }
 
@@ -337,7 +337,7 @@ function submitState(form, loading = true, reset = false) {
 
     button.setAttribute('disabled', 'true')
 
-    if(loader) {
+    if (loader) {
       loader.style.display = 'block'
     }
   }

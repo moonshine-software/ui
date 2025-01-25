@@ -46,8 +46,8 @@ export default () => ({
   _checked(checked = []) {
     checked.forEach(value => {
       this.$el
-      .querySelectorAll('input[value="' + value + '"]')
-      .forEach(input => (input.checked = true))
+        .querySelectorAll('input[value="' + value + '"]')
+        .forEach(input => (input.checked = true))
     })
   },
   pivot(checked = []) {
