@@ -117,7 +117,7 @@ trait WithModal
                     ),
                 ])
             )->when(
-                !\is_null($selector),
+                ! \is_null($selector),
                 static fn (FormBuilderContract $form): FormBuilderContract => $form->asyncSelector($selector)
             )->when(
                 $async && ! $ctx->isAsyncMethod(),
