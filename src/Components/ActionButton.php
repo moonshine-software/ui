@@ -49,6 +49,14 @@ class ActionButton extends MoonShineComponent implements
 
     protected bool $isAsync = false;
 
+    protected ?HttpMethod $asyncHttpMethod = null;
+
+    protected ?AsyncCallback $asyncCallback = null;
+
+    protected ?array $asyncEvents = null;
+
+    protected null|string|array $asyncSelector = null;
+
     protected ?string $asyncMethod = null;
 
     protected ?Closure $onBeforeSetCallback = null;
@@ -246,7 +254,7 @@ class ActionButton extends MoonShineComponent implements
 
     public function disableAsync(): static
     {
-        $this->isAsync = false;
+        $this->purgeAsync();
 
         return $this;
     }
@@ -258,6 +266,10 @@ class ActionButton extends MoonShineComponent implements
         ?AsyncCallback $callback = null
     ): static {
         $this->isAsync = true;
+        $this->asyncHttpMethod = $method;
+        $this->asyncSelector = $selector;
+        $this->asyncEvents = $events;
+        $this->asyncCallback = $callback;
 
         return $this->customAttributes([
             'x-data' => 'actionButton',
@@ -340,6 +352,10 @@ class ActionButton extends MoonShineComponent implements
     public function purgeAsync(): void
     {
         $this->isAsync = false;
+        $this->asyncSelector = null;
+        $this->asyncHttpMethod = null;
+        $this->asyncEvents = null;
+        $this->asyncCallback = null;
 
         $removeAsyncAttr = array_merge(
             ['x-data'],

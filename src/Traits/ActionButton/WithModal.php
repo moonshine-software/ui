@@ -79,6 +79,11 @@ trait WithModal
         ?Closure $modalBuilder = null,
         Closure|string|null $name = null,
     ): static {
+        $method = $this->asyncHttpMethod ?: $method;
+        $events = $this->asyncEvents;
+        $callback = $this->asyncCallback;
+        $selector = $this->asyncSelector;
+
         $isDefaultMethods = \in_array($method, [HttpMethod::GET, HttpMethod::POST], true);
         $async = $this->purgeAsyncTap();
 
@@ -112,11 +117,14 @@ trait WithModal
                     ),
                 ])
             )->when(
+                !\is_null($selector),
+                static fn (FormBuilderContract $form): FormBuilderContract => $form->asyncSelector($selector)
+            )->when(
                 $async && ! $ctx->isAsyncMethod(),
-                static fn (FormBuilderContract $form): FormBuilderContract => $form->async()
+                static fn (FormBuilderContract $form): FormBuilderContract => $form->async(events: $events, callback: $callback)
             )->when(
                 $ctx->isAsyncMethod(),
-                static fn (FormBuilderContract $form): FormBuilderContract => $form->asyncMethod($ctx->getAsyncMethod())
+                static fn (FormBuilderContract $form): FormBuilderContract => $form->asyncMethod($ctx->getAsyncMethod(), events: $events, callback: $callback)
             )->submit(
                 \is_null($button)
                     ? $ctx->getCore()->getTranslator()->get('moonshine::ui.confirm')
