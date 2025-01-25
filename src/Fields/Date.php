@@ -10,7 +10,6 @@ use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
 use MoonShine\UI\Traits\Fields\DateTrait;
 use MoonShine\UI\Traits\Fields\HasPlaceholder;
-use MoonShine\UI\Traits\Fields\Reactivity;
 use MoonShine\UI\Traits\Fields\UpdateOnPreview;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\Fields\WithInputExtensions;

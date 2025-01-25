@@ -7,7 +7,6 @@ namespace MoonShine\UI\Fields;
 use Illuminate\Support\Collection;
 use JsonException;
 use MoonShine\Contracts\UI\HasAsyncContract;
-use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeNumeric;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
