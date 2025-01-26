@@ -327,7 +327,7 @@ export default (asyncUrl = '') => ({
     }
   },
   morphClear(type) {
-    if(type.value) {
+    if (type.value) {
       this.choicesInstance.clearStore()
     }
   },
