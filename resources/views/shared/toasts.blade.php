@@ -1,3 +1,4 @@
+
 <div x-data="toasts()"
      class="toast-container"
      @toast.window="add($event.detail)"

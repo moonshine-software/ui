@@ -29,9 +29,12 @@
             :nullable="$isNullable"
             :searchable="true"
             x-bind:data-async-extra="morphType"
+            x-effect="morphClear(morphType)"
             :value="$value"
             :values="$values"
             :asyncRoute="$isAsyncSearch ? $asyncSearchUrl : null"
+            data-async-on-init="true"
+            data-async-on-init-dropdown="true"
         >
         </x-moonshine::form.select>
     </div>
