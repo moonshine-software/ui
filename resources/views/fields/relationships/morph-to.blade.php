@@ -29,6 +29,7 @@
             :nullable="$isNullable"
             :searchable="true"
             x-bind:data-async-extra="morphType"
+            x-effect="morphClear(morphType)"
             :value="$value"
             :values="$values"
             :asyncRoute="$isAsyncSearch ? $asyncSearchUrl : null"

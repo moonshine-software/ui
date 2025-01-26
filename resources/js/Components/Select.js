@@ -326,6 +326,11 @@ export default (asyncUrl = '') => ({
       this.$el.setAttribute('data-choices-value', this.choicesInstance.getValue(true).join(','))
     }
   },
+  morphClear(type) {
+    if(type.value) {
+      this.choicesInstance.clearStore()
+    }
+  },
   async asyncSearch() {
     const query = this.searchTerms.value ?? null
     let canRequest = this.$el.dataset.asyncOnInit || (query !== null && query.length)
