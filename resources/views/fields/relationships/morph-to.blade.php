@@ -33,6 +33,8 @@
             :value="$value"
             :values="$values"
             :asyncRoute="$isAsyncSearch ? $asyncSearchUrl : null"
+            data-async-on-init="true"
+            data-async-on-init-dropdown="true"
         >
         </x-moonshine::form.select>
     </div>
