@@ -55,6 +55,8 @@ abstract class Field extends FormElement implements FieldContract
 
     protected bool $columnSelection = true;
 
+    protected bool $columnHideOnInit = false;
+
     protected bool $stickyColumn = false;
 
     protected bool $nullable = false;
@@ -117,9 +119,10 @@ abstract class Field extends FormElement implements FieldContract
     }
 
 
-    public function columnSelection(bool $active = true): static
+    public function columnSelection(bool $active = true, bool $hideOnInit = false): static
     {
         $this->columnSelection = $active;
+        $this->columnHideOnInit = $hideOnInit;
 
         return $this;
     }
@@ -127,6 +130,11 @@ abstract class Field extends FormElement implements FieldContract
     public function isColumnSelection(): bool
     {
         return $this->columnSelection;
+    }
+
+    public function isColumnHideOnInit(): bool
+    {
+        return $this->columnHideOnInit;
     }
 
     public function sticky(): static

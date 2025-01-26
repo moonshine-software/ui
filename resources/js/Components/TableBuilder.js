@@ -144,6 +144,12 @@ export default (
 
     this.block.querySelectorAll('[data-column-selection-checker]').forEach(el => {
       let stored = localStorage.getItem(this.getColumnSelectionStoreKey(el))
+      let hideOnInit = this.table?.querySelector(`[data-column-selection="${el.dataset?.column}"]`)
+        ?.dataset.columnSelectionHideOnInit
+
+      if (stored === null && hideOnInit) {
+        stored = 'false'
+      }
 
       el.checked = stored === null || stored === 'true'
       this.columnSelection(el)

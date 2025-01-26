@@ -471,6 +471,7 @@ final class TableBuilder extends IterableComponent implements
                 $cells->push(
                     TableTh::make($thContent, $index)
                         ->customAttributes(['data-column-selection' => $field->getIdentity()])
+                        ->customAttributes(['data-column-selection-hide-on-init' => $field->isColumnHideOnInit()])
                         ->customAttributes(['class' => $field->isStickyColumn() ? $this->getStickyClass() : ''])
                         ->customAttributes($tdAttributes($index)),
                 );
