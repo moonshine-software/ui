@@ -9,7 +9,7 @@
     @if(!$isSimpleMode)
         <x-moonshine::form.input
             type="hidden"
-            :attributes="$attributes->except(['class', ':id', 'id', 'type', 'checked', 'value'])"
+            :attributes="$attributes->except(['class', ':id', 'id', 'type', 'checked', 'value', 'x-model'])"
             value="{{ $offValue }}"
         />
     @endif

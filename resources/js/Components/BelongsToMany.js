@@ -33,25 +33,33 @@ export default () => ({
       const tr = pivot.querySelector('table > tbody > tr:last-child')
       tr.querySelector('.js-pivot-title').innerHTML = item.label
       tr.dataset.rowKey = item.value
-      tr.querySelector('.js-pivot-checker').checked = true
+      const checker = tr.querySelector('.js-pivot-checker')
+      checker.checked = true
+      checker.dispatchEvent(new Event('change'))
 
       this.$dispatch('table_reindex:' + tableName)
     }
   },
   tree(checked = []) {
+    this._checked(checked)
+  },
+  _checked(checked = []) {
     checked.forEach(value => {
       this.$el
         .querySelectorAll('input[value="' + value + '"]')
         .forEach(input => (input.checked = true))
     })
   },
-  pivot() {
+  pivot(checked = []) {
+    this._checked(checked)
+
     this.$root.querySelectorAll('.js-pivot-title')?.forEach(function (el) {
       el.addEventListener('click', event => {
         let tr = el.closest('tr')
         let checker = tr.querySelector('.js-pivot-checker')
 
         checker.checked = !checker.checked
+        checker.dispatchEvent(new Event('change'))
       })
     })
 
@@ -66,6 +74,7 @@ export default () => ({
         let checker = tr.querySelector('.js-pivot-checker')
 
         checker.checked = event.target.value
+        checker.dispatchEvent(new Event('change'))
       })
     })
   },
@@ -77,6 +86,7 @@ export default () => ({
   uncheckAll() {
     this.$root.querySelectorAll('.js-pivot-checker')?.forEach(function (el) {
       el.checked = false
+      el.dispatchEvent(new Event('change'))
     })
   },
 })

@@ -311,14 +311,22 @@ export default (name = '', initData = {}, reactive = {}) => ({
 })
 
 function submitState(form, loading = true, reset = false) {
+  const button = form.querySelector('.js-form-submit-button')
+  const loader = form.querySelector('.js-form-submit-button-loader')
+
+  if (!button) {
+    return
+  }
+
   if (!loading) {
-    form.querySelector('.js-form-submit-button-loader').style.display = 'none'
-    form.querySelector('.js-form-submit-button').removeAttribute('disabled')
+    button.style.display = 'none'
+    loader?.removeAttribute('disabled')
     if (reset) {
       form.reset()
     }
   } else {
     const inputs = form.querySelectorAll('[name]')
+
     if (inputs.length > 0) {
       inputs.forEach(function (element) {
         if (element.classList.contains('form-invalid')) {
@@ -327,8 +335,11 @@ function submitState(form, loading = true, reset = false) {
       })
     }
 
-    form.querySelector('.js-form-submit-button').setAttribute('disabled', 'true')
-    form.querySelector('.js-form-submit-button-loader').style.display = 'block'
+    button.setAttribute('disabled', 'true')
+
+    if (loader) {
+      loader.style.display = 'block'
+    }
   }
 }
 

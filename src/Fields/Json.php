@@ -24,6 +24,7 @@ use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\RemovableContract;
+use MoonShine\UI\Exceptions\FieldException;
 use MoonShine\UI\Traits\Fields\HasVerticalMode;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\Removable;
@@ -261,7 +262,9 @@ class Json extends Field implements
     {
         if ($this->isObjectMode()) {
             return $this->getFields()
-                ->wrapNames($this->getColumn());
+                ->wrapNames($this->getColumn())
+                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")))
+            ;
         }
 
         return $this->getFields()
@@ -549,6 +552,17 @@ class Json extends Field implements
         }
 
         return $data;
+    }
+
+    public function getReactiveValue(): mixed
+    {
+        if (! $this->isObjectMode()) {
+            throw FieldException::reactivityNotSupported(static::class, 'without object mode');
+        }
+
+        return $this->toValue() ?? $this->getPreparedFields()
+            ->onlyFields()
+            ->mapWithKeys(fn (FieldContract $field) => [$field->getColumn() => null]);
     }
 
     /**

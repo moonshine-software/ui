@@ -32,7 +32,8 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
         }
       }
 
-      dispatchEvent(
+      setTimeout(function () {
+        dispatchEvent(
         new CustomEvent(eventName.replaceAll(/\s/g, '').toLowerCase(), {
           attributes,
           bubbles: true,
@@ -40,6 +41,7 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
           cancelable: true,
         }),
       )
+      }, attributes['_delay'] ?? 0)
     })
   }
 }

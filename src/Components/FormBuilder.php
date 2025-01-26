@@ -456,7 +456,7 @@ final class FormBuilder extends MoonShineComponent implements
         );
 
         $reactiveFields = $onlyFields->reactiveFields()
-            ->mapWithKeys(static fn (FieldContract $field): array => [$field->getColumn() => $field->getValue()]);
+            ->mapWithKeys(static fn (FieldContract $field): array => [$field->getColumn() => $field->getReactiveValue()]);
 
         $whenFields = [];
         $this->showWhenFields($onlyFields, $whenFields);
