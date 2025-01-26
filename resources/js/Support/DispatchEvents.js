@@ -32,7 +32,7 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
         }
       }
 
-      setTimeout(function() {
+      setTimeout(function () {
         component.$dispatch(eventName.replaceAll(/\s/g, '').toLowerCase(), attributes)
       }, attributes['_delay'] ?? 0)
     })
