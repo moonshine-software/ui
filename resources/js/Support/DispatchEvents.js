@@ -34,13 +34,13 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
 
       setTimeout(function () {
         dispatchEvent(
-        new CustomEvent(eventName.replaceAll(/\s/g, '').toLowerCase(), {
-          attributes,
-          bubbles: true,
-          composed: true,
-          cancelable: true,
-        }),
-      )
+          new CustomEvent(eventName.replaceAll(/\s/g, '').toLowerCase(), {
+            attributes,
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+          }),
+        )
       }, attributes['_delay'] ?? 0)
     })
   }
