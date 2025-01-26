@@ -7,9 +7,6 @@ namespace MoonShine\UI\Fields;
 use Illuminate\Support\Collection;
 use JsonException;
 use MoonShine\Contracts\UI\HasAsyncContract;
-use MoonShine\Contracts\UI\HasReactivityContract;
-use MoonShine\Support\AlpineJs;
-use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeNumeric;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
@@ -17,23 +14,18 @@ use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
 use MoonShine\UI\Traits\Fields\CanBeMultiple;
 use MoonShine\UI\Traits\Fields\HasPlaceholder;
-use MoonShine\UI\Traits\Fields\Reactivity;
 use MoonShine\UI\Traits\Fields\Searchable;
 use MoonShine\UI\Traits\Fields\SelectTrait;
 use MoonShine\UI\Traits\Fields\UpdateOnPreview;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\HasAsync;
 
-/**
- * @implements HasReactivityContract<Fields>
- */
 class Select extends Field implements
     HasDefaultValueContract,
     CanBeArray,
     CanBeString,
     CanBeNumeric,
     HasUpdateOnPreviewContract,
-    HasReactivityContract,
     HasAsyncContract
 {
     use CanBeMultiple;
@@ -43,7 +35,6 @@ class Select extends Field implements
     use HasAsync;
     use UpdateOnPreview;
     use HasPlaceholder;
-    use Reactivity;
 
     protected string $view = 'moonshine::fields.select';
 
@@ -89,26 +80,14 @@ class Select extends Field implements
         ]);
     }
 
-    public function onChangeEvent(array|string $events, array $exclude = [], bool $withoutPayload = false): static
-    {
-        $excludes = $withoutPayload ? '*' : implode(',', [
-            ...$exclude,
-            '_component_name',
-            '_token',
-            '_method',
-        ]);
-
-        return $this->customAttributes([
-            '@change' => "dispatchEvents(
-                 `" . AlpineJs::prepareEvents($events) . "`,
-                 `$excludes`
-             )",
-        ]);
-    }
-
     protected function asyncWith(): void
     {
         $this->searchable();
+    }
+
+    public function prepareReactivityValue(mixed $value, mixed &$casted, array &$except): mixed
+    {
+        return data_get($value, 'value', $value);
     }
 
     protected function viewData(): array

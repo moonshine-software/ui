@@ -39,6 +39,12 @@
 
             {{ $submitLabel }}
         </x-moonshine::form.button>
+        @else
+            <button type="submit" class="js-form-submit-button" style="display: none;">
+                <x-moonshine::spinner
+                    class="js-form-submit-button-loader"
+                />
+            </button>
         @endif
 
         @if($buttons->isNotEmpty())

@@ -247,6 +247,18 @@ trait RangeTrait
         ];
     }
 
+    protected function resolveValue(): mixed
+    {
+        if ($this->isNullRange()) {
+            return [
+                $this->getFromField() => null,
+                $this->getToField() => null,
+            ];
+        }
+
+        return $this->toValue();
+    }
+
     protected function resolveValidationErrorClasses(): void
     {
         if (Arr::has($this->getErrors(), $this->getNameDotFrom())) {

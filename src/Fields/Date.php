@@ -5,29 +5,22 @@ declare(strict_types=1);
 namespace MoonShine\UI\Fields;
 
 use Illuminate\Support\Carbon;
-use MoonShine\Contracts\UI\HasReactivityContract;
-use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
 use MoonShine\UI\Traits\Fields\DateTrait;
 use MoonShine\UI\Traits\Fields\HasPlaceholder;
-use MoonShine\UI\Traits\Fields\Reactivity;
 use MoonShine\UI\Traits\Fields\UpdateOnPreview;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\Fields\WithInputExtensions;
 
-/**
- * @implements HasReactivityContract<Fields>
- */
-class Date extends Field implements HasDefaultValueContract, CanBeString, HasUpdateOnPreviewContract, HasReactivityContract
+class Date extends Field implements HasDefaultValueContract, CanBeString, HasUpdateOnPreviewContract
 {
     use DateTrait;
     use WithInputExtensions;
     use WithDefaultValue;
     use HasPlaceholder;
     use UpdateOnPreview;
-    use Reactivity;
 
     protected string $view = 'moonshine::fields.input';
 
