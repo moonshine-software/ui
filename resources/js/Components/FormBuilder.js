@@ -318,17 +318,20 @@ function submitState(form, loading = true, reset = false) {
     return
   }
 
+  if (!loader) {
+    return
+  }
+
   if (!loading) {
-    button.style.display = 'none'
-    loader?.removeAttribute('disabled')
+    loader.style.display = 'none'
+    button.removeAttribute('disabled')
     if (reset) {
       form.reset()
     }
   } else {
     const inputs = form.querySelectorAll('[name]')
-
     if (inputs.length > 0) {
-      inputs.forEach(function (element) {
+      inputs.forEach(function(element) {
         if (element.classList.contains('form-invalid')) {
           element.classList.remove('form-invalid')
         }
@@ -336,10 +339,7 @@ function submitState(form, loading = true, reset = false) {
     }
 
     button.setAttribute('disabled', 'true')
-
-    if (loader) {
-      loader.style.display = 'block'
-    }
+    loader.style.display = 'block'
   }
 }
 
