@@ -331,7 +331,7 @@ function submitState(form, loading = true, reset = false) {
   } else {
     const inputs = form.querySelectorAll('[name]')
     if (inputs.length > 0) {
-      inputs.forEach(function(element) {
+      inputs.forEach(function (element) {
         if (element.classList.contains('form-invalid')) {
           element.classList.remove('form-invalid')
         }
