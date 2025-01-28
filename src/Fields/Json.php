@@ -136,7 +136,9 @@ class Json extends Field implements
     {
         $this->objectMode = true;
 
-        return $this;
+        return $this->customAttributes([
+            'class' => 'space-elements'
+        ]);
     }
 
     public function isObjectMode(): bool
