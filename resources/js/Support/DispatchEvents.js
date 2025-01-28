@@ -39,7 +39,7 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
             bubbles: true,
             composed: true,
             cancelable: true,
-          })
+          }),
         )
       }, attributes['_delay'] ?? 0)
     })
