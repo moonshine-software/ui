@@ -33,7 +33,14 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
       }
 
       setTimeout(function () {
-        component.$dispatch(eventName.replaceAll(/\s/g, '').toLowerCase(), attributes)
+        dispatchEvent(
+          new CustomEvent(eventName.replaceAll(/\s/g, '').toLowerCase(), {
+            detail: attributes,
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+          })
+        )
       }, attributes['_delay'] ?? 0)
     })
   }
