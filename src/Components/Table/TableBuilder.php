@@ -318,8 +318,12 @@ final class TableBuilder extends IterableComponent implements
                 )
                 ->pushCellWhen(
                     $this->hasButtons() || $buttons->isNotEmpty(),
-                    static fn (): string => (string) Flex::make([
-                        ActionGroup::make($buttons->toArray()),
+                    fn (): string => (string) Flex::make([
+                        ActionGroup::make($buttons->toArray())
+                            ->when(
+                                $this->isStickyButtons(),
+                                fn(ActionGroup $actionGroup) => $actionGroup->customAttributes(['strategy' => 'absolute'])
+                            ),
                     ])->justifyAlign('end'),
                     index: $fields->count() + ($hasBulk ? 1 : 0),
                     builder: fn (TableCellContract $td): TableCellContract => $tdAttributes(
