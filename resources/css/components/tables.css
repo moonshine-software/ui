@@ -111,8 +111,7 @@ table {
 }
 
 .table-responsive {
-  @apply overflow-auto;
-  width: calc(100% + 0.5rem);
+  @apply overflow-auto w-full;
 }
 
 .table-zoom-in {
