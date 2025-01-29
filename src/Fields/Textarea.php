@@ -7,11 +7,13 @@ namespace MoonShine\UI\Fields;
 use Illuminate\Contracts\Support\Renderable;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
+use MoonShine\UI\Traits\Fields\HasPlaceholder;
 use MoonShine\UI\Traits\Fields\WithDefaultValue;
 use MoonShine\UI\Traits\Fields\WithEscapedValue;
 
 class Textarea extends Field implements HasDefaultValueContract, CanBeString
 {
+    use HasPlaceholder;
     use WithDefaultValue;
     use WithEscapedValue;
 
