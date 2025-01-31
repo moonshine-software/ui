@@ -39,8 +39,8 @@ class Range extends Field implements HasDefaultValueContract, CanBeArray, RangeF
             'max' => $this->max,
             'fromColumn' => "range_from_{$this->getIdentity()}",
             'toColumn' => "range_to_{$this->getIdentity()}",
-            'fromValue' => data_get($this->getValue(), $this->getFromField(), $this->min),
-            'toValue' => data_get($this->getValue(), $this->getToField(), $this->max),
+            'fromValue' => data_get($this->getValue(), $this->getFromField(), $this->min) ?? $this->min ?? 0,
+            'toValue' => data_get($this->getValue(), $this->getToField(), $this->max) ?? $this->max ?? $this->step,
             'fromAttributes' => $this->getFromAttributes(),
             'toAttributes' => $this->getToAttributes(),
         ];
