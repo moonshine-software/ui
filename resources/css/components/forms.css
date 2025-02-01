@@ -133,7 +133,15 @@ input[type='number'] {
     @apply absolute bottom-0 top-0 z-4 rounded-md bg-primary;
   }
   &-input {
-    @apply pointer-events-none absolute z-4 h-2 w-full cursor-pointer appearance-none p-0 opacity-0;
+    @apply absolute z-4 h-2 !min-h-0 w-full cursor-pointer appearance-none p-0 opacity-0;
+
+    & + & {
+      @apply pointer-events-none;
+
+      @supports (-moz-appearance: none) {
+        @apply pointer-events-auto;
+      }
+    }
   }
   &-thumb {
     @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
