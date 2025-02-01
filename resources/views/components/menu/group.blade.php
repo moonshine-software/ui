@@ -11,15 +11,16 @@
         x-data="{ dropdown: false }"
         @click.outside="dropdown = false"
         data-dropdown-placement="bottom-start"
-        x-ref="dropdownMenu"
     @else
         x-data="{ dropdown: {{ $isActive ? 'true' : 'false' }} }"
-        x-ref="dropdownMenu"
     @endif
+    x-ref="dropdownMenu"
 >
     <button
-        x-data="navTooltip"
-        @mouseenter="toggleTooltip()"
+        @if(!$top)
+            x-data="navTooltip"
+            @mouseenter="toggleTooltip()"
+        @endif
         @click.prevent="dropdown = ! dropdown; $nextTick(() => { if (dropdown && $refs.dropdownMenu) $refs.dropdownMenu.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); })"
         class="menu-inner-button"
         :class="dropdown && '_is-active'"
