@@ -545,7 +545,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
             ) ?? false
         );
 
-        if($this->onRequestValue instanceof Closure) {
+        if ($this->onRequestValue instanceof Closure) {
             return \call_user_func(
                 $this->onRequestValue,
                 $value,
