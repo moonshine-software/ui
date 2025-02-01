@@ -206,7 +206,7 @@ body.theme-minimalistic {
       }
 
       &-dropdown {
-        @apply mt-1 top-[3.15rem] border border-solid border-dark-200 bg-dark-50 pb-1 shadow-none dark:bg-dark-700;
+        @apply top-[3.15rem] mt-1 border border-solid border-dark-200 bg-dark-50 pb-1 shadow-none dark:bg-dark-700;
 
         .menu-inner-divider {
           @apply pl-0 before:bg-dark-300 dark:before:bg-dark-200;
