@@ -323,7 +323,7 @@
 
       /* Dropdown Menu */
       &-dropdown {
-        @apply fixed z-5 flex flex-col gap-y-1 rounded-lg border border-dark-300 bg-menu-dropdown-bg px-1 py-1.5 shadow-lg md:min-w-[190px] lg:max-h-72 lg:min-w-[240px] lg:overflow-y-auto;
+        @apply fixed top-[4.85rem] z-5 flex flex-col gap-y-1 rounded-lg border border-dark-300 bg-menu-dropdown-bg px-1 py-1.5 shadow-lg md:min-w-[190px] lg:max-h-72 lg:min-w-[240px] lg:overflow-y-auto;
 
         .menu-inner-link,
         .menu-inner-button {

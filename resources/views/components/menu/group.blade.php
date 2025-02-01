@@ -20,7 +20,7 @@
     <button
         x-data="navTooltip"
         @mouseenter="toggleTooltip()"
-        @click.prevent="dropdown = ! dropdown; $nextTick(() => { if (dropdown && $refs.dropdownMenu) $refs.dropdownMenu.scrollIntoView({ behavior: 'smooth' }); })"
+        @click.prevent="dropdown = ! dropdown; $nextTick(() => { if (dropdown && $refs.dropdownMenu) $refs.dropdownMenu.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); })"
         class="menu-inner-button"
         :class="dropdown && '_is-active'"
         type="button"
