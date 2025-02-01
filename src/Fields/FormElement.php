@@ -73,6 +73,8 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     protected static ?Closure $requestValueResolver = null;
 
+    protected ?Closure $onRequestValue = null;
+
     protected ?string $requestKeyPrefix = null;
 
     protected bool $hasOld = true;
@@ -520,18 +522,40 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         static::$requestValueResolver = $resolver;
     }
 
+    /**
+     * @param  Closure(mixed $value, string $name, mixed $default, static $ctx): mixed  $callback
+     */
+    public function onRequestValue(Closure $callback): static
+    {
+        $this->onRequestValue = $callback;
+
+        return $this;
+    }
+
     public function getRequestValue(string|int|null $index = null): mixed
     {
         if (! \is_null(static::$requestValueResolver)) {
             return \call_user_func(static::$requestValueResolver, $index, $this->getDefaultIfExists(), $this);
         }
 
-        return $this->prepareRequestValue(
+        $value = $this->prepareRequestValue(
             $this->getCore()->getRequest()->get(
                 $this->getRequestNameDot($index),
                 $this->getDefaultIfExists()
             ) ?? false
         );
+
+        if ($this->onRequestValue instanceof Closure) {
+            return \call_user_func(
+                $this->onRequestValue,
+                $value,
+                $this->getRequestNameDot($index),
+                $this->getDefaultIfExists(),
+                $this
+            );
+        }
+
+        return $value;
     }
 
     public function getRequestNameDot(string|int|null $index = null): string
