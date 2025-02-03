@@ -232,7 +232,7 @@
 
 /* Aside horizontal navigation */
 .layout-menu-horizontal {
-  @apply sticky inset-x-0 top-0 z-[100] flex h-[4.5rem] items-center gap-x-5 overflow-x-auto overflow-y-hidden bg-body/80 px-6 transition-colors md:px-10 lg:h-24 lg:overflow-y-auto;
+  @apply sticky inset-x-0 top-0 z-[100] flex h-[4.5rem] items-center gap-x-5 overflow-x-auto overflow-y-hidden bg-body/95 px-6 transition-colors md:px-10 lg:h-24 lg:overflow-y-auto;
 
   .menu-inner-item-char {
     @apply hidden;
