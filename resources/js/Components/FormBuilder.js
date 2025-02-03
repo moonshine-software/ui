@@ -359,9 +359,9 @@ function inputsErrors(data, form) {
     const input = form.querySelector(`[name="${formattedKey}"]`)
     if (input) {
       input.classList.add('form-invalid')
-      const errorDiv = document.createElement('div');
+      const errorDiv = document.createElement('div')
       errorDiv.classList.add('form-error')
-      errorDiv.textContent = data.errors[key];
+      errorDiv.textContent = data.errors[key]
       input.after(errorDiv)
     }
   }
