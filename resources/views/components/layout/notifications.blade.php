@@ -12,7 +12,7 @@
             class="w-[264px] xs:w-80"
         >
             <x-slot:toggler class="notifications-icon">
-                <span class="absolute top-0 right-1 h-2 w-2 rounded-lg bg-red-500"></span>
+                <span class="absolute top-0 right-1 h-2 w-2 rounded-full bg-red-500"></span>
                 <x-moonshine::icon
                     icon="bell"
                     color="gray"
