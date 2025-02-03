@@ -52,7 +52,7 @@ export class Iterable {
 
         let name = fieldOrBlock.dataset.name
 
-        if(!name) {
+        if (!name) {
           return
         }
 
