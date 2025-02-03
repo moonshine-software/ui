@@ -51,6 +51,11 @@ export class Iterable {
         }
 
         let name = fieldOrBlock.dataset.name
+
+        if(!name) {
+          return
+        }
+
         let closestBlock = fieldOrBlock.closest(`[data-r-block]`)
         let parent = fieldOrBlock.closest(closestBlock.dataset.rClosestSelector)
         let _key = parent.dataset.rowKey ?? parent.rowIndex ?? index

@@ -335,12 +335,19 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
             : $empty;
 
         if ($withOld && $old !== $empty) {
-            return $old;
+            $this->setValue(
+                $this->resolveOldValue($old)
+            );
         }
 
         $this->isValueResolved = true;
 
         return $this->resolvedValue = $this->resolveValue();
+    }
+
+    protected function resolveOldValue(mixed $old): mixed
+    {
+        return $old;
     }
 
     protected function resolveValue(): mixed
