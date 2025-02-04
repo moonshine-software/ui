@@ -23,7 +23,7 @@
         </x-moonshine::form.label>
     @endif
 
-    <div>
+    <div class="error-wrapper">
         {{ $before ?? '' }}
 
         {{ !$beforeLabel && !$insideLabel ? $slot : '' }}

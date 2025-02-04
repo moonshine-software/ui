@@ -111,6 +111,7 @@ input[type='number'] {
     @apply h-6 w-11 rounded-full bg-gray-200 transition-colors duration-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all focus:ring-gray-200 peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:border peer-focus:border-white peer-focus:ring peer-focus:ring-opacity-70 dark:border-dark-300 dark:bg-dark-800 dark:peer-focus:border-dark-300 dark:peer-focus:ring-dark-100 dark:peer-focus:ring-opacity-30;
   }
 }
+.form-switcher:has(.form-invalid),
 .form-switcher.form-invalid {
   .form-switcher-toggler {
     @apply border border-red-600 dark:border-red-700;

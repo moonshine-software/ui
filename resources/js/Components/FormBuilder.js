@@ -356,13 +356,18 @@ function inputsErrors(data, form) {
 
   for (let key in data.errors) {
     let formattedKey = key.replace(/\.(\d+|\w+)/g, '[$1]')
-    const input = form.querySelector(`[name="${formattedKey}"]`)
-    if (input) {
-      input.classList.add('form-invalid')
-      const errorDiv = document.createElement('div')
-      errorDiv.classList.add('form-error')
-      errorDiv.textContent = data.errors[key]
-      input.after(errorDiv)
+    const inputs = form.querySelectorAll(`[name="${formattedKey}"]`)
+    if (inputs.length) {
+      inputs.forEach(input => input.classList.add('form-invalid'))
+
+      const errorWrapper = inputs[0].closest('.moonshine-field').querySelector('.error-wrapper');
+      console.log(errorWrapper)
+      if (errorWrapper) {
+        const errorDiv = document.createElement('div')
+        errorDiv.classList.add('form-error')
+        errorDiv.textContent = data.errors[key]
+        errorWrapper.appendChild(errorDiv)
+      }
     }
   }
 }
