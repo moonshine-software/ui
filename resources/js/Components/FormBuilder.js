@@ -202,7 +202,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
     }
 
     if (method?.toLowerCase() === 'get') {
-      action = action + '?' + new URLSearchParams(formData).toString()
+      action = action + (action.includes('?') ? '&' : '?') + new URLSearchParams(formData).toString()
     }
 
     let componentRequestData = new ComponentRequestData()

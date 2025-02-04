@@ -120,11 +120,8 @@ trait WithModal
                 ! \is_null($selector),
                 static fn (FormBuilderContract $form): FormBuilderContract => $form->asyncSelector($selector)
             )->when(
-                $async && ! $ctx->isAsyncMethod(),
+                $async,
                 static fn (FormBuilderContract $form): FormBuilderContract => $form->async(events: $events, callback: $callback)
-            )->when(
-                $ctx->isAsyncMethod(),
-                static fn (FormBuilderContract $form): FormBuilderContract => $form->asyncMethod($ctx->getAsyncMethod(), events: $events, callback: $callback)
             )->submit(
                 \is_null($button)
                     ? $ctx->getCore()->getTranslator()->get('moonshine::ui.confirm')
