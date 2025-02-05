@@ -22,7 +22,7 @@ trait WithQuickFormElementAttributes
     {
         $this->nameAttribute = $name;
 
-        return $this;
+        return $this->setAttribute('name', $name);
     }
 
     public function getNameAttribute(?string $index = null): string
