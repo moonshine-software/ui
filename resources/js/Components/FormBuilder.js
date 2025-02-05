@@ -360,13 +360,13 @@ function inputsErrors(data, form) {
     if (inputs.length) {
       inputs.forEach(input => input.classList.add('form-invalid'))
 
-      const errorWrapper = inputs[0].closest('.moonshine-field').querySelector('.error-wrapper')
-      console.log(errorWrapper)
-      if (errorWrapper) {
+      const fieldArea = inputs[0].closest('[data-inside="field"]') ?? null
+
+      if (fieldArea) {
         const errorDiv = document.createElement('div')
         errorDiv.classList.add('form-error')
         errorDiv.textContent = data.errors[key]
-        errorWrapper.appendChild(errorDiv)
+        fieldArea.after(errorDiv)
       }
     }
   }
