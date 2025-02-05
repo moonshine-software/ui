@@ -451,7 +451,7 @@ class Json extends Field implements
                 fn (TableBuilder $tableBuilder) => value($this->modifyTable, $tableBuilder, $this->isPreviewMode()),
             );
 
-        if(!$this->isObjectMode() && !$this->isPreviewMode()) {
+        if(!$this->isPreviewMode()) {
             $component = $component
                 ->editable()
                 ->reindex(prepared: true)
