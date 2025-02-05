@@ -34,7 +34,7 @@ use Throwable;
 
 /**
  * @implements HasFieldsContract<Fields|FieldsContract>
- * @implements FieldWithComponentContract<TableBuilder>
+ * @implements FieldWithComponentContract<TableBuilderContract|FieldsGroup>
  */
 class Json extends Field implements
     HasFieldsContract,
@@ -76,7 +76,7 @@ class Json extends Field implements
 
     protected bool $resolveValueOnce = true;
 
-    protected ?ComponentContract $resolvedComponent = null;
+    protected null|TableBuilderContract|FieldsGroup $resolvedComponent = null;
 
     /**
      * @throws Throwable
@@ -290,6 +290,7 @@ class Json extends Field implements
     {
         $component = $this->getComponent();
 
+        // FieldsGroup component
         if ($this->isObjectMode()) {
             return $component
                 ->previewMode()
