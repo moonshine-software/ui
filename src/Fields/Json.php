@@ -12,7 +12,7 @@ use MoonShine\Contracts\UI\ActionButtonContract;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
-use MoonShine\Contracts\UI\FieldWithComponent;
+use MoonShine\Contracts\UI\FieldWithComponentContract;
 use MoonShine\Contracts\UI\HasFieldsContract;
 use MoonShine\Contracts\UI\TableBuilderContract;
 use MoonShine\UI\Collections\Fields;
@@ -34,11 +34,11 @@ use Throwable;
 
 /**
  * @implements HasFieldsContract<Fields|FieldsContract>
- * @implements FieldWithComponent<TableBuilder>
+ * @implements FieldWithComponentContract<TableBuilder>
  */
 class Json extends Field implements
     HasFieldsContract,
-    FieldWithComponent,
+    FieldWithComponentContract,
     RemovableContract,
     HasDefaultValueContract,
     CanBeArray
