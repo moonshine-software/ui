@@ -348,7 +348,7 @@ class Json extends Field implements
         $collection = $this->prepareOnApply($collection);
 
         foreach ($this->getFields() as $field) {
-            if($field instanceof self) {
+            if ($field instanceof self) {
                 foreach ($collection as $index => $value) {
                     $column = $field->getColumn();
                     $collection[$index][$column] = $field->prepareOnApplyRecursive(
@@ -371,7 +371,7 @@ class Json extends Field implements
 
     public function getComponent(): ComponentContract
     {
-        if(!\is_null($this->resolvedComponent)) {
+        if (! \is_null($this->resolvedComponent)) {
             return $this->resolvedComponent;
         }
 
@@ -451,7 +451,7 @@ class Json extends Field implements
                 fn (TableBuilder $tableBuilder) => value($this->modifyTable, $tableBuilder, $this->isPreviewMode()),
             );
 
-        if(!$this->isObjectMode() && !$this->isPreviewMode()) {
+        if (! $this->isPreviewMode()) {
             $component = $component
                 ->editable()
                 ->reindex(prepared: true)
