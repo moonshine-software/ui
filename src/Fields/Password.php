@@ -11,6 +11,8 @@ class Password extends Text
 {
     protected string $type = 'password';
 
+    protected bool $hasOld = false;
+
     protected function resolvePreview(): string
     {
         return '***';
