@@ -42,7 +42,7 @@
                 >
                 </x-moonshine::form.select>
             @elseif($isTreeMode)
-                <div x-data="belongsToMany" x-init='tree(@json($value))'>
+                <div x-data="belongsToMany" x-init='tree(@json($value))' data-relation="{{$relationName}}">
                     {!! $treeHtml !!}
                 </div>
             @else

@@ -356,7 +356,7 @@ function inputsErrors(data, form) {
 
   for (let key in data.errors) {
     let formattedKey = key.replace(/\.(\d+|\w+)/g, '[$1]')
-    const inputs = form.querySelectorAll(`[name="${formattedKey}"]`)
+    const inputs = form.querySelectorAll(`[name="${formattedKey}"], [data-relation="${formattedKey}"]`)
     if (inputs.length) {
       inputs.forEach(input => input.classList.add('form-invalid'))
 
