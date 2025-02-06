@@ -288,7 +288,10 @@ export default (asyncUrl = '') => ({
 
     if (this.removeItemButton) {
       this.$el.parentElement.addEventListener('click', event => {
-        event.target.closest('.choices')?.querySelector('select')?.focus()
+        if (document.activeElement.name !== 'search_terms') {
+          // necessary for reactivity to work
+          event.target.closest('.choices')?.querySelector('select')?.focus()
+        }
 
         if (event.target.classList.contains('choices__button--remove')) {
           const choiceElement = event.target.closest('.choices__item')

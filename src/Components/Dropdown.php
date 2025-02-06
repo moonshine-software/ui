@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\View\ComponentSlot;
 
 /**
- * @method static static make(?string $title = null, Closure|string $toggler = '', Closure|Renderable|string $content = '', Closure|array $items = [], bool $searchable = false, Closure|string $searchPlaceholder = '', string $placement = 'bottom-start')
+ * @method static static make(?string $title = null, Closure|string $toggler = '', Closure|Renderable|string $content = '', Closure|array $items = [], bool $searchable = false, Closure|string $searchPlaceholder = '', string $placement = 'bottom-start', Closure|string $footer = '')
  */
 final class Dropdown extends MoonShineComponent
 {
