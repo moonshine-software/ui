@@ -79,6 +79,8 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     protected bool $hasOld = true;
 
+    protected bool $isOldValue = false;
+
     protected bool $isGroup = false;
 
     protected ComponentAttributesBagContract $wrapperAttributes;
@@ -90,19 +92,19 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
     public function __construct(
         Closure|string|null $label = null,
         ?string $column = null,
-        ?Closure $formatted = null
+        ?Closure $formatted = null,
     ) {
         parent::__construct();
 
         $this->attributes = new MoonShineComponentAttributeBag(
-            $this->getPropertyAttributes()->toArray()
+            $this->getPropertyAttributes()->toArray(),
         );
 
         $this->wrapperAttributes = new MoonShineComponentAttributeBag();
 
         $this->setLabel($label ?? $this->getLabel());
         $this->setColumn(
-            trim($column ?? str($this->getLabel())->lower()->snake()->value())
+            trim($column ?? str($this->getLabel())->lower()->snake()->value()),
         );
 
         if (! \is_null($formatted)) {
@@ -119,7 +121,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
                 return isset($this->{$property})
                     ? [$attr => $this->{$property}]
                     : [];
-            }
+            },
         );
     }
 
@@ -199,7 +201,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
             return \call_user_func(
                 $this->fillCallback,
                 \is_null($casted) ? $raw : $casted->getOriginal(),
-                $this
+                $this,
             );
         }
 
@@ -252,7 +254,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         return $this->resolveFill(
             $casted->toArray(),
             $casted,
-            $index
+            $index,
         );
     }
 
@@ -335,12 +337,26 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
             : $empty;
 
         if ($withOld && $old !== $empty) {
-            return $old;
+            $this->isOldValue = true;
+
+            $this->setValue(
+                $this->resolveOldValue($old),
+            );
         }
 
         $this->isValueResolved = true;
 
         return $this->resolvedValue = $this->resolveValue();
+    }
+
+    protected function resolveOldValue(mixed $old): mixed
+    {
+        return $old;
+    }
+
+    public function isOldValue(): bool
+    {
+        return $this->isOldValue;
     }
 
     protected function resolveValue(): mixed
@@ -379,8 +395,8 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
                     $this->getFormattedValueCallback(),
                     $this->getData()?->getOriginal(),
                     $this->getRowIndex(),
-                    $this
-                )
+                    $this,
+                ),
             );
         }
 
@@ -497,8 +513,8 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         $this->setRequestKeyPrefix(
             str($value)->when(
                 $prefix,
-                static fn ($str) => $str->prepend("$prefix.")
-            )->value()
+                static fn ($str) => $str->prepend("$prefix."),
+            )->value(),
         );
 
         return $this;
@@ -541,8 +557,8 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         $value = $this->prepareRequestValue(
             $this->getCore()->getRequest()->get(
                 $this->getRequestNameDot($index),
-                $this->getDefaultIfExists()
-            ) ?? false
+                $this->getDefaultIfExists(),
+            ) ?? false,
         );
 
         if ($this->onRequestValue instanceof Closure) {
@@ -564,12 +580,12 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
             ->when(
                 $this->getRequestKeyPrefix(),
                 fn (Stringable $str): Stringable => $str->prepend(
-                    "{$this->getRequestKeyPrefix()}."
-                )
+                    "{$this->getRequestKeyPrefix()}.",
+                ),
             )
             ->when(
                 ! \is_null($index) && $index !== '',
-                static fn (Stringable $str): Stringable => $str->append(".$index")
+                static fn (Stringable $str): Stringable => $str->append(".$index"),
             )->value();
     }
 

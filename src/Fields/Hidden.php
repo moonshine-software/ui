@@ -17,6 +17,8 @@ class Hidden extends Field implements HasDefaultValueContract, CanBeString
 
     protected string $type = 'hidden';
 
+    protected bool $hasOld = false;
+
     protected bool $showValue = false;
 
     protected bool $columnSelection = false;

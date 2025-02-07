@@ -11,6 +11,8 @@ class HiddenIds extends Field
 {
     protected string $view = 'moonshine::fields.hidden-ids';
 
+    protected bool $hasOld = false;
+
     protected string $type = 'hidden';
 
     public function __construct(

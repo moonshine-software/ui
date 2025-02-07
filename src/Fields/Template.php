@@ -20,6 +20,8 @@ class Template extends Field implements HasFieldsContract
 {
     use WithFields;
 
+    protected bool $hasOld = false;
+
     protected function prepareFields(): FieldsContract
     {
         return tap(

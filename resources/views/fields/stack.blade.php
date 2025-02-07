@@ -1,6 +1,8 @@
 @props([
     'fields' => [],
 ])
-<x-moonshine::fields-group
-    :components="$fields"
-/>
+<div class="space-elements">
+    <x-moonshine::fields-group
+        :components="$fields"
+    />
+</div>

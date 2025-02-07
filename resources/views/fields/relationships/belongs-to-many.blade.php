@@ -38,12 +38,12 @@
                     ])"
                     :nullable="$isNullable"
                     :searchable="$isSearchable"
-                    :values="$value"
+                    :values="$values"
                     :asyncRoute="$isAsyncSearch ? $asyncSearchUrl : null"
                 >
                 </x-moonshine::form.select>
             @elseif($isTreeMode)
-                <div x-data="belongsToMany" x-init='tree(@json($value))'>
+                <div x-data="belongsToMany" x-init='tree(@json($keys))'>
                     {!! $treeHtml !!}
                 </div>
             @else
