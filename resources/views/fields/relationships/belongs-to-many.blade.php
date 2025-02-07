@@ -19,6 +19,7 @@
 <div x-id="['belongs-to-many']"
      :id="$id('belongs-to-many')"
      data-show-when-field="{{ $attributes->get('name') }}"
+     data-validation-field="{{$relationName}}"
 >
     @if($isCreatable)
         {!! $createButton !!}
@@ -42,7 +43,7 @@
                 >
                 </x-moonshine::form.select>
             @elseif($isTreeMode)
-                <div x-data="belongsToMany" x-init='tree(@json($value))' data-validation-wrapper="{{$relationName}}">
+                <div x-data="belongsToMany" x-init='tree(@json($value))'>
                     {!! $treeHtml !!}
                 </div>
             @else

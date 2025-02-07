@@ -10,7 +10,7 @@
 <div {{ $attributes->merge(['class' => 'form-group moonshine-field'])->except('required') }}
      x-id="['input-wrapper', 'field-{{ $formName }}']"
      :id="$id('input-wrapper')"
-     data-inside="field"
+     data-validation-wrapper
 >
     {{ $beforeLabel && !$insideLabel ? $slot : '' }}
 
@@ -25,7 +25,7 @@
         </x-moonshine::form.label>
     @endif
 
-    <div data-inside="field">
+    <div data-validation-wrapper>
         {{ $before ?? '' }}
 
         {{ !$beforeLabel && !$insideLabel ? $slot : '' }}

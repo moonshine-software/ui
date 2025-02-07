@@ -357,11 +357,11 @@ function inputsErrors(data, form) {
 
   for (let key in data.errors) {
     let formattedKey = key.replace(/\.(\d+|\w+)/g, '[$1]')
-    const inputs = form.querySelectorAll(`[name="${formattedKey}"], [data-validation-wrapper="${formattedKey}"]`)
+    const inputs = form.querySelectorAll(`[name="${formattedKey}"], [data-validation-field="${formattedKey}"]`)
     if (inputs.length) {
       inputs.forEach(input => input.classList.add('form-invalid'))
 
-      const fieldArea = inputs[0].closest('[data-inside="field"]') ?? null
+      const fieldArea = inputs[0].closest('[data-validation-wrapper]') ?? null
 
       if (fieldArea) {
         const errorDiv = document.createElement('div')
