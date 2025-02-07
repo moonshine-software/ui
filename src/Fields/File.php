@@ -24,6 +24,8 @@ class File extends Field implements FileableContract, RemovableContract
 
     protected string $view = 'moonshine::fields.file';
 
+    protected bool $hasOld = false;
+
     protected string $type = 'file';
 
     protected string $accept = '*/*';
