@@ -2,6 +2,7 @@
     'name' => 'default',
     'open' => $isOpen ?? false,
     'left' => $isLeft ?? false,
+    'wide' => $isWide ?? false,
     'title' => '',
     'async' => false,
     'asyncUrl' => '',
@@ -45,7 +46,12 @@
                     x-transition:leave-start="opacity-100 translate-x-0"
                     x-transition:leave-end="opacity-0 translate-x-full"
                 @endif
-                class="offcanvas offcanvas-{{ $left ? 'left' : 'right' }}"
+                @class([
+                    'offcanvas',
+                    'offcanvas-left' => $left,
+                    'offcanvas-right' => !$left,
+                    'w-full max-w-none' => $wide,
+                ])
                 aria-modal="true"
                 role="dialog"
             >
