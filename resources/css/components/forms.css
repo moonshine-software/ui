@@ -101,7 +101,7 @@ input[type='number'] {
 
 /* Form Error */
 .form-error {
-  @apply !mt-0 text-3xs text-red-600 dark:text-red-500;
+  @apply !mt-0 col-span-12 text-3xs text-red-600 dark:text-red-500;
 }
 
 /* Form Switcher */
