@@ -445,7 +445,7 @@ class Json extends Field implements
                         ? Column::make()->columnSpan($this->verticalValueSpan)
                         /** @var Column $default */
                         /** @phpstan-ignore-next-line  */
-                        : $default->columnSpan($this->verticalValueSpan) : null,
+                        : $default->columnSpan($this->verticalValueSpan)->customAttributes(['data-validation-wrapper' => true]) : null,
                 ),
             )
             ->when(
