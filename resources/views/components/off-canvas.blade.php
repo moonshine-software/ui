@@ -3,6 +3,7 @@
     'open' => $isOpen ?? false,
     'left' => $isLeft ?? false,
     'wide' => $isWide ?? false,
+    'full' => $isFull ?? false,
     'title' => '',
     'async' => false,
     'asyncUrl' => '',
@@ -50,7 +51,8 @@
                     'offcanvas',
                     'offcanvas-left' => $left,
                     'offcanvas-right' => !$left,
-                    'w-full max-w-none' => $wide,
+                    'w-full max-w-none' => $full,
+                    'w-4/5 max-w-none' => $wide && !$full,
                 ])
                 aria-modal="true"
                 role="dialog"

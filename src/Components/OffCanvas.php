@@ -22,6 +22,8 @@ final class OffCanvas extends AbstractWithComponents
 
     protected bool $wide = false;
 
+    protected bool $full = false;
+
     protected array $togglerAttributes = [];
 
     public function __construct(
@@ -55,6 +57,13 @@ final class OffCanvas extends AbstractWithComponents
     public function wide(Closure|bool|null $condition = null): self
     {
         $this->wide = \is_null($condition) || value($condition, $this);
+
+        return $this;
+    }
+
+    public function full(Closure|bool|null $condition = null): self
+    {
+        $this->full = \is_null($condition) || value($condition, $this);
 
         return $this;
     }
@@ -100,6 +109,7 @@ final class OffCanvas extends AbstractWithComponents
         return [
             'isLeft' => $this->left,
             'isWide' => $this->wide,
+            'isFull' => $this->full,
             'isOpen' => $this->open,
             'title' => value($this->title, $this),
             'async' => ! empty($this->asyncUrl),
