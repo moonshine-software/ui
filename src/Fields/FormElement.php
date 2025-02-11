@@ -381,7 +381,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         $this->formattedValueCallback = $formattedValueCallback;
     }
 
-    /** @return ?Closure(mixed $original, int $index, static $ctx): mixed  */
+    /** @return null|Closure(mixed $original, int $index, static $ctx): mixed  */
     public function getFormattedValueCallback(): ?Closure
     {
         return $this->formattedValueCallback;
