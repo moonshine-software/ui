@@ -54,7 +54,11 @@ export function listComponentRequest(component, pushState = false) {
   let componentRequestData = new ComponentRequestData()
   componentRequestData
     .withBeforeHandleResponse(function (data, t) {
-      const query = originalUrl.slice(originalUrl.indexOf('?') + 1)
+      let query = originalUrl.slice(originalUrl.indexOf('?') + 1)
+      const params = new URLSearchParams(query)
+      params.delete('_component_name')
+
+      query = params.toString()
 
       if (pushState) {
         history.pushState({}, '', query ? '?' + query : location.pathname)
