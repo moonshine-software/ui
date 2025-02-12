@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Support\Components\MoonShineComponentAttributeBag;
 use MoonShine\Support\DTOs\FileItemExtra;
+use MoonShine\UI\Contracts\FileableContract;
+use MoonShine\UI\Fields\File;
 use MoonShine\UI\Traits\WithStorage;
 
 trait FileTrait
@@ -21,22 +23,63 @@ trait FileTrait
 
     protected bool $keepOriginalFileName = false;
 
-    /** @var ?Closure(mixed, static): string */
+    /** @var null|Closure(mixed, static): string */
     protected ?Closure $customName = null;
 
-    /** @var ?Closure(string, int): string */
+    /** @var null|Closure(string, int): string */
     protected ?Closure $names = null;
 
-    /** @var ?Closure(string, int): array */
+    /** @var null|Closure(string, int): array */
     protected ?Closure $itemAttributes = null;
 
-    /** @var ?Closure(string, int): ?FileItemExtra */
+    /** @var null|Closure(string, int): ?FileItemExtra */
     protected ?Closure $extraAttributes = null;
 
-    /** @var ?Closure(static): Collection */
+    /** @var null|Closure(static): array */
+    protected ?Closure $dropzoneAttributes = null;
+
+    /** @var null|Closure(static): Collection */
     protected ?Closure $remainingValuesResolver = null;
 
     protected ?Collection $remainingValues = null;
+
+    public function dropzoneAttributes(Closure $attributes): static
+    {
+        $this->dropzoneAttributes = $attributes;
+
+        return $this;
+    }
+
+    public function getDropzoneAttributes(): ComponentAttributesBagContract
+    {
+        $attributes = new MoonShineComponentAttributeBag(
+            $this->dropzoneAttributes === null ? [] : \call_user_func($this->dropzoneAttributes, $this),
+        );
+
+        if(!$attributes->has('x-data')) {
+            $attributes = $attributes->merge([
+                'x-data' => 'sortable',
+                'data-handle' => '.dropzone-item',
+            ]);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param  string|Closure(static): string  $url
+     */
+    public function reorderable(string|Closure $url, ?string $group = null): static
+    {
+        return $this->dropzoneAttributes(static function (FileableContract $ctx) use($url, $group) {
+            $url = value($url, $ctx);
+
+            return [
+                'x-data' => "sortable(`$url`, `$group`)",
+                'data-handle' => '.dropzone-item',
+            ];
+        });
+    }
 
     /**
      * @param  Closure(string $filename, int $index): string  $callback
@@ -81,7 +124,7 @@ trait FileTrait
             }
 
             return new MoonShineComponentAttributeBag(
-                (array) \call_user_func($this->itemAttributes, $filename, $index)
+                (array) \call_user_func($this->itemAttributes, $filename, $index),
             );
         };
     }
@@ -155,7 +198,7 @@ trait FileTrait
     {
         $extensions = array_map(
             static fn ($val): string => '.' . $val,
-            $this->allowedExtensions
+            $this->allowedExtensions,
         );
 
         return implode(',', $extensions);
@@ -252,8 +295,8 @@ trait FileTrait
 
         return collect(
             $this->getCore()->getRequest()->get(
-                $this->getHiddenRemainingValuesKey()
-            )
+                $this->getHiddenRemainingValuesKey(),
+            ),
         );
     }
 
@@ -295,7 +338,7 @@ trait FileTrait
     public function removeExcludedFiles(): void
     {
         $values = collect(
-            $this->toValue(withDefault: false)
+            $this->toValue(withDefault: false),
         );
 
         $values->diff($this->getRemainingValues())->each(fn (?string $file) => $file !== null ? $this->deleteFile($file) : null);
