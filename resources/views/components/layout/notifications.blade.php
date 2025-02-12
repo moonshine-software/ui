@@ -39,7 +39,7 @@
 
                         @if(!is_null($notification->getButton()))
                             <div class="notifications-more">
-                                <a href="{{ $notification->getButton()->getLink() }}">
+                                <a href="{{ $notification->getButton()->getLink() }}" {{ $notification->getButton()->getAttributes() }}>
                                     {{ $notification->getButton()->getLabel() }}
                                 </a>
                             </div>
