@@ -47,6 +47,6 @@
     </div>
 @elseif($notfound)
     <x-moonshine::alert type="default" class="my-4" icon="s.no-symbol">
-        {{ $translates['notfound'] }}
+        {{ $translates['notfound'] ?? 'Records not found' }}
     </x-moonshine::alert>
 @endif
