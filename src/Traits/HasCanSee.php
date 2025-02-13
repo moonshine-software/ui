@@ -10,6 +10,11 @@ trait HasCanSee
 {
     protected ?Closure $canSeeCallback = null;
 
+    public function hasCanSeeCallback(): bool
+    {
+        return $this->canSeeCallback !== null;
+    }
+
     public function canSee(Closure $callback): static
     {
         $this->canSeeCallback = $callback;
@@ -19,7 +24,7 @@ trait HasCanSee
 
     public function isSee(): bool
     {
-        if (\is_null($this->canSeeCallback)) {
+        if (!$this->hasCanSeeCallback()) {
             return true;
         }
 
