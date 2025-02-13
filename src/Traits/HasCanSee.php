@@ -24,7 +24,7 @@ trait HasCanSee
 
     public function isSee(): bool
     {
-        if (!$this->hasCanSeeCallback()) {
+        if (! $this->hasCanSeeCallback()) {
             return true;
         }
 
