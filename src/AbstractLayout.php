@@ -83,7 +83,7 @@ abstract class AbstractLayout implements LayoutContract
         ];
     }
 
-    protected function getMainThemeJs(): Css
+    protected function getMainThemeJs(): Js
     {
         return Js::make('/vendor/moonshine/assets/app.js')->defer();
     }
