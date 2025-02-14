@@ -30,15 +30,15 @@ abstract class AbstractLayout implements LayoutContract
         protected readonly MenuManagerContract $menuManager,
     ) {
         $this->getAssetManager()->add(
-            $this->assets()
+            $this->assets(),
         );
 
         $this->getMenuManager()->add(
-            $this->menu()
+            $this->menu(),
         );
 
         $this->colors(
-            $this->colorManager
+            $this->colorManager,
         );
     }
 
@@ -78,9 +78,24 @@ abstract class AbstractLayout implements LayoutContract
     protected function assets(): array
     {
         return [
-            Js::make('/vendor/moonshine/assets/app.js')->defer(),
-            Css::make('/vendor/moonshine/assets/main.css')->defer(),
+            $this->getMainThemeJs(),
+            $this->getMainThemeCss(),
         ];
+    }
+
+    protected function getMainThemeJs(): Css
+    {
+        return Js::make('/vendor/moonshine/assets/app.js')->defer();
+    }
+
+    protected function getMainThemeCss(): Css
+    {
+        return Css::make('/vendor/moonshine/assets/main.css')->defer();
+    }
+
+    protected function getCompactThemeCss(): Css
+    {
+        return Css::make('/vendor/moonshine/assets/minimalistic.css')->defer();
     }
 
     protected function menu(): array
