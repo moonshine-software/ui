@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Traits;
 
+use SplFileInfo;
+
 trait WithStorage
 {
     protected ?string $disk = null;
@@ -87,7 +89,7 @@ trait WithStorage
     }
 
     /**
-     * @return list<\SplFileInfo>
+     * @return list<SplFileInfo>
      */
     public function getStorageFiles(string $dir): array
     {
