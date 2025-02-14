@@ -48,7 +48,7 @@ trait FileTrait
         return $this;
     }
 
-    /** @return Closure(string, int): string */
+    /** @return Closure(string, int, static): string */
     public function resolveNames(): Closure
     {
         return function (string $filename, int $index = 0): string {
@@ -71,7 +71,7 @@ trait FileTrait
     }
 
     /**
-     * @return Closure(string $filename, int $index): ComponentAttributesBagContract
+     * @return Closure(string $filename, int $index, static): ComponentAttributesBagContract
      */
     public function resolveItemAttributes(): Closure
     {
@@ -97,7 +97,7 @@ trait FileTrait
     }
 
     /**
-     * @return Closure(string $filename, int $index): ?FileItemExtra
+     * @return Closure(string $filename, int $index, static): ?FileItemExtra
      */
     public function resolveExtraAttributes(): Closure
     {

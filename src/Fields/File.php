@@ -30,6 +30,9 @@ class File extends Field implements FileableContract, RemovableContract
 
     protected string $accept = '*/*';
 
+    /**
+     * @var string[]
+     */
     protected array $propertyAttributes = [
         'type',
         'accept',
@@ -79,7 +82,7 @@ class File extends Field implements FileableContract, RemovableContract
                 $index => new FileItem(
                     fullPath: $path,
                     rawValue: data_get($this->toValue(), $index, $this->toValue()),
-                    name: (string) \call_user_func($this->resolveNames(), $path, $index, $this),
+                    name: \call_user_func($this->resolveNames(), $path, $index, $this),
                     attributes: \call_user_func($this->resolveItemAttributes(), $path, $index, $this),
                     extra: \call_user_func($this->resolveExtraAttributes(), $path, $index, $this),
                 ),

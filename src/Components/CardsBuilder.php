@@ -160,7 +160,7 @@ final class CardsBuilder extends IterableComponent implements
         return $this;
     }
 
-    protected function prepareAsyncUrl(Closure|string|null $url = null): Closure|string|null
+    protected function prepareAsyncUrl(Closure|string|null $url = null): Closure|string
     {
         return $url ?? fn (): string => $this->getCore()->getRouter()->getEndpoints()->component(name: $this->getName());
     }

@@ -146,7 +146,7 @@ final class TableBuilder extends IterableComponent implements
             ->toArray();
     }
 
-    protected function prepareAsyncUrl(Closure|string|null $url = null): Closure|string|null
+    protected function prepareAsyncUrl(Closure|string|null $url = null): Closure|string
     {
         return $url ?? fn (): string => $this->getCore()->getRouter()->getEndpoints()->component(
             $this->getName(),

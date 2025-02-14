@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace MoonShine\UI\Components\Layout;
 
 use Closure;
-use Illuminate\Contracts\Support\Renderable;
 use MoonShine\UI\Components\MoonShineComponent;
 
 final class Meta extends MoonShineComponent
 {
-    protected function resolveRender(): Renderable|Closure|string
+    protected function resolveRender(): Closure
     {
         return function (): string {
             $name = $this->getName();

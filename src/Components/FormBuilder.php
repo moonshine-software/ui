@@ -175,7 +175,7 @@ final class FormBuilder extends MoonShineComponent implements
         return $this->isPrecognitive;
     }
 
-    protected function prepareAsyncUrl(Closure|string|null $url = null): Closure|string|null
+    protected function prepareAsyncUrl(Closure|string|null $url = null): Closure|string
     {
         return $url ?? $this->getAction();
     }

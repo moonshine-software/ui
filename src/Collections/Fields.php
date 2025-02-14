@@ -9,10 +9,10 @@ use Illuminate\Support\Traits\Conditionable;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\HasComponentsContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
+use MoonShine\Contracts\UI\Collection\ComponentsContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\HasFieldsContract;
-use MoonShine\Contracts\UI\HasReactivityContract;
 use MoonShine\Contracts\UI\WithoutExtractionContract;
 use MoonShine\Core\Collections\BaseCollection;
 use MoonShine\UI\Contracts\FieldsWrapperContract;
@@ -29,8 +29,8 @@ class Fields extends BaseCollection implements FieldsContract
     use Conditionable;
 
     /**
-     * @param list<ComponentContract> $elements
-     * @param list<ComponentContract> $data
+     * @param  FieldsContract|ComponentsContract|list<ComponentContract>  $elements
+     * @param list<FieldContract> $data
      * @throws Throwable
      */
     protected function extractFields(iterable $elements, array &$data): void
@@ -298,7 +298,7 @@ class Fields extends BaseCollection implements FieldsContract
     {
         /** @var static */
         return $this->filter(
-            static fn (FieldContract $field): bool => $field instanceof HasReactivityContract && $field->isReactive()
+            static fn (FieldContract $field): bool => $field->isReactive()
         );
     }
 

@@ -60,6 +60,6 @@ class Enum extends Select implements CanBeEnum
             return (string) $value->toString();
         }
 
-        return (string) ($value?->value ?? '');
+        return (string) ($value->value ?? '');
     }
 }

@@ -45,6 +45,9 @@ trait WithStorage
         return $this;
     }
 
+    /**
+     * @return non-empty-array<string, string>
+     */
     public function getOptions(): array
     {
         return [
@@ -75,11 +78,17 @@ trait WithStorage
         return $this->getCore()->getStorage(disk: $this->getDisk())->deleteDirectory($dir);
     }
 
+    /**
+     * @return string[]
+     */
     public function getStorageDirectories(string $dir): array
     {
         return $this->getCore()->getStorage(disk: $this->getDisk())->getDirectories($dir);
     }
 
+    /**
+     * @return list<\SplFileInfo>
+     */
     public function getStorageFiles(string $dir): array
     {
         return $this->getCore()->getStorage(disk: $this->getDisk())->getFiles($dir);
