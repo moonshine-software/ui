@@ -22,7 +22,7 @@ use MoonShine\UI\Fields\HiddenIds;
 trait WithModal
 {
     /**
-     * @var ?Closure(mixed, DataWrapperContract, static): ComponentContract
+     * @var null|Closure(mixed, DataWrapperContract, static): ComponentContract
      */
     protected ?Closure $modal = null;
 
@@ -74,7 +74,7 @@ trait WithModal
         Closure|string|null $button = null,
         Closure|array|null $fields = null,
         HttpMethod $method = HttpMethod::POST,
-        /** @var ?Closure(mixed): FormBuilderContract $formBuilder */
+        /** @var null|Closure(mixed): FormBuilderContract $formBuilder */
         ?Closure $formBuilder = null,
         ?Closure $modalBuilder = null,
         Closure|string|null $name = null,

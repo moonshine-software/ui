@@ -57,14 +57,14 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     protected mixed $formattedValue = null;
 
-    /** @var ?Closure(mixed, int, static): mixed */
+    /** @var null|Closure(mixed, int, static): mixed */
     protected ?Closure $formattedValueCallback = null;
 
     protected ?Closure $fromRaw = null;
 
     protected ?Closure $fillCallback = null;
 
-    /** @var ?Closure(static): static */
+    /** @var null|Closure(static): static */
     protected ?Closure $afterFillCallback = null;
 
     protected mixed $data = null;

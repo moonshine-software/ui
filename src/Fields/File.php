@@ -105,6 +105,7 @@ class File extends Field implements FileableContract, RemovableContract
             'isRemovable' => $this->isRemovable(),
             'removableAttributes' => $this->getRemovableAttributes(),
             'hiddenAttributes' => $this->getHiddenAttributes(),
+            'dropzoneAttributes' => $this->getDropzoneAttributes(),
             'canDownload' => $this->canDownload(),
         ];
     }

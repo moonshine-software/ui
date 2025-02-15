@@ -15,7 +15,7 @@ use MoonShine\UI\Components\OffCanvas;
 trait WithOffCanvas
 {
     /**
-     * @var ?Closure(mixed, DataWrapperContract, static): ComponentContract
+     * @var null|Closure(mixed, DataWrapperContract, static): ComponentContract
      */
     protected ?Closure $offCanvas = null;
 

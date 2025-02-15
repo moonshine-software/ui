@@ -71,7 +71,7 @@ final class CardsBuilder extends IterableComponent implements
     protected bool $overlay = false;
 
     /**
-     * @var ?Closure(mixed, int, self): ComponentContract
+     * @var null|Closure(mixed, int, self): ComponentContract
      */
     protected ?Closure $customComponent = null;
 
