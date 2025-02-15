@@ -55,7 +55,7 @@ trait FileTrait
             $this->dropzoneAttributes === null ? [] : \call_user_func($this->dropzoneAttributes, $this),
         );
 
-        if(!$attributes->has('x-data')) {
+        if (! $attributes->has('x-data')) {
             $attributes = $attributes->merge([
                 'x-data' => 'sortable',
                 'data-handle' => '.dropzone-item',
@@ -70,7 +70,7 @@ trait FileTrait
      */
     public function reorderable(string|Closure $url, ?string $group = null): static
     {
-        return $this->dropzoneAttributes(static function (FileableContract $ctx) use($url, $group): array {
+        return $this->dropzoneAttributes(static function (FileableContract $ctx) use ($url, $group): array {
             $url = value($url, $ctx);
 
             return [
