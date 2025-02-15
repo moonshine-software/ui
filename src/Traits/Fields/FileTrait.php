@@ -10,7 +10,6 @@ use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Support\Components\MoonShineComponentAttributeBag;
 use MoonShine\Support\DTOs\FileItemExtra;
 use MoonShine\UI\Contracts\FileableContract;
-use MoonShine\UI\Fields\File;
 use MoonShine\UI\Traits\WithStorage;
 
 trait FileTrait
@@ -71,7 +70,7 @@ trait FileTrait
      */
     public function reorderable(string|Closure $url, ?string $group = null): static
     {
-        return $this->dropzoneAttributes(static function (FileableContract $ctx) use($url, $group) {
+        return $this->dropzoneAttributes(static function (FileableContract $ctx) use($url, $group): array {
             $url = value($url, $ctx);
 
             return [
