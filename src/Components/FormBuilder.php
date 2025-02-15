@@ -349,9 +349,9 @@ final class FormBuilder extends MoonShineComponent implements
 
     /**
      * @param Closure(mixed $values, FieldsContract $fields): bool $apply
-     * @param ?Closure(FieldContract $field): void $default
-     * @param ?Closure(mixed $values): mixed $before
-     * @param ?Closure(mixed $values): void $after
+     * @param null|Closure(FieldContract $field): void $default
+     * @param null|Closure(mixed $values): mixed $before
+     * @param null|Closure(mixed $values): void $after
      * @throws Throwable
      */
     public function apply(

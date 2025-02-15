@@ -175,7 +175,7 @@ trait FileTrait
     }
 
     /**
-     * @return ?Closure(mixed $file, static $ctx): string
+     * @return null|Closure(mixed $file, static $ctx): string
      */
     public function getCustomName(): ?Closure
     {

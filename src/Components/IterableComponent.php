@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Components;
 
+use Closure;
 use Illuminate\Support\Collection;
 use MoonShine\Contracts\Core\Paginator\PaginatorContract;
 use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
@@ -30,6 +31,20 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
 
     protected iterable $buttons = [];
 
+    protected ?Closure $itemsResolver = null;
+
+    protected bool $itemsResolved = false;
+
+    /**
+     * @param  Closure(iterable $items, static $ctx): iterable  $resolver
+     */
+    public function itemsResolver(Closure $resolver): static
+    {
+        $this->itemsResolver = $resolver;
+
+        return $this;
+    }
+
     public function items(iterable $items = []): static
     {
         $this->items = $items;
@@ -51,7 +66,17 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
 
     public function getItems(): Collection
     {
-        return $this->items = collect($this->items)->filter();
+        if($this->itemsResolved) {
+            return new Collection($this->items);
+        }
+
+        if(!\is_null($this->itemsResolver)) {
+            $this->items = \call_user_func($this->itemsResolver, $this->items, $this);
+        }
+
+        $this->itemsResolved = true;
+
+        return $this->items = (new Collection($this->items))->filter();
     }
 
     public function paginator(PaginatorContract $paginator): static
