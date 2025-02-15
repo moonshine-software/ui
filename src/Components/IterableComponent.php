@@ -66,11 +66,11 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
 
     public function getItems(): Collection
     {
-        if($this->itemsResolved) {
+        if ($this->itemsResolved) {
             return new Collection($this->items);
         }
 
-        if(!\is_null($this->itemsResolver)) {
+        if (! \is_null($this->itemsResolver)) {
             $this->items = \call_user_func($this->itemsResolver, $this->items, $this);
         }
 
