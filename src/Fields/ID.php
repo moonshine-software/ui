@@ -6,6 +6,9 @@ namespace MoonShine\UI\Fields;
 
 use Closure;
 
+/**
+ * @method static static make(Closure|string|null $label = 'ID', ?string $column = 'id', ?Closure $formatted = null)
+ */
 class ID extends Hidden
 {
     protected string $field = 'id';
