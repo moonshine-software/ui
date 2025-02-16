@@ -52,11 +52,12 @@ trait WithSorts
             return $this->getCore()->getRequest()->getUrlWithQuery($sortData);
         }
 
-        $urlParse = parse_url($url);
+        $parsed = parse_url($url);
+        parse_str($parsed['query'] ?? '', $query);
 
-        $separator = empty($urlParse['query']) ? '?' : '&';
+        $params = array_merge($query, $sortData);
 
-        return $url . $separator . Arr::query($sortData);
+        return strtok($url, '?') . '?' . Arr::query($params);
     }
 
     public function isSortActive(): bool
