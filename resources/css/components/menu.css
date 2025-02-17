@@ -469,7 +469,7 @@
         }
       }
       &-burger {
-        @apply inline-flex items-center;
+        @apply inline-flex items-center text-white;
       }
     }
 
