@@ -23,6 +23,7 @@ use MoonShine\UI\Collections\TableCells;
 use MoonShine\UI\Collections\TableRows;
 use MoonShine\UI\Components\ActionGroup;
 use MoonShine\UI\Components\Components;
+use MoonShine\UI\Components\FlexibleRender;
 use MoonShine\UI\Components\Heading;
 use MoonShine\UI\Components\IterableComponent;
 use MoonShine\UI\Components\Layout\Column;
@@ -260,7 +261,7 @@ final class TableBuilder extends IterableComponent implements
                 foreach ($fields as $field) {
                     $attributes = $field->getWrapperAttributes()->jsonSerialize();
                     $title = Column::make([
-                        Div::make([$field->getLabel()])->class('form-label'),
+                        Div::make([FlexibleRender::make($field->getLabel())])->class('form-label'),
                     ])->columnSpan(\is_int($this->verticalTitleCallback) ? $this->verticalTitleCallback : 2);
 
                     $value = Column::make([
