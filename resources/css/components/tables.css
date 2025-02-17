@@ -55,6 +55,16 @@ table {
   }
 }
 
+.table-divider {
+  div.grid {
+    @apply border-b dark:border-dark-400 py-2 !my-0;
+
+    &:last-child {
+      @apply border-b-0 pb-0;
+    }
+  }
+}
+
 .table-list {
   @apply border-separate border-spacing-y-2.5;
 
