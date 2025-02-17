@@ -5,7 +5,7 @@ export default async function load(url, id) {
   if (status === 200) {
     let containerElement = document.getElementById(id)
 
-    containerElement.innerHTML = data?.html ?? data;
+    containerElement.innerHTML = data?.html ?? data
 
     const scriptElements = containerElement.querySelectorAll('script')
 
