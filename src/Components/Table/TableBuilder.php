@@ -260,7 +260,7 @@ final class TableBuilder extends IterableComponent implements
                 foreach ($fields as $field) {
                     $attributes = $field->getWrapperAttributes()->jsonSerialize();
                     $title = Column::make([
-                        Heading::make($field->getLabel())->h(4),
+                        Div::make([$field->getLabel()])->class('form-label'),
                     ])->columnSpan(\is_int($this->verticalTitleCallback) ? $this->verticalTitleCallback : 2);
 
                     $value = Column::make([

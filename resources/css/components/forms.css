@@ -88,7 +88,7 @@ input[type='number'] {
 
 /* Form Label */
 .form-label {
-  @apply cursor-pointer text-3xs font-medium;
+  @apply text-3xs font-medium;
   > .required {
     @apply text-red-500;
   }
