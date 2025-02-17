@@ -24,7 +24,6 @@ use MoonShine\UI\Collections\TableRows;
 use MoonShine\UI\Components\ActionGroup;
 use MoonShine\UI\Components\Components;
 use MoonShine\UI\Components\FlexibleRender;
-use MoonShine\UI\Components\Heading;
 use MoonShine\UI\Components\IterableComponent;
 use MoonShine\UI\Components\Layout\Column;
 use MoonShine\UI\Components\Layout\Div;
