@@ -13,7 +13,7 @@
 {!! $before !!}
 
 <x-moonshine::form.wrapper
-    label="{{ $label }}"
+    :label="$label"
     :form-name="$formName"
     :attributes="$attributes"
     :beforeLabel="$isBeforeLabel"
