@@ -25,9 +25,11 @@ final class Thumbnails extends MoonShineComponent
                             ? $value->toArray()
                             : (new FileItem(
                                 $value['full_path'] ?? $value,
-                                $value['raw_value'] ?? $value,
-                                $value['name'] ?? $value,
-                                $value['attributes'] ?? new MoonShineComponentAttributeBag(),
+                                $value['raw_value'] ?? $value['full_path'] ?? $value,
+                                $value['name'] ?? '',
+                                isset($value['attributes']) && $value['attributes'] instanceof MoonShineComponentAttributeBag
+                                    ? $value['attributes']
+                                    : new MoonShineComponentAttributeBag($value['attributes'] ?? []),
                             ))->toArray(),
                     ]
                 )->toArray();

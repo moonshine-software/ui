@@ -19,6 +19,8 @@ use MoonShine\UI\Components\Layout\{Layout};
  */
 abstract class AbstractLayout implements LayoutContract
 {
+    protected bool $booted = false;
+
     /**
      * @param  TCore  $core
      */
@@ -40,6 +42,26 @@ abstract class AbstractLayout implements LayoutContract
         $this->colors(
             $this->colorManager,
         );
+
+        $this->booted();
+    }
+
+    protected function onBoot(): void
+    {
+        //
+    }
+
+    public function booted(): static
+    {
+        if ($this->booted) {
+            return $this;
+        }
+
+        $this->onBoot();
+
+        $this->booted = true;
+
+        return $this;
     }
 
     protected function getPage(): PageContract
