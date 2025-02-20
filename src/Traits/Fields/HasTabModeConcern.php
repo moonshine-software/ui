@@ -6,7 +6,7 @@ namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
 
-trait TabModeTrait
+trait HasTabModeConcern
 {
     protected bool $isTabMode = false;
 
