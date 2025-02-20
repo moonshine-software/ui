@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
+use MoonShine\Core\Collections\Components;
+use MoonShine\Laravel\Components\Fragment;
+use MoonShine\UI\Components\ActionButton;
 
 trait ModalModeTrait
 {
@@ -20,5 +23,16 @@ trait ModalModeTrait
     public function isModalMode(): bool
     {
         return $this->isModalMode;
+    }
+
+    public function getModalButton(
+        Components $components,
+        string $buttonName,
+        string $fragmentName
+    ): ActionButton {
+        return ActionButton::make($buttonName)->inModal(
+            title: $this->getLabel(),
+            content: (string) Fragment::make($components)->name($fragmentName)
+        );
     }
 }
