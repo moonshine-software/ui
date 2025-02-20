@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
-use MoonShine\Support\DTOs\Select\Option;
-use MoonShine\Support\DTOs\Select\OptionGroup;
-use MoonShine\Support\DTOs\Select\OptionProperty;
 use MoonShine\Support\DTOs\Select\Options;
 
 trait SelectTrait
