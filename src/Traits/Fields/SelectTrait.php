@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
+use MoonShine\Support\DTOs\Select\Option;
+use MoonShine\Support\DTOs\Select\OptionGroup;
+use MoonShine\Support\DTOs\Select\OptionProperty;
 use MoonShine\Support\DTOs\Select\Options;
 
 trait SelectTrait
@@ -32,7 +35,13 @@ trait SelectTrait
     public function getValues(): Options
     {
         if ($this->options instanceof Options) {
-            return $this->options;
+            ['options' => $options, 'properties' => $properties] = $this->options->toRaw();
+
+            return new Options(
+                $options,
+                $this->getValue(),
+                $properties
+            );
         }
 
         return new Options(
