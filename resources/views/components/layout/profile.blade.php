@@ -33,16 +33,18 @@
                 </div>
             </a>
 
-            <a href="{{ $logOutRoute }}"
-               class="profile-exit"
-               title="Logout"
-            >
-                <x-moonshine::icon
-                    icon="power"
-                    color="gray"
-                    size="6"
-                />
-            </a>
+            @if($logOutRoute)
+                <a href="{{ $logOutRoute }}"
+                   class="profile-exit"
+                   title="Logout"
+                >
+                    <x-moonshine::icon
+                        icon="power"
+                        color="gray"
+                        size="6"
+                    />
+                </a>
+            @endif
         </div>
     @endif
 
