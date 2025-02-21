@@ -62,7 +62,6 @@ final class FormBuilder extends MoonShineComponent implements
         '_without-redirect',
         '_method',
         '_component_name',
-        '_async_field',
     ];
 
     protected bool $isPrecognitive = false;
