@@ -4,7 +4,7 @@ import debounce from '../Support/Debounce.js'
 import {crudFormQuery, getQueryString, prepareFormData} from '../Support/Forms.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {formToJSON} from 'axios'
-import {DEFAULT_CONFIG} from 'choices.js/src/scripts/defaults'
+import {DEFAULT_CONFIG} from '../../../node_modules/choices.js/src/scripts/defaults'
 
 export default (asyncUrl = '') => ({
   choicesInstance: null,
@@ -123,10 +123,10 @@ export default (asyncUrl = '') => ({
         )
       },
       searchResultLimit: 100,
-      callbackOnCreateTemplates: function (template) {
+      callbackOnCreateTemplates: function (strToEl, escapeForTemplate) {
         return {
           item: ({classNames}, data) => {
-            return template(`
+            return strToEl(`
                 <div class="${classNames.item} ${
                   data.highlighted ? classNames.highlightedState : classNames.itemSelectable
                 } ${data.placeholder ? classNames.placeholder : ''}" data-item data-id="${
@@ -134,12 +134,12 @@ export default (asyncUrl = '') => ({
                 }" data-value="${data.value}" ${data.active ? 'aria-selected="true"' : ''} ${
                   data.disabled ? 'aria-disabled="true"' : ''
                 }>
-                      <div class="flex gap-x-2 items-center ">
+                      <div class="flex gap-x-2 items-center">
                         ${
                           data.customProperties?.image
                             ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
                               '<img class="h-full w-full object-cover" src="' +
-                              data.customProperties.image +
+                              escapeForTemplate(this.allowHTML, data.customProperties.image) +
                               '" alt=""></div>'
                             : ''
                         }
@@ -159,7 +159,7 @@ export default (asyncUrl = '') => ({
               `)
           },
           choice: ({classNames}, data) => {
-            return template(`
+            return strToEl(`
                 <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
                   data.disabled ? classNames.itemDisabled : classNames.itemSelectable
                 } ${data.value == '' ? 'choices__placeholder' : ''}" data-select-text="${
@@ -171,12 +171,12 @@ export default (asyncUrl = '') => ({
                 } data-id="${data.id}" data-value="${data.value}" ${
                   data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
                 }>
-                      <div class="flex gap-x-2 items-center ">
+                      <div class="flex gap-x-2 items-center">
                           ${
                             data.customProperties?.image
                               ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
                                 '<img class="h-full w-full object-cover" src="' +
-                                data.customProperties.image +
+                                escapeForTemplate(this.allowHTML, data.customProperties.image) +
                                 '" alt=""></div>'
                               : ''
                           }
@@ -382,13 +382,9 @@ export default (asyncUrl = '') => ({
 
     de(componentEvent, '', this, extra)
   },
-  fromUrl(url) {
-    return fetch(url)
-      .then(response => {
-        return response.json()
-      })
-      .then(json => {
-        return json
-      })
+  async fromUrl(url) {
+    const response = await fetch(url)
+    const json = await response.json()
+    return json
   },
 })
