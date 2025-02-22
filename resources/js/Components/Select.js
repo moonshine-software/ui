@@ -139,7 +139,7 @@ export default (asyncUrl = '') => ({
                           data.customProperties?.image
                             ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
                               '<img class="h-full w-full object-cover" src="' +
-                              escapeForTemplate(this.allowHTML, data.customProperties.image) +
+                              escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
                               '" alt=""></div>'
                             : ''
                         }
@@ -176,7 +176,7 @@ export default (asyncUrl = '') => ({
                             data.customProperties?.image
                               ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
                                 '<img class="h-full w-full object-cover" src="' +
-                                escapeForTemplate(this.allowHTML, data.customProperties.image) +
+                                escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
                                 '" alt=""></div>'
                               : ''
                           }
