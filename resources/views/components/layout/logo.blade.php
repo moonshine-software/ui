@@ -5,7 +5,7 @@
     'logoSmall',
     'logoSmallAttributes',
     'darkLogo' => null,
-    'darkSmallLogo' => null,
+    'darkLogoSmall' => null,
 ])
 <a {{ $attributes->merge(['class' => 'block', 'rel' => 'home', 'href' => $href]) }}>
     <img src="{{ $logo }}"
@@ -29,12 +29,12 @@
         <img src="{{ $logoSmall }}"
             {{ $logoSmallAttributes?->merge(['class' => 'block h-8 lg:h-10 xl:hidden']) }}
              alt="{{ $title }}"
-             @if($darkSmallLogo) :style="$store.darkMode.on ? 'display: none!important' : ''" @endif
+             @if($darkLogoSmall) :style="$store.darkMode.on ? 'display: none!important' : ''" @endif
         />
     @endif
 
-    @if($logoSmall && $darkSmallLogo)
-        <img src="{{ $darkSmallLogo }}"
+    @if($logoSmall && $darkLogoSmall)
+        <img src="{{ $darkLogoSmall }}"
              :style="!$store.darkMode.on ? 'display: none!important' : ''"
              {{ $logoSmallAttributes?->merge(['class' => 'block h-8 lg:h-10 xl:hidden']) }}
              alt="{{ $title }}"
