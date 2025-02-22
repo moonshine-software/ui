@@ -189,15 +189,16 @@ export default (asyncUrl = '') => ({
           },
         }
       },
-      callbackOnInit: () => {
-        this.searchTerms = this.$el.closest('.choices').querySelector('[name="search_terms"]')
-
-        if (asyncUrl && this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown) {
-          this.asyncSearch()
-        }
-      },
       ...this.customOptions,
     })
+
+    this.choicesInstance.callbackOnInit = () => {
+      this.searchTerms = this.choicesInstance.input.element
+
+      if (asyncUrl && this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown) {
+          this.asyncSearch()
+      }
+    }
 
     this.setDataValues()
 
@@ -279,7 +280,7 @@ export default (asyncUrl = '') => ({
     }
 
     if (asyncUrl) {
-      this.searchTerms.addEventListener(
+      this.searchTerms?.addEventListener(
         'input',
         debounce(event => this.asyncSearch(), 300),
         false,
@@ -288,7 +289,7 @@ export default (asyncUrl = '') => ({
 
     if (this.removeItemButton) {
       this.$el.parentElement.addEventListener('click', event => {
-        if (document.activeElement.name !== 'search_terms') {
+        if (document.activeElement.type !== 'search') {
           // necessary for reactivity to work
           event.target.closest('.choices')?.querySelector('select')?.focus()
         }
