@@ -24,6 +24,9 @@ final class Logo extends MoonShineComponent
         public string $logo,
         public ?string $logoSmall = null,
         public ?string $title = null,
+        // anonymous component variables
+        public ?string $darkLogo = null,
+        public ?string $darkLogoSmall = null,
         public bool $minimized = false,
     ) {
         parent::__construct();
@@ -50,6 +53,14 @@ final class Logo extends MoonShineComponent
     public function minimized(): self
     {
         $this->minimized = true;
+
+        return $this;
+    }
+
+    public function darkMode(string $logo, ?string $small = null): self
+    {
+        $this->darkLogo = $logo;
+        $this->darkLogoSmall = $small;
 
         return $this;
     }
