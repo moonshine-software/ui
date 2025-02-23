@@ -10,6 +10,8 @@ use MoonShine\Contracts\AssetManager\AssetManagerContract;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
 use MoonShine\Contracts\Core\DependencyInjection\CoreContract;
 use MoonShine\Contracts\Core\PageContract;
+use MoonShine\Contracts\MenuManager\MenuAutoloaderContract;
+use MoonShine\Contracts\MenuManager\MenuElementContract;
 use MoonShine\Contracts\MenuManager\MenuManagerContract;
 use MoonShine\Contracts\UI\LayoutContract;
 use MoonShine\UI\Components\Layout\{Layout};
@@ -30,6 +32,7 @@ abstract class AbstractLayout implements LayoutContract
         protected readonly AssetManagerContract $assetManager,
         protected readonly ColorManagerContract $colorManager,
         protected readonly MenuManagerContract $menuManager,
+        protected readonly MenuAutoloaderContract $menuAutoloader,
     ) {
         $this->getAssetManager()->add(
             $this->assets(),
@@ -123,6 +126,18 @@ abstract class AbstractLayout implements LayoutContract
     protected function menu(): array
     {
         return [];
+    }
+
+    /**
+     * @return list<MenuElementContract>
+     */
+    protected function autoloadMenu(): array
+    {
+        $data = $this->getCore()->getOptimizer()->hasType(MenuElementContract::class)
+            ? $this->getCore()->getOptimizer()->getType(MenuElementContract::class)
+            : null;
+
+        return $this->menuAutoloader->resolve($data);
     }
 
     abstract public function build(): Layout;
