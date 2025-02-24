@@ -168,7 +168,7 @@ ul.horizontal-list {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   @apply grid items-center;
   li {
-    @apply pe-2 pb-2;
+    @apply pb-2 pe-2;
 
     .form-group {
       @apply flex-nowrap;
