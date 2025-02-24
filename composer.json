@@ -23,7 +23,7 @@
         "php": "^8.2",
         "ext-curl": "*",
         "ext-json": "*",
-        "illuminate/view": "^10|^11",
+        "illuminate/view": "^10|^11|^12",
         "moonshine/asset-manager": "^3.0",
         "moonshine/contracts": "^3.0",
         "moonshine/core": "^3.0",
