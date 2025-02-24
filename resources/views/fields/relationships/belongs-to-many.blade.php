@@ -8,7 +8,9 @@
     'isAsyncSearch' => false,
     'isSelectMode' => false,
     'isTreeMode' => false,
+    'isHorizontalMode' => false,
     'treeHtml' => '',
+    'listHtml' => '',
     'asyncSearchUrl' => '',
     'isCreatable' => false,
     'createButton' => '',
@@ -45,6 +47,10 @@
             @elseif($isTreeMode)
                 <div x-data="belongsToMany" x-init='tree(@json($keys))'>
                     {!! $treeHtml !!}
+                </div>
+            @elseif($isHorizontalMode)
+                <div x-data="belongsToMany" x-init='tree(@json($keys))'>
+                    {!! $listHtml !!}
                 </div>
             @else
                 @if($isAsyncSearch)

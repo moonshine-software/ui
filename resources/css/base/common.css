@@ -163,6 +163,19 @@ ul.tree-list {
   }
 }
 
+/* Checkboxes horizontal */
+ul.horizontal-list {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  @apply grid items-center;
+  li {
+    @apply pe-2 pb-2;
+
+    .form-group {
+      @apply flex-nowrap;
+    }
+  }
+}
+
 /* Images in a row */
 .images-row {
   @apply flex;
