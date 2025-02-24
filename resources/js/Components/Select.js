@@ -127,71 +127,69 @@ export default (asyncUrl = '') => ({
         return {
           item: ({classNames}, data) => {
             return strToEl(`
-                    <div class="${classNames.item} ${
-                        data.highlighted ? classNames.highlightedState : classNames.itemSelectable
-                      } ${data.placeholder ? classNames.placeholder : ''}" data-item data-id="${
-                        data.id
-                      }" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${data.active ? 'aria-selected="true"' : ''} ${
-                        data.disabled ? 'aria-disabled="true"' : ''
-                      }>
-                      <div class="flex gap-x-2 items-center">
-                        ${
-                          data.customProperties?.image
-                            ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
-                            '<img class="h-full w-full object-cover" src="' +
-                            escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
-                            '" alt=""></div>'
-                            : ''
-                        }
-                        <span>
-                          ${escapeForTemplate(this.config.allowHTML, data.label)}
-                          ${
-                            this.config.removeItemButton
-                              ? `<button type="button" class="choices__button choices__button--remove" data-button="">${
-                                translates?.choices?.remove_item ?? 'x'
-                              }</button>`
-                              : ''
-                          }
-                        </span>
-                      </div>
-                    </div>`)
+              <div class="${classNames.item} ${
+                  data.highlighted ? classNames.highlightedState : classNames.itemSelectable
+                } ${data.placeholder ? classNames.placeholder : ''}" data-item data-id="${
+                  data.id
+                }" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${data.active ? 'aria-selected="true"' : ''} ${
+                  data.disabled ? 'aria-disabled="true"' : ''
+                }>
+                <div class="flex gap-x-2 items-center">
+                  ${
+                    data.customProperties?.image
+                      ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
+                      '<img class="h-full w-full object-cover" src="' +
+                      escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
+                      '" alt=""></div>'
+                      : ''
+                  }
+                  <span>
+                    ${escapeForTemplate(this.config.allowHTML, data.label)}
+                    ${
+                      this.config.removeItemButton
+                        ? `<button type="button" class="choices__button choices__button--remove" data-button="">${
+                          translates?.choices?.remove_item ?? 'x'
+                        }</button>`
+                        : ''
+                    }
+                  </span>
+                </div>
+              </div>
+            `)
           },
           choice: ({classNames}, data) => {
             return strToEl(`
-                    <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
-                        data.disabled ? classNames.itemDisabled : classNames.itemSelectable
-                      } ${data.value == '' ? 'choices__placeholder' : ''}" data-select-text="${
-                        this.config.itemSelectText
-                      }" data-choice ${
-                        data.disabled
-                          ? 'data-choice-disabled aria-disabled="true"'
-                          : 'data-choice-selectable'
-                      } data-id="${data.id}" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${
-                        data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
-                      }>
-                      <div class="flex gap-x-2 items-center">
-                        ${
-                          data.customProperties?.image
-                            ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
-                            '<img class="h-full w-full object-cover" src="' +
-                            escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
-                            '" alt=""></div>'
-                            : ''
-                        }
-                        <span>
-                          ${escapeForTemplate(this.config.allowHTML, data.label)}
-                        </span>
-                      </div>
-                    </div>`)
+              <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
+                  data.disabled ? classNames.itemDisabled : classNames.itemSelectable
+                } ${data.value == '' ? 'choices__placeholder' : ''}" data-select-text="${
+                  this.config.itemSelectText
+                }" data-choice ${
+                  data.disabled
+                    ? 'data-choice-disabled aria-disabled="true"'
+                    : 'data-choice-selectable'
+                } data-id="${data.id}" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${
+                  data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
+                }>
+                <div class="flex gap-x-2 items-center">
+                  ${
+                    data.customProperties?.image
+                      ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
+                      '<img class="h-full w-full object-cover" src="' +
+                      escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
+                      '" alt=""></div>'
+                      : ''
+                  }
+                  <span>
+                    ${escapeForTemplate(this.config.allowHTML, data.label)}
+                  </span>
+                </div>
+              </div>
+            `)
           },
         }
       },
       callbackOnInit: () => {
         this.searchTerms = this.$el.closest('.choices').querySelector('[type="search"]')
-
-        if (this.searchTerms) {
-          this.searchTerms.name = 'search_terms'
-        }
 
         if (asyncUrl && this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown) {
           this.asyncSearch()
@@ -289,11 +287,6 @@ export default (asyncUrl = '') => ({
 
     if (this.removeItemButton) {
       this.$el.parentElement.addEventListener('click', event => {
-        if (document.activeElement.name !== 'search_terms') {
-          // necessary for reactivity to work
-          event.target.closest('.choices')?.querySelector('select')?.focus()
-        }
-
         if (event.target.classList.contains('choices__button--remove')) {
           const choiceElement = event.target.closest('.choices__item')
           const id = choiceElement.getAttribute('data-id')
