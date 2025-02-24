@@ -94,6 +94,7 @@ export default (asyncUrl = '') => ({
 
     this.choicesInstance = new Choices(this.$el, {
       allowHTML: true,
+      duplicateItemsAllowed: false,
       items: items,
       position: 'bottom',
       placeholderValue: this.placeholder,
@@ -362,7 +363,7 @@ export default (asyncUrl = '') => ({
       })
     }
 
-    await this.choicesInstance.setChoices(options, 'value', 'label', true)
+    await this.choicesInstance.setChoices(options, 'value', 'label', false)
     this.isLoadedOptions = true
   },
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
