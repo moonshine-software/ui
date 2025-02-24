@@ -81,21 +81,9 @@ export default (asyncUrl = '') => ({
       }
     }
 
-    const items = []
-
-    Array.from(this.$el.options ?? []).forEach(function (option) {
-      items.push({
-        label: option.text,
-        value: option.value,
-        selected: option.selected,
-        customProperties: option.dataset?.properties ? JSON.parse(option.dataset.properties) : {},
-      })
-    })
-
     this.choicesInstance = new Choices(this.$el, {
       allowHTML: true,
       duplicateItemsAllowed: false,
-      items: items,
       position: 'bottom',
       placeholderValue: this.placeholder,
       searchEnabled: this.searchEnabled,
@@ -268,16 +256,6 @@ export default (asyncUrl = '') => ({
       )
     }
 
-    const form = this.$el.closest('form')
-    if (form !== null) {
-      form.addEventListener('reset', () => {
-        this.choicesInstance.clearChoices()
-        this.choicesInstance.setChoices(items)
-        const activeItem = items.filter(item => item.selected) ?? items[0]
-        this.choicesInstance.setChoiceByValue(activeItem)
-      })
-    }
-
     if (asyncUrl) {
       this.searchTerms.addEventListener(
         'input',
@@ -288,6 +266,11 @@ export default (asyncUrl = '') => ({
 
     if (this.removeItemButton) {
       this.$el.parentElement.addEventListener('click', event => {
+        if (document.activeElement.type !== 'search') {
+          // necessary for reactivity to work
+          event.target.closest('.choices')?.querySelector('select')?.focus()
+        }
+
         if (event.target.classList.contains('choices__button--remove')) {
           const choiceElement = event.target.closest('.choices__item')
           const id = choiceElement.getAttribute('data-id')
@@ -297,15 +280,12 @@ export default (asyncUrl = '') => ({
             this.choicesInstance._store.placeholderChoice
           ) {
             this.choicesInstance.removeActiveItems(id)
-
             this.choicesInstance._triggerChange(this.choicesInstance._store.placeholderChoice.value)
-
             this.choicesInstance._selectPlaceholderChoice(
               this.choicesInstance._store.placeholderChoice,
             )
           } else {
             const {items} = this.choicesInstance._store
-
             const itemToRemove = id && items.find(item => item.id === parseInt(id, 10))
 
             if (!itemToRemove) {
