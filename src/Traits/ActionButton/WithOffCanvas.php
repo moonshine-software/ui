@@ -35,7 +35,7 @@ trait WithOffCanvas
         iterable $components = [],
     ): static {
         if (\is_null($name)) {
-            $name = (string) spl_object_id($this);
+            $name = fn(mixed $data, ActionButtonContract $ctx) => spl_object_id($this) . $ctx->getData()?->getKey();
         }
 
         $async = $this->purgeAsyncTap();
