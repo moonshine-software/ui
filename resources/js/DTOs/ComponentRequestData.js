@@ -6,6 +6,8 @@ export class ComponentRequestData {
     this._beforeRequest = null
     this._responseHandler = null
 
+    this._responseType = null
+
     this._beforeHandleResponse = null
     this._afterResponse = null
 
@@ -80,6 +82,10 @@ export class ComponentRequestData {
     return this._afterResponse
   }
 
+  get responseType() {
+    return this._responseType
+  }
+
   hasAfterResponse() {
     return this._afterResponse !== null && typeof this._afterResponse === 'function'
   }
@@ -114,11 +120,18 @@ export class ComponentRequestData {
     return this
   }
 
+  withResponseType(value) {
+    this._responseType = value
+
+    return this
+  }
+
   fromDataset(dataset = {}) {
     return this.withEvents(dataset.asyncEvents ?? '')
       .withSelector(dataset.asyncSelector ?? '')
       .withResponseHandler(dataset.asyncResponseHandler ?? null)
       .withBeforeRequest(dataset.asyncBeforeRequest ?? null)
+      .withResponseType(dataset.asyncResponseType ?? null)
   }
 
   fromObject(object = {}) {
@@ -130,5 +143,6 @@ export class ComponentRequestData {
       .withAfterResponse(object.afterResponse ?? null)
       .withErrorCallback(object.errorCallback ?? null)
       .withExtraProperties(object.extraProperties ?? null)
+      .withResponseType(object.responseType ?? null)
   }
 }

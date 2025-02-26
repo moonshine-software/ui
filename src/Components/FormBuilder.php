@@ -179,6 +179,13 @@ final class FormBuilder extends MoonShineComponent implements
         return $url ?? $this->getAction();
     }
 
+    public function download(): self
+    {
+        return $this->customAttributes([
+            'data-async-response-type' => 'blob',
+        ]);
+    }
+
     /**
      * @throws Throwable
      */

@@ -203,6 +203,13 @@ class ActionButton extends MoonShineComponent implements
         );
     }
 
+    public function download(): static
+    {
+        return $this->customAttributes([
+            'download' => true,
+            'data-async-response-type' => 'blob',
+        ]);
+    }
     /**
      * @param array|(Closure(mixed $original): array) $params = []
      * @throws Throwable

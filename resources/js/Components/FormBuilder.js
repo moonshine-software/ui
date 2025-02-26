@@ -214,6 +214,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
       .withSelector(form.dataset.asyncSelector ?? '')
       .withBeforeRequest(callback.beforeRequest)
       .withResponseHandler(callback.responseHandler)
+      .withResponseType(form.dataset.asyncResponseType ?? null)
       .withEvents(events)
       .withAfterResponse(function (data, type) {
         if (type !== 'error' && t.inModal && t.autoClose) {
