@@ -65,6 +65,16 @@ export default function request(
         })
       }
 
+      if (!componentRequestData.selector && typeof data.html === 'object' && data.html !== null) {
+        Object.entries(data.html).forEach(function ([selector, html]) {
+          let elements = document.querySelectorAll(selector)
+
+          elements.forEach(element => {
+            element.innerHTML = html
+          })
+        })
+      }
+
       if (data.fields_values !== undefined) {
         for (let [selector, value] of Object.entries(data.fields_values)) {
           let el = document.querySelector(selector)
