@@ -265,20 +265,19 @@ class Json extends Field implements
 
     protected function prepareFields(): FieldsContract
     {
+        $fields = $this->getFields()->prepareAttributes();
+
         if ($this->isObjectMode()) {
-            return $this->getFields()
-                ->wrapNames($this->getColumn())
-                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")))
-            ;
+            $fields = $fields
+                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")));
         }
 
-        return $this->getFields()
-            ->prepareAttributes()
+        return $fields
             ->prepareReindexNames(parent: $this, before: static function (self $parent, FieldContract $field): void {
                 $field
                     ->withoutWrapper()
                     ->setRequestKeyPrefix($parent->getRequestKeyPrefix());
-            });
+            }, except: fn(FieldContract $parent) => $parent instanceof self && $parent->isObjectMode());
     }
 
     protected function resolveRawValue(): mixed
