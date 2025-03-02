@@ -389,8 +389,8 @@ class Json extends Field implements
 
         if ($this->isObjectMode()) {
             return FieldsGroup::make(
-                $fields,
-            )->fill($values->toArray())->mapFields(
+                Fields::make($fields)->fillCloned($values->toArray())
+            )->mapFields(
                 fn (FieldContract $field): FieldContract => $field
                     ->formName($this->getFormName())
                     ->setParent($this),
@@ -535,14 +535,16 @@ class Json extends Field implements
                     data_get($apply, $field->getColumn()),
                 );
             }
+
+            if ($this->isObjectMode()) {
+                $applyValues = $applyValues[$index] ?? [];
+            }
         }
 
         $preparedValues = $this->prepareOnApply($applyValues);
-        $values = $this->isKeyValue() ? $preparedValues : array_values($preparedValues);
-
-        if ($this->isObjectMode()) {
-            $values = $values[0] ?? [];
-        }
+        $values = $this->isObjectMode() || $this->isKeyValue()
+            ? $preparedValues
+            : array_values($preparedValues);
 
         return \is_null($response) ? data_set(
             $data,

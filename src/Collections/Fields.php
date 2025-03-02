@@ -245,6 +245,10 @@ class Fields extends BaseCollection implements FieldsContract
 
             $ignore = $except !== null && $except($parent, $field) === true;
 
+            if($ignore) {
+                $level--;
+            }
+
             $name = $field->generateNameFrom(
                 $name->value(),
                 $ignore ? "" : "\${index$level}",
