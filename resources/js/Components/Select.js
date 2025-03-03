@@ -343,7 +343,8 @@ export default (asyncUrl = '') => ({
       })
     }
 
-    await this.choicesInstance.setChoices(options, 'value', 'label', false)
+    await this.choicesInstance.setChoices(options, 'value', 'label', true)
+
     this.isLoadedOptions = true
   },
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
