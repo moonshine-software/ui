@@ -5,9 +5,9 @@
     'color' => '',
 ])
 <div {{ $attributes->class([
-    'text-current',
     'w-' . ($size ?? 5),
     'h-' . ($size ?? 5),
+    'text-current' => empty($color),
     "text-$color" => !empty($color),
 ]) }}>
     @if($slot?->isNotEmpty())
