@@ -7,11 +7,6 @@ const vendorSafeList = [
     variants: isDevelopment() ? ['xl'] : ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
   },
   {
-    // usage: icons
-    pattern: /text-(pink|purple)/,
-    variants: isDevelopment() ? [] : ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
-  },
-  {
     // usage: flex align items
     pattern: /items-(start|end|center|baseline|stretch)/,
   },
