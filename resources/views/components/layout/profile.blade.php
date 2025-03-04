@@ -66,13 +66,13 @@
                             @endif
 
                             <div class="profile-info">
-                                <h5 class="name">{{ $nameOfUser }}</h5>
+                                <h5 class="text-purple">{{ $nameOfUser }}</h5>
                                 <div class="email">{{ $username }}</div>
                             </div>
                         </div>
                     </x-slot:title>
                     <x-slot:toggler>
-                        <x-moonshine::icon icon="chevron-up-down" />
+                        <x-moonshine::icon icon="chevron-up-down" color="white" />
                     </x-slot:toggler>
 
                     @if($logOutRoute)
