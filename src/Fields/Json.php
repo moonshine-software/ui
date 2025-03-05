@@ -276,6 +276,10 @@ class Json extends Field implements
             ->prepareReindexNames(parent: $this, before: static function (self $parent, FieldContract $field): void {
                 if(!$parent->isObjectMode()) {
                     $field->withoutWrapper();
+                } else {
+                    $parent->customWrapperAttributes([
+                        'class' => 'inner-json-object-mode',
+                    ]);
                 }
 
                 $field->setRequestKeyPrefix($parent->getRequestKeyPrefix());
