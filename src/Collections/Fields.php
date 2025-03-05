@@ -243,7 +243,7 @@ class Fields extends BaseCollection implements FieldsContract
                 $field->showValue();
             }
 
-            $ignore = $except !== null && $except($parent, $field) === true;
+            $ignore = $except instanceof Closure && $except($parent, $field) === true;
 
             if($ignore) {
                 $level--;

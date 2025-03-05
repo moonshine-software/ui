@@ -274,10 +274,12 @@ class Json extends Field implements
 
         return $fields
             ->prepareReindexNames(parent: $this, before: static function (self $parent, FieldContract $field): void {
-                $field
-                    ->withoutWrapper()
-                    ->setRequestKeyPrefix($parent->getRequestKeyPrefix());
-            }, except: fn(FieldContract $parent) => $parent instanceof self && $parent->isObjectMode());
+                if(!$parent->isObjectMode()) {
+                    $field->withoutWrapper();
+                }
+
+                $field->setRequestKeyPrefix($parent->getRequestKeyPrefix());
+            }, except: fn(FieldContract $parent): bool => $parent instanceof self && $parent->isObjectMode());
     }
 
     protected function resolveRawValue(): mixed
