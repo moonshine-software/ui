@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 // Modal/OffCanvas async content
 export default async function load(url, id) {
   const {data, status} = await axios.get(url)
