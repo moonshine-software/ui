@@ -114,7 +114,9 @@ export default (asyncUrl = '') => ({
       searchResultLimit: 100,
       callbackOnCreateTemplates: function (strToEl, escapeForTemplate) {
         return {
-          item: ({classNames}, data) => {
+          item: ({classNames}, data, removeItemButton) => {
+            const image = data.customProperties?.image;
+
             return strToEl(`
               <div class="${classNames.item} ${
                   data.highlighted ? classNames.highlightedState : classNames.itemSelectable
@@ -125,17 +127,17 @@ export default (asyncUrl = '') => ({
                 }>
                 <div class="flex gap-x-2 items-center">
                   ${
-                    data.customProperties?.image
+                    image
                       ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
                       '<img class="h-full w-full object-cover" src="' +
-                      escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
+                      escapeForTemplate(this.config.allowHTML, image) +
                       '" alt=""></div>'
                       : ''
                   }
                   <span>
                     ${escapeForTemplate(this.config.allowHTML, data.label)}
                     ${
-                      this.config.removeItemButton
+                      data.value && removeItemButton
                         ? `<button type="button" class="choices__button choices__button--remove" data-button="">${
                           translates?.choices?.remove_item ?? 'x'
                         }</button>`
@@ -147,6 +149,8 @@ export default (asyncUrl = '') => ({
             `)
           },
           choice: ({classNames}, data) => {
+            const image = data.customProperties?.image;
+
             return strToEl(`
               <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
                   data.disabled ? classNames.itemDisabled : classNames.itemSelectable
@@ -161,10 +165,10 @@ export default (asyncUrl = '') => ({
                 }>
                 <div class="flex gap-x-2 items-center">
                   ${
-                    data.customProperties?.image
+                    image
                       ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
                       '<img class="h-full w-full object-cover" src="' +
-                      escapeForTemplate(this.config.allowHTML, data.customProperties.image) +
+                      escapeForTemplate(this.config.allowHTML, image) +
                       '" alt=""></div>'
                       : ''
                   }
