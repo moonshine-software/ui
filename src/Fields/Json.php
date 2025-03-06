@@ -154,6 +154,11 @@ class Json extends Field implements
         return $this->keyValue || $this->onlyValue;
     }
 
+    public function isGroup(): bool
+    {
+        return !$this->isObjectMode() && $this->isGroup;
+    }
+
     public function creatable(
         Closure|bool|null $condition = null,
         ?int $limit = null,
