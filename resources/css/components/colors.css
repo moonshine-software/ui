@@ -3,7 +3,7 @@
   @apply text-success-text;
 }
 .text-error {
-  @apply text-error-text;
+  /*@apply text-error;*/
 }
 .text-warning {
   @apply text-warning-text;

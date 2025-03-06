@@ -18,6 +18,302 @@ input[type='number'] {
   color-scheme: dark;
 }
 
+/* Base state */
+._default {
+  @apply text-2xs border outline-none transition-colors duration-200;
+  @apply border-gray-300 bg-white; /* light theme */
+  @apply dark:border-dark-300 dark:bg-dark-800; /* dark theme */
+}
+._focus {
+  @apply ring;
+  @apply ring-offset-0 border-gray-300 ring-gray-200 ring-opacity-70; /* light theme */
+  @apply dark:border-dark-300 dark:ring-dark-100 dark:ring-opacity-30; /* dark theme */
+}
+._read-only {
+  @apply cursor-default opacity-60 focus:ring-0;
+}
+._disabled {
+  @apply cursor-not-allowed opacity-60 bg-gray-100 text-gray-400 dark:bg-dark-700;
+  @apply bg-gray-100 text-gray-400; /* light theme */
+  @apply dark:text-gray-500 dark:bg-dark-700; /* dark theme */
+}
+._placeholder {
+  @apply placeholder:text-2xs;
+  @apply placeholder:text-gray-400; /* light theme */
+  @apply dark:placeholder:text-gray-500; /* dark theme */
+}
+._error {
+  @apply border-error focus:ring-error focus:ring-opacity-20; /* light theme */
+  @apply dark:border-error dark:focus:ring-error dark:focus:ring-opacity-40; /* dark theme */
+}
+
+/* Default field */
+.form-input,
+.form-textarea,
+.form-select,
+.form-multiselect,
+.form-file-upload {
+  @apply _default _placeholder rounded-md;
+  @apply block w-full;
+
+  &:focus {
+    @apply _focus;
+  }
+
+  &:read-only {
+    @apply _read-only;
+  }
+
+  &:disabled {
+    @apply _disabled;
+  }
+
+  /* Invalid field */
+  .form-invalid &,
+  &.form-invalid {
+    @apply _error;
+  }
+}
+
+/* Textarea field */
+.form-textarea {
+  @apply min-h-[120px];
+}
+
+/* File upload */
+.form-file-upload {
+  @apply cursor-pointer overflow-hidden bg-clip-padding file:-m-3 file:cursor-pointer file:overflow-hidden
+    file:rounded-none file:border-0 file:border-solid file:border-inherit file:p-3 file:transition
+    file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] file:disabled:cursor-not-allowed;
+  @apply file:bg-slate-100; /* light theme */
+  @apply dark:file:bg-primary dark:file:text-white; /* dark theme */
+
+  &:not(:disabled) {
+    @apply hover:file:bg-neutral-200; /* light theme */
+    @apply dark:file:text-white dark:file:hover:bg-secondary; /* dark theme */
+  }
+}
+
+/* Radio */
+.form-checkbox,
+.form-radio {
+  @apply _default shrink-0 cursor-pointer checked:bg-primary text-primary hover:text-primary;
+
+  &:focus {
+    @apply _focus checked:bg-primary;
+  }
+  &:disabled {
+    @apply _disabled checked:bg-primary;
+  }
+
+  /* Invalid field */
+  .form-invalid &,
+  &.form-invalid {
+    @apply _error;
+    @apply checked:bg-error text-error; /* light theme */
+    @apply dark:checked:bg-error dark:text-error; /* dark theme */
+  }
+}
+
+/* Checkbox */
+.form-checkbox {
+  @apply rounded;
+}
+
+/* Form Switcher */
+.form-switcher {
+  @apply relative flex cursor-pointer items-center;
+
+  &-toggler {
+    @apply _default h-6 w-11 rounded-full;
+    @apply after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:border peer-checked:after:border-primary after:transition-all peer-checked:after:translate-x-full;
+    @apply peer-checked:bg-primary after:border-gray-300; /* light theme */
+    @apply dark:peer-checked:bg-primary dark:after:border-dark-300; /* dark theme */
+
+    .peer:not(:checked) ~ & {
+      @apply bg-slate-100; /* light theme */
+      @apply dark:bg-dark-800; /* dark theme */
+    }
+
+    .peer:focus:not(:disabled) ~ & {
+      @apply _focus;
+    }
+
+    .peer:disabled ~ & {
+      @apply _disabled;
+    }
+    .peer:checked:disabled ~ & {
+       @apply bg-primary; /* light theme */
+       @apply bg-primary; /* dark theme */
+     }
+  }
+
+  /* Invalid field */
+  .form-invalid &,
+  &:has(.form-invalid),
+  &.form-invalid {
+    .form-switcher-toggler {
+      @apply _error;
+    }
+
+    .peer:focus~.form-switcher-toggler {
+      @apply _error;
+      @apply ring-error ring-opacity-20 ; /* light theme */
+      @apply dark:ring-error dark:ring-opacity-40; /* dark theme */
+    }
+
+    .peer:not(:disabled) {
+      &:checked~.form-switcher-toggler {
+        @apply bg-error after:border-error; /* light theme */
+        @apply dark:bg-error after:border-error; /* dark theme */
+      }
+
+      &:not(:checked)~.form-switcher-toggler {
+        @apply after:bg-error; /* light theme */
+        @apply dark:after:bg-error; /* dark theme */
+      }
+    }
+  }
+}
+
+/* Expansion field */
+.form-group.form-group-expansion {
+  @apply flex-row items-stretch gap-0;
+
+  .form-input {
+    @apply rounded-r-none shrink;
+
+    & ~ .expansion-wrapper {
+      @apply border-l-0;
+    }
+  }
+
+  .expansion-wrapper {
+    @apply _default shrink-0 rounded-r-md overflow-hidden flex flex-row items-center;
+    @apply text-slate-600 bg-slate-100; /* light theme */
+    @apply dark:text-slate-400 dark:bg-dark-900/20; /* dark theme */
+
+    .expansion {
+      @apply h-full px-2 min-w-8 text-2xs flex justify-center items-center ;
+    }
+
+    button {
+      @apply hover:bg-gray-300 dark:hover:bg-dark-300;
+    }
+  }
+
+  .form-input:read-only ~ .expansion-wrapper {
+    @apply _read-only;
+  }
+
+  .form-input:not(:read-only):focus ~ .expansion-wrapper {
+    @apply _focus;
+  }
+
+  .form-input:disabled ~ .expansion-wrapper {
+    @apply _disabled;
+
+    * {
+      @apply pointer-events-none;
+    }
+  }
+
+  .form-input.form-invalid ~ .expansion-wrapper {
+    @apply _error;
+  }
+
+  .form-input.form-invalid:not(:read-only):focus ~ .expansion-wrapper {
+    @apply _error;
+    @apply ring-error ring-opacity-20; /* light theme */
+    @apply dark:ring-error dark:ring-opacity-40; /* dark theme */
+  }
+}
+
+/* Form Range */
+.form-group-range-wrapper {
+  --gradient-start: rgb(var(--primary));
+  --gradient-end: rgb(var(--primary));
+
+  .form-range {
+    @apply absolute z-4 h-2 w-full appearance-none opacity-0 cursor-pointer;
+
+    &:disabled {
+      @apply cursor-not-allowed;
+
+      & + .form-range-slider {
+        @apply _disabled;
+      }
+    }
+
+    &[readonly] {
+       @apply cursor-default;
+
+       & + .form-range-slider {
+         @apply _read-only;
+       }
+    }
+
+    &.form-invalid:first-child {
+      & ~ .form-range-slider > .form-range-connect {
+        --gradient-start: rgb(var(--error-bg));
+      }
+
+      & ~ .form-range-slider > .form-range-thumb-left {
+        @apply bg-error; /* light theme */
+        @apply dark:bg-error; /* dark theme */
+      }
+    }
+    &:not(:first-of-type).form-invalid {
+      & ~ .form-range-slider > .form-range-connect {
+        --gradient-end: rgb(var(--error-bg));
+      }
+
+      & ~ .form-range-slider > .form-range-thumb-right {
+        @apply bg-error; /* light theme */
+        @apply dark:bg-error; /* dark theme */
+      }
+    }
+
+    &:not(:first-of-type) {
+      @apply pointer-events-none;
+
+      @supports (-moz-appearance: none) {
+        @apply pointer-events-auto;
+      }
+    }
+
+    &-slider {
+      @apply relative z-0 my-1.5 h-2 mx-4;
+    }
+
+    &-tracker {
+      @apply absolute bottom-0 -left-4 -right-4 top-0 z-3 rounded-md;
+      @apply bg-slate-100; /* light theme */
+      @apply dark:bg-dark-800; /* dark theme */
+    }
+
+    &-connect {
+      @apply absolute bottom-0 top-0 z-4 rounded-md;
+      background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    }
+
+    &-thumb {
+      @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
+
+      &-left {
+        @apply left-5 -ml-4;
+      }
+
+      &-right {
+        @apply right-5 -mr-4;
+      }
+    }
+  }
+}
+
+
+
+
 .form-flex-col {
   @apply flex flex-col gap-y-5;
 }
@@ -37,7 +333,7 @@ input[type='number'] {
     @apply flex-row items-center justify-items-center;
 
     & > label + div {
-      @apply w-full lg:w-0 lg:grow;
+      @apply w-full;
     }
 
     & > label:first-child:not(.form-switcher) {
@@ -68,29 +364,14 @@ input[type='number'] {
       }
     }
   }
-  &-expansion {
-    @apply flex-row items-stretch gap-0;
-    .form-input {
-      @apply rounded-r-none;
-    }
-    .expansion,
-    .expansion-custom {
-      @apply rounded-none border border-gray-300 bg-slate-100 px-3 py-2 text-2xs text-slate-600 shadow-sm first:rounded-l-md last:rounded-r-md dark:border-dark-300 dark:bg-dark-900/20 dark:text-slate-400 [&:not(:first-child)]:border-l-transparent [&:not(:last-child)]:border-r-transparent;
-      ~ .form-input {
-        @apply rounded-l-none rounded-r-md;
-      }
-    }
-    .expansion-custom {
-      @apply p-0;
-    }
-  }
+
 }
 
 /* Form Label */
 .form-label {
   @apply text-3xs font-medium;
   > .required {
-    @apply text-red-500;
+    @apply text-error;
   }
 }
 
@@ -101,105 +382,12 @@ input[type='number'] {
 
 /* Form Error */
 .form-error {
-  @apply col-span-12 !mt-0 text-3xs text-red-600 dark:text-red-500;
+  @apply col-span-12 !mt-0 text-3xs text-error dark:text-error;
 }
 
-/* Form Switcher */
-.form-switcher {
-  @apply relative flex cursor-pointer items-center;
-  &-toggler {
-    @apply h-6 w-11 rounded-full bg-gray-200 transition-colors duration-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all focus:ring-gray-200 peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:border peer-focus:border-white peer-focus:ring peer-focus:ring-opacity-70 dark:border-dark-300 dark:bg-dark-800 dark:peer-focus:border-dark-300 dark:peer-focus:ring-dark-100 dark:peer-focus:ring-opacity-30;
-  }
-}
-.form-invalid .form-switcher,
-.form-switcher:has(.form-invalid),
-.form-switcher.form-invalid {
-  .form-switcher-toggler {
-    @apply border border-red-600 dark:border-red-700;
-  }
-  .peer:focus ~ .form-switcher-toggler {
-    @apply ring-red-400 ring-opacity-20 dark:ring-red-600 dark:ring-opacity-40;
-  }
-}
 
-/* Form Range */
-.form-range {
-  @apply h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 focus:outline-gray-200 dark:bg-dark-800;
-  &-slider {
-    @apply relative z-0 my-1.5 h-2;
-  }
-  &-tracker {
-    @apply absolute bottom-0 left-0 right-0 top-0 z-3 rounded-md bg-gray-200 dark:bg-dark-200;
-  }
-  &-connect {
-    @apply absolute bottom-0 top-0 z-4 rounded-md bg-primary;
-  }
-  &-input {
-    @apply absolute z-4 h-2 !min-h-0 w-full cursor-pointer appearance-none p-0 opacity-0;
 
-    & + & {
-      @apply pointer-events-none;
 
-      @supports (-moz-appearance: none) {
-        @apply pointer-events-auto;
-      }
-    }
-  }
-  &-thumb {
-    @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
-    &-left {
-      @apply left-0;
-    }
-    &-right {
-      @apply right-0;
-    }
-  }
-}
-
-/* File upload */
-.form-file-upload {
-  @apply cursor-pointer overflow-hidden bg-clip-padding file:-m-3 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-slate-100 file:p-3 file:transition file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-primary dark:file:text-white dark:file:hover:bg-secondary;
-}
-
-.form-input,
-.form-textarea,
-.form-select,
-.form-multiselect,
-.form-file-upload {
-  @apply block w-full rounded-md border border-gray-300 text-2xs outline-none transition-colors duration-200 placeholder:text-2xs placeholder:text-gray-400 focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-70 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-2xs disabled:text-gray-400 dark:border-dark-300 dark:bg-dark-800 dark:placeholder:text-gray-500 dark:focus:ring-dark-100 dark:focus:ring-opacity-30 dark:disabled:bg-dark-700 dark:disabled:text-gray-500;
-
-  /* Invalid field */
-  .form-invalid &,
-  &.form-invalid {
-    @apply border-red-600 focus:ring-red-400 focus:ring-opacity-20 dark:border-red-700 dark:focus:ring-red-600 dark:focus:ring-opacity-40;
-  }
-}
-
-.form-textarea {
-  @apply min-h-[120px];
-}
-
-.form-checkbox {
-  @apply shrink-0 cursor-pointer rounded border-gray-300 text-primary transition-colors duration-200 focus:ring focus:ring-gray-200 focus:ring-opacity-70 focus:ring-offset-0 dark:border-dark-300 dark:bg-dark-800 dark:checked:bg-primary dark:focus:ring-dark-100 dark:focus:ring-opacity-30;
-}
-
-.form-radio {
-  @apply shrink-0 cursor-pointer border-gray-300 text-primary transition-colors duration-200 focus:border-purple-400 focus:ring focus:ring-primary focus:ring-opacity-20 focus:ring-offset-0 dark:border-dark-300 dark:bg-dark-800 dark:checked:bg-primary dark:focus:border-primary dark:focus:ring-dark-100 dark:focus:ring-opacity-30;
-}
-
-.form-radio,
-.form-checkbox {
-  ~ span,
-  ~ label {
-    @apply cursor-pointer text-2xs;
-  }
-
-  /* Invalid field */
-  .form-invalid &,
-  &.form-invalid {
-    @apply border-red-600 focus:ring-red-400 focus:ring-opacity-20 dark:border-red-700 dark:focus:ring-red-600 dark:focus:ring-opacity-40;
-  }
-}
 
 /* Dropzone */
 .dropzone {
@@ -254,7 +442,7 @@ input[type='number'] {
   }
 
   &-remove {
-    @apply absolute right-1 top-1 z-5 flex shrink-0 items-center justify-center rounded-full border border-red-600 bg-red-600 leading-none text-white will-change-transform hover:bg-white hover:text-red-600 dark:hover:border-red-700 dark:hover:bg-red-700 dark:hover:text-white;
+    @apply absolute right-1 top-1 z-5 flex shrink-0 items-center justify-center rounded-full border border-error bg-error leading-none text-white will-change-transform hover:bg-white hover:text-error dark:hover:border-error dark:hover:bg-error dark:hover:text-white;
     > svg {
       @apply h-3 w-3;
     }
@@ -277,11 +465,11 @@ input[type='number'] {
   .form-invalid &,
   &:has(.form-invalid) {
     &.is-focused {
-      @apply ring-red-400 ring-opacity-20 dark:ring-red-600 dark:ring-opacity-40;
+      @apply ring-error ring-opacity-20 dark:ring-error dark:ring-opacity-40;
     }
 
     .choices__inner {
-      @apply border-red-600 dark:border-red-700;
+      @apply border-error dark:border-error;
     }
   }
 
@@ -302,7 +490,7 @@ input[type='number'] {
 
   &.is-disabled {
     .choices__inner {
-      @apply bg-gray-100 text-gray-400 disabled:cursor-not-allowed dark:bg-dark-700 dark:text-gray-500;
+      @apply opacity-50 bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-dark-700 dark:text-gray-500;
     }
     .choices__button {
       @apply hidden;
@@ -315,7 +503,7 @@ input[type='number'] {
 
   .choices__list--dropdown,
   .choices__list[aria-expanded] {
-    @apply z-10 rounded-b-md border-gray-300  bg-white shadow-lg shadow-slate-400/20 dark:border-dark-300 dark:bg-dark-800 dark:shadow-xl dark:shadow-primary/15;
+    @apply z-10 rounded-b-md border-gray-300 bg-white shadow-lg shadow-slate-400/20 dark:border-dark-300 dark:bg-dark-800 dark:shadow-xl dark:shadow-primary/15;
 
     .choices__input {
       @apply dark:border-b-dark-200 dark:bg-dark-700;
