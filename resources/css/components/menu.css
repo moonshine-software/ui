@@ -386,7 +386,7 @@
 
     /* Burger button */
     &-burger {
-      @apply inline-flex items-center lg:hidden;
+      @apply inline-flex items-center lg:hidden text-white;
     }
   }
 
