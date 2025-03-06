@@ -6,6 +6,14 @@ export class Iterable {
   }
 
   async reindex(block, itemSelector, closestSelector = null) {
+    if(block === null || block === undefined) {
+      return
+    }
+
+    if(itemSelector === '' || itemSelector === null || itemSelector === undefined) {
+      return
+    }
+
     closestSelector = closestSelector ?? itemSelector
 
     let topLevelBlock = block.hasAttribute('data-top-level')
@@ -59,6 +67,7 @@ export class Iterable {
         let closestBlock = fieldOrBlock.closest(`[data-r-block]`)
         let parent = fieldOrBlock.closest(closestBlock.dataset.rClosestSelector)
         let _key = parent.dataset.rowKey ?? parent.rowIndex ?? index
+        // _key will be 0 if table without thead and 1 if with
 
         prev['${index' + level + '}'] = _key
 

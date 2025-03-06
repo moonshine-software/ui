@@ -16,6 +16,8 @@ export default {
   coverageDirectory: '<rootDir>/resources/js/__tests__/coverage',
   coveragePathIgnorePatterns: [
     '/resources/js/Components/',
+    '/resources/js/Support/UI.js',
+    '/resources/js/moonshine.js',
     '/resources/js/bootstrap.js',
     '/resources/js/app.js',
     '/resources/js/layout.js',
