@@ -101,21 +101,21 @@ export default (asyncUrl = '') => ({
       },
       addItemText: value => {
         return (
-            translates?.choices?.add_item?.replace(':value', `<b>${value}</b>`) ??
-            DEFAULT_CONFIG.addItemText(value)
+          translates?.choices?.add_item?.replace(':value', `<b>${value}</b>`) ??
+          DEFAULT_CONFIG.addItemText(value)
         )
       },
       maxItemText: maxItemCount => {
         return (
-            translates?.choices?.max_item?.replace(':count', maxItemCount) ??
-            DEFAULT_CONFIG.maxItemText(maxItemCount)
+          translates?.choices?.max_item?.replace(':count', maxItemCount) ??
+          DEFAULT_CONFIG.maxItemText(maxItemCount)
         )
       },
       searchResultLimit: 100,
       callbackOnCreateTemplates: function (strToEl, escapeForTemplate) {
         return {
           item: ({classNames}, data, removeItemButton) => {
-            const image = data.customProperties?.image;
+            const image = data.customProperties?.image
 
             return strToEl(`
               <div class="${classNames.item} ${
@@ -129,9 +129,9 @@ export default (asyncUrl = '') => ({
                   ${
                     image
                       ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
-                      '<img class="h-full w-full object-cover" src="' +
-                      escapeForTemplate(this.config.allowHTML, image) +
-                      '" alt=""></div>'
+                        '<img class="h-full w-full object-cover" src="' +
+                        escapeForTemplate(this.config.allowHTML, image) +
+                        '" alt=""></div>'
                       : ''
                   }
                   <span>
@@ -139,8 +139,8 @@ export default (asyncUrl = '') => ({
                     ${
                       data.value && removeItemButton
                         ? `<button type="button" class="choices__button choices__button--remove" data-button="">${
-                          translates?.choices?.remove_item ?? 'x'
-                        }</button>`
+                            translates?.choices?.remove_item ?? 'x'
+                          }</button>`
                         : ''
                     }
                   </span>
@@ -149,7 +149,7 @@ export default (asyncUrl = '') => ({
             `)
           },
           choice: ({classNames}, data) => {
-            const image = data.customProperties?.image;
+            const image = data.customProperties?.image
 
             return strToEl(`
               <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
@@ -167,9 +167,9 @@ export default (asyncUrl = '') => ({
                   ${
                     image
                       ? '<div class="zoom-in h-10 w-10 overflow-hidden rounded-md">' +
-                      '<img class="h-full w-full object-cover" src="' +
-                      escapeForTemplate(this.config.allowHTML, image) +
-                      '" alt=""></div>'
+                        '<img class="h-full w-full object-cover" src="' +
+                        escapeForTemplate(this.config.allowHTML, image) +
+                        '" alt=""></div>'
                       : ''
                   }
                   <span>
@@ -195,36 +195,36 @@ export default (asyncUrl = '') => ({
     this.setDataValues()
 
     this.$el.addEventListener(
-        'change',
-        () => {
-          this.isLoadedOptions = false
+      'change',
+      () => {
+        this.isLoadedOptions = false
 
-          this.setDataValues()
-        },
-        false,
+        this.setDataValues()
+      },
+      false,
     )
 
     if (asyncUrl) {
       this.$el.addEventListener(
-          'showDropdown',
-          () => {
-            if (!this.isLoadedOptions) {
-              this.asyncSearch()
-            }
-          },
-          false,
+        'showDropdown',
+        () => {
+          if (!this.isLoadedOptions) {
+            this.asyncSearch()
+          }
+        },
+        false,
       )
     }
 
     if (this.associatedWith && asyncUrl) {
       document.querySelector(`[name="${this.associatedWith}"]`).addEventListener(
-          'change',
-          event => {
-            this.choicesInstance.clearStore()
-            this.$el.dispatchEvent(new Event('change'))
-            this.isLoadedOptions = false
-          },
-          false,
+        'change',
+        event => {
+          this.choicesInstance.clearStore()
+          this.$el.dispatchEvent(new Event('change'))
+          this.isLoadedOptions = false
+        },
+        false,
       )
     }
 
@@ -248,13 +248,13 @@ export default (asyncUrl = '') => ({
         'showDropdown',
         event => {
           createPopper(
-              this.choicesInstance.containerInner.element,
-              this.choicesInstance.dropdown.element,
-              {
-                placement: 'bottom',
-                strategy: 'fixed',
-                modifiers: [sameWidth],
-              },
+            this.choicesInstance.containerInner.element,
+            this.choicesInstance.dropdown.element,
+            {
+              placement: 'bottom',
+              strategy: 'fixed',
+              modifiers: [sameWidth],
+            },
           )
         },
         false,
@@ -352,7 +352,7 @@ export default (asyncUrl = '') => ({
     if (exclude !== '*') {
       extra['_data'] = form
         ? formToJSON(prepareFormData(new FormData(form), exclude))
-        : { value: this.choicesInstance.getValue(true) }
+        : {value: this.choicesInstance.getValue(true)}
     }
 
     de(componentEvent, '', this, extra)
@@ -365,28 +365,28 @@ export default (asyncUrl = '') => ({
   normalizeOptions(items) {
     return items.map(item => {
       if (item.hasOwnProperty('values')) {
-        const { values, ...groupData } = item;
+        const {values, ...groupData} = item
 
         const normalizedValues = !Array.isArray(values)
           ? Object.entries(values).map(([value, data]) => ({
-            value,
-            ...(typeof data === 'object' ? data : { label: data })
-          }))
-          : values;
+              value,
+              ...(typeof data === 'object' ? data : {label: data}),
+            }))
+          : values
 
         return {
           label: groupData.label,
           id: groupData.id ?? JSON.stringify(groupData.label),
           disabled: groupData.disabled !== undefined ? !!groupData.disabled : false,
           choices: normalizedValues.map(option => this.normalizeOption(option)),
-        };
+        }
       }
 
-      return this.normalizeOption(item);
-    });
+      return this.normalizeOption(item)
+    })
   },
   normalizeOption(option) {
-    const { properties, ...rest } = option;
+    const {properties, ...rest} = option
 
     return {
       ...rest,
@@ -394,7 +394,7 @@ export default (asyncUrl = '') => ({
       label: rest.label,
       selected: !!rest.selected,
       disabled: !!rest.disabled,
-      customProperties: Array.isArray(properties) ? {} : (properties || {})
-    };
-  }
+      customProperties: Array.isArray(properties) ? {} : properties || {},
+    }
+  },
 })
