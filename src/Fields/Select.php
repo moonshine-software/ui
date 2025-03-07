@@ -89,7 +89,7 @@ class Select extends Field implements
     {
         $result = data_get($value, 'value', $value);
 
-        return $this->isMultiple() && is_array($result)
+        return $this->isMultiple() && \is_array($result)
             ? array_filter($result, 'strlen')
             : $result;
     }
