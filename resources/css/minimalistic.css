@@ -565,25 +565,17 @@ body.theme-minimalistic {
   .form-select,
   .form-multiselect,
   .form-file-upload {
-    @apply min-h-[34px] px-2 py-1;
+    @apply min-h-8 px-2 py-1;
   }
 
   .form-file-upload {
     @apply text-3xs;
   }
 
-  .form-flex-col {
-    @apply gap-y-3;
-  }
-
   .form-group {
     &:not(.form-group-expansion) {
       @apply gap-1;
     }
-  }
-
-  .form-hint {
-    @apply text-[0.825rem] leading-[1.25];
   }
 
   .form-group-expansion {
@@ -603,14 +595,7 @@ body.theme-minimalistic {
 
   .form-switcher {
     &-toggler {
-      @apply dark:border dark:border-dark-200;
-      height: 1.25rem;
-      width: 2.25rem;
-
-      &::after {
-        height: 1rem;
-        width: 1rem;
-      }
+      @apply h-5 w-9 after:w-4 after:h-4;
     }
   }
 
@@ -620,34 +605,18 @@ body.theme-minimalistic {
   }
 
   /* Choices */
-  .choices__inner {
-    @apply min-h-[34px] !py-1;
-  }
+  .choices {
+    .choices__inner {
+      @apply min-h-8 px-2 py-1;
+    }
 
-  .choices[data-type*='select-one'] .choices__inner {
-    @apply pb-1;
-  }
+    .choices__list--dropdown .choices__item,
+    .choices__list[aria-expanded] .choices__item {
+      @apply px-2 py-1 text-3xs;
+    }
 
-  .choices[data-type*='select-one'] .choices__input {
-    @apply px-2 py-1;
-  }
-
-  .choices__list--dropdown .choices__item,
-  .choices__list[aria-expanded] .choices__item {
-    @apply px-2 py-1 text-3xs;
-  }
-
-  .choices .choices__list--multiple .choices__item {
-    @apply -mb-0.5 -mt-1 mr-1 px-1.5 py-0;
-  }
-
-  .choices__list--single {
-    @apply px-0;
-  }
-
-  .choices__list--multiple {
-    .choices__item:last-child {
-      @apply mr-1;
+    .choices .choices__list--multiple .choices__item {
+      @apply -my-0.5 px-1 py-0;
     }
   }
 
