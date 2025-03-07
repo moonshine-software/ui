@@ -18,6 +18,26 @@ input[type='number'] {
   color-scheme: dark;
 }
 
+/* Form Label */
+.form-label {
+  @apply text-3xs font-medium;
+  > .required {
+    @apply text-error;
+  }
+}
+
+/* Form Hint */
+.form-hint {
+  @apply text-3xs;
+  @apply text-slate-500; /* light theme */
+  @apply dark:text-slate-400; /* dark theme */
+}
+
+/* Form Error */
+.form-error {
+  @apply col-span-12 text-3xs text-error;
+}
+
 /* Base state */
 ._default {
   @apply text-2xs border outline-none transition-colors duration-200;
@@ -53,7 +73,7 @@ input[type='number'] {
 .form-select,
 .form-multiselect,
 .form-file-upload {
-  @apply _default _placeholder rounded-md;
+  @apply _default _placeholder rounded-md min-h-10;
   @apply block w-full;
 
   &:focus {
@@ -230,160 +250,283 @@ input[type='number'] {
 }
 
 /* Form Range */
-.form-group-range-wrapper {
+.form-group-range {
   --gradient-start: rgb(var(--primary));
   --gradient-end: rgb(var(--primary));
+  @apply gap-4;
 
-  .form-range {
-    @apply absolute z-4 h-2 w-full appearance-none opacity-0 cursor-pointer;
+  &-wrapper {
+    @apply relative w-full;
 
-    &:disabled {
-      @apply cursor-not-allowed;
+    .form-range {
+      @apply absolute z-4 top-1 h-0 w-full appearance-none  pointer-events-none opacity-0 cursor-pointer;
 
-      & + .form-range-slider {
-        @apply _disabled;
-      }
-    }
-
-    &[readonly] {
-       @apply cursor-default;
-
-       & + .form-range-slider {
-         @apply _read-only;
-       }
-    }
-
-    &.form-invalid:first-child {
-      & ~ .form-range-slider > .form-range-connect {
-        --gradient-start: rgb(var(--error-bg));
+      &::-webkit-slider-thumb {
+        @apply h-5 w-5 appearance-none pointer-events-auto;
       }
 
-      & ~ .form-range-slider > .form-range-thumb-left {
-        @apply bg-error; /* light theme */
-        @apply dark:bg-error; /* dark theme */
-      }
-    }
-    &:not(:first-of-type).form-invalid {
-      & ~ .form-range-slider > .form-range-connect {
-        --gradient-end: rgb(var(--error-bg));
+      &::-moz-range-thumb {
+        @apply h-5 w-5 appearance-none pointer-events-auto;
       }
 
-      & ~ .form-range-slider > .form-range-thumb-right {
-        @apply bg-error; /* light theme */
-        @apply dark:bg-error; /* dark theme */
-      }
-    }
-
-    &:not(:first-of-type) {
-      @apply pointer-events-none;
-
-      @supports (-moz-appearance: none) {
-        @apply pointer-events-auto;
-      }
-    }
-
-    &-slider {
-      @apply relative z-0 my-1.5 h-2 mx-4;
-    }
-
-    &-tracker {
-      @apply absolute bottom-0 -left-4 -right-4 top-0 z-3 rounded-md;
-      @apply bg-slate-100; /* light theme */
-      @apply dark:bg-dark-800; /* dark theme */
-    }
-
-    &-connect {
-      @apply absolute bottom-0 top-0 z-4 rounded-md;
-      background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-    }
-
-    &-thumb {
-      @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
-
-      &-left {
-        @apply left-5 -ml-4;
+      &::-ms-thumb {
+        @apply h-5 w-5 appearance-none pointer-events-auto;
       }
 
-      &-right {
-        @apply right-5 -mr-4;
+      &:disabled {
+        @apply cursor-not-allowed;
+
+        & + .form-range-slider {
+          @apply _disabled;
+        }
+      }
+
+      &[readonly] {
+        @apply cursor-default;
+
+        & + .form-range-slider {
+          @apply _read-only;
+        }
+      }
+
+      &.form-invalid:first-child {
+        & ~ .form-range-slider > .form-range-connect {
+          --gradient-start: rgb(var(--error));
+        }
+
+        & ~ .form-range-slider > .form-range-thumb-left {
+          @apply bg-error; /* light theme */
+          @apply dark:bg-error; /* dark theme */
+        }
+      }
+      &:not(:first-of-type).form-invalid {
+        & ~ .form-range-slider > .form-range-connect {
+          --gradient-end: rgb(var(--error));
+        }
+
+        & ~ .form-range-slider > .form-range-thumb-right {
+          @apply bg-error; /* light theme */
+          @apply dark:bg-error; /* dark theme */
+        }
+      }
+
+      &:not(:first-of-type) {
+        @apply pointer-events-none;
+
+        @supports (-moz-appearance: none) {
+          @apply pointer-events-auto;
+        }
+      }
+
+      &-slider {
+        @apply relative z-0 my-1.5 h-2 mx-4;
+      }
+
+      &-tracker {
+        @apply absolute bottom-0 -left-4 -right-4 top-0 z-3 rounded-md;
+        @apply bg-slate-100; /* light theme */
+        @apply dark:bg-dark-800; /* dark theme */
+      }
+
+      &-connect {
+        @apply absolute bottom-0 top-0 z-4 rounded-md;
+        background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+      }
+
+      &-thumb {
+        @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
+
+        &-left {
+          @apply left-5 -ml-4;
+        }
+
+        &-right {
+          @apply right-5 -mr-4;
+        }
+      }
+    }
+  }
+
+  &-fields {
+    @apply mt-4 flex w-full items-center justify-between gap-4;
+
+    & > .form-input {
+      @apply max-w-44;
+
+      &:last-child {
+        @apply text-right;
       }
     }
   }
 }
 
-
-
-
-.form-flex-col {
-  @apply flex flex-col gap-y-5;
-}
-
+/* Form Group */
 .form-group {
   @apply flex w-full flex-col gap-2;
-
-  .form-input,
-  .form-textarea,
-  .form-select,
-  .form-multiselect,
-  .form-file-upload {
-    @apply min-h-[42px];
-  }
 
   &-inline {
     @apply flex-row items-center justify-items-center;
 
     & > label + div {
-      @apply w-full;
+      @apply w-full lg:w-0 lg:grow;
     }
 
     & > label:first-child:not(.form-switcher) {
       @apply lg:w-1/5;
     }
   }
-  &-buttons {
-    @apply mt-3 flex-row flex-wrap justify-end;
+}
+
+/* Choices (Single/Multiple Select) */
+.choices {
+  @apply _default rounded-md;
+
+  &.is-focused {
+    @apply _focus;
   }
-  &-range {
-    @apply gap-4;
-    input[type='range']::-webkit-slider-thumb {
-      pointer-events: all;
-      width: 24px;
-      height: 24px;
-      -webkit-appearance: none;
+
+  .form-invalid &,
+  &:has(.form-invalid) {
+    @apply _error
+  }
+
+  &.is-open {
+    @apply rounded-b-none;
+  }
+
+  .choices__inner {
+    @apply min-h-0 text-2xs border-none bg-transparent;
+    padding: .5rem .75rem;
+
+    .choices__list--single {
+      @apply p-0;
     }
-    &-wrapper {
-      @apply relative w-full;
+  }
+
+  .choices__list--dropdown,
+  .choices__list[aria-expanded] {
+    @apply _default rounded-b-md z-10;
+
+    .choices__item.is-highlighted {
+      @apply text-slate-600 bg-slate-100; /* light theme */
+      @apply dark:text-slate-400 dark:bg-dark-900/20; /* dark theme */
     }
-    &-fields {
-      @apply mt-4 flex w-full items-center justify-between gap-3;
-      > .form-input {
-        max-width: 180px;
-        &:last-child {
-          @apply text-right;
-        }
+  }
+
+  .choices__input {
+    @apply m-0 p-0 bg-transparent;
+    box-shadow: none;
+  }
+
+  .choices__list--multiple .choices__item {
+    @apply border-0 py-0 text-3xs;
+  }
+
+  .choices__list--multiple {
+    .choices__button {
+      @apply !border-l-white/50;
+    }
+    .choices__item {
+      @apply rounded-md border-primary bg-primary;
+    }
+    .choices__item.is-highlighted {
+      @apply border-secondary bg-secondary;
+    }
+  }
+
+  /*
+  .choices__input {
+    @apply m-0 w-[1px] bg-white p-0 text-3xs leading-6 focus:ring-0 dark:bg-dark-800 dark:placeholder:text-gray-500;
+  }
+
+  .choices__inner {
+    @apply min-h-10 rounded-md border-gray-300 bg-white !py-2 text-2xs !leading-6 leading-tight transition-colors duration-200 dark:border-dark-300 dark:bg-dark-800;
+
+    .choices__list--single {
+      @apply py-0;
+    }
+    .choices__list--multiple .choices__item {
+      @apply border-0 py-0 text-3xs;
+    }
+  }
+
+  &.is-disabled {
+    .choices__inner {
+      @apply opacity-50 bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-dark-700 dark:text-gray-500;
+    }
+    .choices__button {
+      @apply hidden;
+    }
+  }
+
+  .choices__placeholder {
+    @apply text-gray-400 opacity-100 dark:text-gray-500;
+  }
+
+  .choices__list--dropdown,
+  .choices__list[aria-expanded] {
+    @apply z-10 rounded-b-md border-gray-300 bg-white shadow-lg shadow-slate-400/20 dark:border-dark-300 dark:bg-dark-800 dark:shadow-xl dark:shadow-primary/15;
+
+    .choices__input {
+      @apply dark:border-b-dark-200 dark:bg-dark-700;
+    }
+
+    .choices__item--selectable {
+      &.is-highlighted {
+        @apply bg-slate-100 dark:bg-dark-400;
       }
     }
   }
 
+  .choices__list--single {
+    .choices__button {
+      @apply dark:invert;
+    }
+  }
+
+  .choices__list--multiple {
+    .choices__button {
+      @apply !border-l-white/50;
+    }
+    .choices__item {
+      @apply rounded-md border-primary bg-primary;
+    }
+    .choices__item.is-highlighted {
+      @apply border-secondary bg-secondary;
+    }
+  }
+
+   */
+}
+/*
+.choices [hidden] {
+  @apply absolute left-0 top-0 z-0 !m-0 !block h-full w-full !p-0 opacity-0;
 }
 
-/* Form Label */
-.form-label {
-  @apply text-3xs font-medium;
-  > .required {
-    @apply text-error;
+.choices .choices__input--cloned {
+  @apply relative z-1;
+}
+
+.choices__heading {
+  @apply !border-gray-300 !text-gray-400 dark:!border-dark-300 dark:!text-gray-500;
+}
+*/
+
+
+
+/*
+.form-flex-col {
+  @apply flex flex-col gap-y-5;
+}
+.form-group {
+  &-buttons {
+    @apply mt-3 flex-row flex-wrap justify-end;
   }
 }
+*/
 
-/* Form Hint */
-.form-hint {
-  @apply text-3xs text-slate-500 dark:text-slate-400;
-}
 
-/* Form Error */
-.form-error {
-  @apply col-span-12 !mt-0 text-3xs text-error dark:text-error;
-}
+
 
 
 
@@ -449,99 +592,4 @@ input[type='number'] {
   }
 }
 
-/* Choises (Single/Multiple Select) */
-.choices {
-  @apply !mb-0 w-full rounded-md text-2xs dark:after:!border-t-dark-50;
 
-  &.is-open {
-    @apply dark:after:!border-b-dark-50 dark:after:!border-t-transparent;
-    .choices__inner {
-      @apply rounded-b-none rounded-t-md;
-    }
-  }
-  &.is-focused {
-    @apply border-gray-300 ring ring-gray-200 ring-opacity-70 transition-colors dark:ring-dark-100 dark:ring-opacity-30;
-  }
-  .form-invalid &,
-  &:has(.form-invalid) {
-    &.is-focused {
-      @apply ring-error ring-opacity-20 dark:ring-error dark:ring-opacity-40;
-    }
-
-    .choices__inner {
-      @apply border-error dark:border-error;
-    }
-  }
-
-  .choices__input {
-    @apply m-0 w-[1px] bg-white p-0 text-3xs leading-6 focus:ring-0 dark:bg-dark-800 dark:placeholder:text-gray-500;
-  }
-
-  .choices__inner {
-    @apply min-h-[42px] rounded-md border-gray-300 bg-white !py-2 text-2xs !leading-6 leading-tight transition-colors duration-200 dark:border-dark-300 dark:bg-dark-800;
-
-    .choices__list--single {
-      @apply py-0;
-    }
-    .choices__list--multiple .choices__item {
-      @apply border-0 py-0 text-3xs;
-    }
-  }
-
-  &.is-disabled {
-    .choices__inner {
-      @apply opacity-50 bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-dark-700 dark:text-gray-500;
-    }
-    .choices__button {
-      @apply hidden;
-    }
-  }
-
-  .choices__placeholder {
-    @apply text-gray-400 opacity-100 dark:text-gray-500;
-  }
-
-  .choices__list--dropdown,
-  .choices__list[aria-expanded] {
-    @apply z-10 rounded-b-md border-gray-300 bg-white shadow-lg shadow-slate-400/20 dark:border-dark-300 dark:bg-dark-800 dark:shadow-xl dark:shadow-primary/15;
-
-    .choices__input {
-      @apply dark:border-b-dark-200 dark:bg-dark-700;
-    }
-
-    .choices__item--selectable {
-      &.is-highlighted {
-        @apply bg-slate-100 dark:bg-dark-400;
-      }
-    }
-  }
-
-  .choices__list--single {
-    .choices__button {
-      @apply dark:invert;
-    }
-  }
-
-  .choices__list--multiple {
-    .choices__button {
-      @apply !border-l-white/50;
-    }
-    .choices__item {
-      @apply rounded-md border-primary bg-primary;
-    }
-    .choices__item.is-highlighted {
-      @apply border-secondary bg-secondary;
-    }
-  }
-}
-.choices [hidden] {
-  @apply absolute left-0 top-0 z-0 !m-0 !block h-full w-full !p-0 opacity-0;
-}
-
-.choices .choices__input--cloned {
-  @apply relative z-1;
-}
-
-.choices__heading {
-  @apply !border-gray-300 !text-gray-400 dark:!border-dark-300 dark:!text-gray-500;
-}
