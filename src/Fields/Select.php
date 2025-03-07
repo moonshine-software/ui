@@ -87,7 +87,11 @@ class Select extends Field implements
 
     public function prepareReactivityValue(mixed $value, mixed &$casted, array &$except): mixed
     {
-        return data_get($value, 'value', $value);
+        $result = data_get($value, 'value', $value);
+
+        return $this->isMultiple() && \is_array($result)
+            ? array_filter($result, static fn ($value): bool => $value !== null && $value !== false)
+            : $result;
     }
 
     protected function viewData(): array
