@@ -19,14 +19,13 @@ describe('FormUtils', () => {
     expect(result).toEqual({ignoreKey: 'ignore'})
   })
 
-  test('validationInHiddenBlocks should add invalid listeners to fields',
-    () => {
-      document.body.innerHTML = '<input type="text" />'
-      const input = document.querySelector('input')
-      const spy = jest.spyOn(input, 'addEventListener')
-      validationInHiddenBlocks()
-      expect(spy).toHaveBeenCalledWith('invalid', expect.any(Function))
-    })
+  test('validationInHiddenBlocks should add invalid listeners to fields', () => {
+    document.body.innerHTML = '<input type="text" />'
+    const input = document.querySelector('input')
+    const spy = jest.spyOn(input, 'addEventListener')
+    validationInHiddenBlocks()
+    expect(spy).toHaveBeenCalledWith('invalid', expect.any(Function))
+  })
 
   test('getAncestorsUntil should return ancestors correctly', () => {
     document.body.innerHTML = '<div id="parent"><div id="child"></div></div>'

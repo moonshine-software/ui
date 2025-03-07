@@ -6,11 +6,11 @@ export class Iterable {
   }
 
   async reindex(block, itemSelector, closestSelector = null) {
-    if(block === null || block === undefined) {
+    if (block === null || block === undefined) {
       return
     }
 
-    if(itemSelector === '' || itemSelector === null || itemSelector === undefined) {
+    if (itemSelector === '' || itemSelector === null || itemSelector === undefined) {
       return
     }
 

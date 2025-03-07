@@ -36,8 +36,7 @@ export default async function request(
       method: method,
       data: body,
       headers: headers,
-    })
-    .then(function (response) {
+    }).then(function (response) {
       t.loading = false
 
       const data = response.data ?? {}

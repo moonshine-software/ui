@@ -15,8 +15,8 @@ describe('selectorsParams', () => {
   })
 
   test('should handle multiple selectors correctly', () => {
-    document.body.innerHTML = '<input id="input1" value="value1" />' +
-      '<input id="input2" value="value2" />'
+    document.body.innerHTML =
+      '<input id="input1" value="value1" />' + '<input id="input2" value="value2" />'
     const result = selectorsParams('#input1,#input2')
     expect(result).toEqual({'#input1': 'value1', '#input2': 'value2'})
   })
@@ -40,4 +40,3 @@ describe('selectorsParams', () => {
     expect(result).toEqual({'#input1': 'value1'})
   })
 })
-

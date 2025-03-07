@@ -71,4 +71,3 @@ describe('mergeURLString', () => {
     expect(result).toBe('http://example.com?existing=value&key=new')
   })
 })
-

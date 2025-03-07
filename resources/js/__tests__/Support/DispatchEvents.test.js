@@ -63,16 +63,22 @@ describe('dispatchEvents', () => {
     jest.runAllTimers()
 
     expect(mockDispatchEvents()).toHaveBeenCalledTimes(2)
-    expect(mockDispatchEvents()).toHaveBeenNthCalledWith(1, expectEvent('click', {
-      extraParam: 'extraValue',
-      param1: 'value1',
-      param2: 'value2',
-    }))
+    expect(mockDispatchEvents()).toHaveBeenNthCalledWith(
+      1,
+      expectEvent('click', {
+        extraParam: 'extraValue',
+        param1: 'value1',
+        param2: 'value2',
+      }),
+    )
 
-    expect(mockDispatchEvents()).toHaveBeenNthCalledWith(2, expectEvent('hover', {
-      extraParam: 'extraValue',
-      param3: 'value3',
-    }))
+    expect(mockDispatchEvents()).toHaveBeenNthCalledWith(
+      2,
+      expectEvent('hover', {
+        extraParam: 'extraValue',
+        param3: 'value3',
+      }),
+    )
   })
 
   it('should not dispatch events if type is error', () => {
@@ -86,7 +92,7 @@ describe('dispatchEvents', () => {
   function expectEvent(type, detail = {}) {
     return {
       type,
-      ...detail
+      ...detail,
     }
   }
 

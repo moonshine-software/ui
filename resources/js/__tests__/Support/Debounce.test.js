@@ -49,9 +49,12 @@ describe('debounce', () => {
 
   test('should apply the correct context when the function is called', () => {
     const context = {value: 42}
-    const debouncedFunction = debounce(function() {
-      expect(this.value).toBe(42)
-    }.bind(context), 500)
+    const debouncedFunction = debounce(
+      function () {
+        expect(this.value).toBe(42)
+      }.bind(context),
+      500,
+    )
     debouncedFunction()
     jest.advanceTimersByTime(500)
   })
