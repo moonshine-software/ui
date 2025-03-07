@@ -181,10 +181,11 @@ export default (asyncUrl = '') => ({
           },
         }
       },
-      callbackOnInit: () => {
+      callbackOnInit: async () => {
         this.searchTerms = this.$el.closest('.choices').querySelector('[type="search"]')
 
         if (asyncUrl && this.$el.dataset.asyncOnInit && !this.$el.dataset.asyncOnInitDropdown) {
+          await this.$nextTick
           this.asyncSearch()
         }
       },
