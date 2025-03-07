@@ -101,14 +101,14 @@ export default (asyncUrl = '') => ({
       },
       addItemText: value => {
         return (
-          translates?.choices?.add_item?.replace(':value', `<b>${value}</b>`) ??
-          DEFAULT_CONFIG.addItemText(value)
+            translates?.choices?.add_item?.replace(':value', `<b>${value}</b>`) ??
+            DEFAULT_CONFIG.addItemText(value)
         )
       },
       maxItemText: maxItemCount => {
         return (
-          translates?.choices?.max_item?.replace(':count', maxItemCount) ??
-          DEFAULT_CONFIG.maxItemText(maxItemCount)
+            translates?.choices?.max_item?.replace(':count', maxItemCount) ??
+            DEFAULT_CONFIG.maxItemText(maxItemCount)
         )
       },
       searchResultLimit: 100,
@@ -119,12 +119,12 @@ export default (asyncUrl = '') => ({
 
             return strToEl(`
               <div class="${classNames.item} ${
-                  data.highlighted ? classNames.highlightedState : classNames.itemSelectable
-                } ${data.placeholder ? classNames.placeholder : ''}" data-item data-id="${
-                  data.id
-                }" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${data.active ? 'aria-selected="true"' : ''} ${
-                  data.disabled ? 'aria-disabled="true"' : ''
-                }>
+                data.highlighted ? classNames.highlightedState : classNames.itemSelectable
+              } ${data.placeholder ? classNames.placeholder : ''}" data-item data-id="${
+                data.id
+              }" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${data.active ? 'aria-selected="true"' : ''} ${
+                data.disabled ? 'aria-disabled="true"' : ''
+              }>
                 <div class="flex gap-x-2 items-center">
                   ${
                     image
@@ -153,16 +153,16 @@ export default (asyncUrl = '') => ({
 
             return strToEl(`
               <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
-                  data.disabled ? classNames.itemDisabled : classNames.itemSelectable
-                } ${data.value == '' ? 'choices__placeholder' : ''}" data-select-text="${
-                  this.config.itemSelectText
-                }" data-choice ${
-                  data.disabled
-                    ? 'data-choice-disabled aria-disabled="true"'
-                    : 'data-choice-selectable'
-                } data-id="${data.id}" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${
-                  data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
-                }>
+                data.disabled ? classNames.itemDisabled : classNames.itemSelectable
+              } ${data.value == '' ? 'choices__placeholder' : ''}" data-select-text="${
+                this.config.itemSelectText
+              }" data-choice ${
+                data.disabled
+                  ? 'data-choice-disabled aria-disabled="true"'
+                  : 'data-choice-selectable'
+              } data-id="${data.id}" data-value="${escapeForTemplate(this.config.allowHTML, data.value)}" ${
+                data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
+              }>
                 <div class="flex gap-x-2 items-center">
                   ${
                     image
@@ -194,36 +194,36 @@ export default (asyncUrl = '') => ({
     this.setDataValues()
 
     this.$el.addEventListener(
-      'change',
-      () => {
-        this.isLoadedOptions = false
+        'change',
+        () => {
+          this.isLoadedOptions = false
 
-        this.setDataValues()
-      },
-      false,
+          this.setDataValues()
+        },
+        false,
     )
 
     if (asyncUrl) {
       this.$el.addEventListener(
-        'showDropdown',
-        () => {
-          if (!this.isLoadedOptions) {
-            this.asyncSearch()
-          }
-        },
-        false,
+          'showDropdown',
+          () => {
+            if (!this.isLoadedOptions) {
+              this.asyncSearch()
+            }
+          },
+          false,
       )
     }
 
     if (this.associatedWith && asyncUrl) {
       document.querySelector(`[name="${this.associatedWith}"]`).addEventListener(
-        'change',
-        event => {
-          this.choicesInstance.clearStore()
-          this.$el.dispatchEvent(new Event('change'))
-          this.isLoadedOptions = false
-        },
-        false,
+          'change',
+          event => {
+            this.choicesInstance.clearStore()
+            this.$el.dispatchEvent(new Event('change'))
+            this.isLoadedOptions = false
+          },
+          false,
       )
     }
 
@@ -247,13 +247,13 @@ export default (asyncUrl = '') => ({
         'showDropdown',
         event => {
           createPopper(
-            this.choicesInstance.containerInner.element,
-            this.choicesInstance.dropdown.element,
-            {
-              placement: 'bottom',
-              strategy: 'fixed',
-              modifiers: [sameWidth],
-            },
+              this.choicesInstance.containerInner.element,
+              this.choicesInstance.dropdown.element,
+              {
+                placement: 'bottom',
+                strategy: 'fixed',
+                modifiers: [sameWidth],
+              },
           )
         },
         false,
@@ -338,13 +338,7 @@ export default (asyncUrl = '') => ({
       }
 
       options = await this.fromUrl(url.toString() + (formQuery.length ? '&' + formQuery : ''))
-      options = options.map(item => {
-        const {properties, ...other} = item
-        return {
-          ...other,
-          customProperties: properties,
-        }
-      })
+      options = this.normalizeOptions(options)
     }
 
     await this.choicesInstance.setChoices(options, 'value', 'label', true)
@@ -357,7 +351,7 @@ export default (asyncUrl = '') => ({
     if (exclude !== '*') {
       extra['_data'] = form
         ? formToJSON(prepareFormData(new FormData(form), exclude))
-        : {value: this.choicesInstance.getValue(true)}
+        : { value: this.choicesInstance.getValue(true) }
     }
 
     de(componentEvent, '', this, extra)
@@ -367,4 +361,39 @@ export default (asyncUrl = '') => ({
     const json = await response.json()
     return json
   },
+  normalizeOptions(items) {
+    return items.map(item => {
+      if (item.hasOwnProperty('values')) {
+        const { values, ...groupData } = item;
+
+        const normalizedValues = !Array.isArray(values)
+          ? Object.entries(values).map(([value, data]) => ({
+            value,
+            ...(typeof data === 'object' ? data : { label: data })
+          }))
+          : values;
+
+        return {
+          label: groupData.label,
+          id: groupData.id ?? JSON.stringify(groupData.label),
+          disabled: groupData.disabled !== undefined ? !!groupData.disabled : false,
+          choices: normalizedValues.map(option => this.normalizeOption(option)),
+        };
+      }
+
+      return this.normalizeOption(item);
+    });
+  },
+  normalizeOption(option) {
+    const { properties, ...rest } = option;
+
+    return {
+      ...rest,
+      value: String(rest.value),
+      label: rest.label,
+      selected: !!rest.selected,
+      disabled: !!rest.disabled,
+      customProperties: Array.isArray(properties) ? {} : (properties || {})
+    };
+  }
 })
