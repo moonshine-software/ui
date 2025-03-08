@@ -35,7 +35,7 @@ input[type='number'] {
 
 /* Form Error */
 .form-error {
-  @apply col-span-12 text-3xs text-error;
+  @apply col-span-12 text-3xs text-error !mt-0;
 }
 
 /* Base state */
@@ -151,28 +151,34 @@ input[type='number'] {
 .form-switcher {
   @apply relative flex cursor-pointer items-center;
 
-  &-toggler {
+  .form-switcher-toggler {
     @apply __default h-6 w-11 rounded-full;
-    @apply after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:border peer-checked:after:border-primary after:transition-all peer-checked:after:translate-x-full;
+    @apply after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:border after:transition-all;
     @apply peer-checked:bg-primary after:border-gray-300; /* light theme */
     @apply dark:peer-checked:bg-primary dark:after:border-dark-300; /* dark theme */
+  }
 
-    .peer:not(:checked) ~ & {
-      @apply bg-slate-100; /* light theme */
-      @apply dark:bg-dark-800; /* dark theme */
-    }
+  .peer:checked + .form-switcher-toggler {
+    @apply after:border-primary after:translate-x-full;
+    @apply bg-primary after:border-gray-300; /* light theme */
+    @apply dark:bg-primary dark:after:border-dark-300; /* dark theme */
+  }
 
-    .peer:focus:not(:disabled) ~ & {
-      @apply __focus;
-    }
+  .peer:not(:checked) + .form-switcher-toggler {
+    @apply bg-slate-100; /* light theme */
+    @apply dark:bg-dark-800; /* dark theme */
+  }
 
-    .peer:disabled ~ & {
-      @apply __disabled;
-    }
-    .peer:checked:disabled ~ & {
-       @apply bg-primary; /* light theme */
-       @apply bg-primary; /* dark theme */
-     }
+  .peer:focus:not(:disabled) + .form-switcher-toggler {
+    @apply __focus;
+  }
+
+  .peer:disabled + .form-switcher-toggler {
+    @apply __disabled;
+  }
+  .peer:checked:disabled + .form-switcher-toggler {
+    @apply bg-primary; /* light theme */
+    @apply bg-primary; /* dark theme */
   }
 
   /* Invalid field */
@@ -183,19 +189,19 @@ input[type='number'] {
       @apply __error;
     }
 
-    .peer:focus~.form-switcher-toggler {
+    .peer:focus ~ .form-switcher-toggler {
       @apply __error;
       @apply ring-error ring-opacity-20 ; /* light theme */
       @apply dark:ring-error dark:ring-opacity-40; /* dark theme */
     }
 
     .peer:not(:disabled) {
-      &:checked~.form-switcher-toggler {
+      &:checked ~ .form-switcher-toggler {
         @apply bg-error after:border-error; /* light theme */
         @apply dark:bg-error after:border-error; /* dark theme */
       }
 
-      &:not(:checked)~.form-switcher-toggler {
+      &:not(:checked) ~ .form-switcher-toggler {
         @apply after:bg-error; /* light theme */
         @apply dark:after:bg-error; /* dark theme */
       }
@@ -262,7 +268,7 @@ input[type='number'] {
   --gradient-end: rgb(var(--primary));
   @apply gap-4;
 
-  &-wrapper {
+  .form-group-range-wrapper {
     @apply relative w-full;
 
     .form-range {
@@ -324,37 +330,37 @@ input[type='number'] {
           @apply pointer-events-auto;
         }
       }
+    }
 
-      &-slider {
-        @apply relative z-0 my-1.5 h-2 mx-4;
-      }
+    .form-range-slider {
+      @apply relative z-0 my-1.5 h-2 mx-4;
 
-      &-tracker {
+      .form-range-tracker {
         @apply absolute bottom-0 -left-4 -right-4 top-0 z-3 rounded-md;
         @apply bg-slate-100; /* light theme */
         @apply dark:bg-dark-800; /* dark theme */
       }
 
-      &-connect {
+      .form-range-connect {
         @apply absolute bottom-0 top-0 z-4 rounded-md;
         background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
       }
 
-      &-thumb {
+      .form-range-thumb {
         @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
 
-        &-left {
+        &.form-range-thumb-left {
           @apply left-5 -ml-4;
         }
 
-        &-right {
+        &.form-range-thumb-right {
           @apply right-5 -mr-4;
         }
       }
     }
   }
 
-  &-fields {
+  .form-group-range-fields {
     @apply mt-4 flex w-full items-center justify-between gap-4;
 
     & > .form-input {
@@ -371,7 +377,7 @@ input[type='number'] {
 .form-group {
   @apply flex w-full flex-col gap-2;
 
-  &-inline {
+  &.form-group-inline {
     @apply flex-row items-center justify-items-center;
 
     & > label + div {
@@ -408,6 +414,19 @@ input[type='number'] {
   &:has(.form-invalid) {
     @apply __error
   }
+
+  &[data-type*=select-one] {
+    &:not(.is-open) {
+      @apply after:border-t-gray-300; /* light theme */
+      @apply dark:after:border-t-dark-300; /* dark theme */
+    }
+
+    &.is-open {
+      @apply after:border-b-gray-300; /* light theme */
+      @apply dark:after:border-b-dark-300; /* dark theme */
+    }
+  }
+
 
   &.is-open {
     @apply rounded-b-none;
@@ -478,14 +497,14 @@ input[type='number'] {
   @apply border-gray-300; /* light theme */
   @apply dark:border-dark-300; /* dark theme */
 
-  &-items {
+  .dropzone-items {
     @apply flex flex-wrap gap-2;
   }
 
-  &-item {
+  .dropzone-item {
     @apply relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-md;
 
-    &-file {
+    .dropzone-item-file {
       @apply __default;
       @apply flex h-auto w-full items-center gap-2 p-2;
 
@@ -503,7 +522,7 @@ input[type='number'] {
     }
   }
 
-  &-file-icon {
+  .dropzone-file-icon {
     @apply text-primary; /* light theme */
     @apply dark:text-secondary; /* dark theme */
 
@@ -512,11 +531,11 @@ input[type='number'] {
     }
   }
 
-  &-file-name {
+  .dropzone-file-name {
     @apply grow truncate text-2xs;
   }
 
-  &-remove {
+  .dropzone-remove {
     @apply absolute right-1 top-1 z-5 flex shrink-0 items-center justify-center rounded-full border border-error bg-error leading-none text-white hover:bg-white hover:text-error;
 
     & > svg {

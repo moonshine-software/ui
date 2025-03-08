@@ -452,6 +452,10 @@ body.theme-minimalistic {
     &-title {
       @apply mb-3 pb-3;
     }
+
+    &.box-dark {
+      @apply bg-dark-600 dark:bg-dark-800 dark:border dark:border-dark-300;
+    }
   }
 
   /* Buttons */
