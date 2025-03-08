@@ -55,7 +55,7 @@ input[type='number'] {
 .__disabled {
   @apply cursor-not-allowed opacity-60 bg-gray-100 text-gray-400 dark:bg-dark-700;
   @apply bg-gray-100 text-gray-400; /* light theme */
-  @apply dark:text-gray-500 dark:bg-dark-700; /* dark theme */
+  @apply dark:bg-dark-700 dark:text-gray-500; /* dark theme */
 }
 .__placeholder {
   @apply placeholder:text-2xs;
@@ -431,6 +431,10 @@ input[type='number'] {
   .choices__list[aria-expanded] {
     @apply __default rounded-b-md z-10;
 
+    .choices__input {
+      @apply __default __placeholder;
+    }
+
     .choices__item.is-highlighted {
       @apply text-slate-600 bg-slate-100; /* light theme */
       @apply dark:text-slate-400 dark:bg-dark-900/20; /* dark theme */
@@ -455,6 +459,11 @@ input[type='number'] {
         @apply border-l-white/50 m-0;
       }
     }
+  }
+
+  .choices__heading {
+    @apply border-gray-300 text-gray-400; /* light theme */
+    @apply dark:border-dark-300 dark:text-gray-500; /* dark theme */
   }
 
   /* Show browser errors */
