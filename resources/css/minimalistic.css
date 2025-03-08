@@ -454,7 +454,7 @@ body.theme-minimalistic {
     }
 
     &.box-dark {
-      @apply bg-dark-600 dark:bg-dark-800 dark:border dark:border-dark-300;
+      @apply bg-dark-600 dark:border dark:border-dark-300 dark:bg-dark-800;
     }
   }
 
@@ -599,7 +599,7 @@ body.theme-minimalistic {
 
   .form-switcher {
     &-toggler {
-      @apply h-5 w-9 after:w-4 after:h-4;
+      @apply h-5 w-9 after:h-4 after:w-4;
     }
   }
 
