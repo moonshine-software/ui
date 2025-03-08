@@ -20,6 +20,7 @@
                 class="search-form-field form-input"
                 value="{{ $value }}"
                 placeholder="{{ $placeholder }}"
+                required
             />
 
             <button class="search-form-submit" type="submit">
