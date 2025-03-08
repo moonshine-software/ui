@@ -5,9 +5,11 @@
     <div {{ $attributes->merge(['class' => 'form-group form-group-expansion']) }}>
         {{ $slot ?? '' }}
 
-        @foreach($extensions as $extension)
-            {!! $extension !!}
-        @endforeach
+        <div class="expansion-wrapper">
+            @foreach($extensions as $extension)
+                {!! $extension !!}
+            @endforeach
+        </div>
     </div>
 @else
     {{ $slot ?? '' }}

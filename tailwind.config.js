@@ -116,6 +116,7 @@ export default {
           text: 'rgba(var(--warning-text), <alpha-value>)',
         },
         error: {
+          DEFAULT: 'rgba(var(--error), <alpha-value>)',
           bg: 'rgba(var(--error-bg), <alpha-value>)',
           text: 'rgba(var(--error-text), <alpha-value>)',
         },

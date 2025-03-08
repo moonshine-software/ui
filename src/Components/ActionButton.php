@@ -66,7 +66,7 @@ class ActionButton extends MoonShineComponent implements
     public function __construct(
         Closure|string $label,
         protected Closure|string $url = '#',
-        protected ?DataWrapperContract $data = null
+        protected ?DataWrapperContract $data = null,
     ) {
         parent::__construct();
 
@@ -199,10 +199,17 @@ class ActionButton extends MoonShineComponent implements
                  `" . AlpineJs::prepareEvents($events) . "`,
                  `$excludes`
              )",
-            'prevent'
+            'prevent',
         );
     }
 
+    public function download(): static
+    {
+        return $this->customAttributes([
+            'download' => true,
+            'data-async-response-type' => 'blob',
+        ]);
+    }
     /**
      * @param array|(Closure(mixed $original): array) $params = []
      * @throws Throwable
@@ -215,7 +222,7 @@ class ActionButton extends MoonShineComponent implements
         array $events = [],
         ?AsyncCallback $callback = null,
         ?PageContract $page = null,
-        ?ResourceContract $resource = null
+        ?ResourceContract $resource = null,
     ): static {
         $this->asyncMethod = $method;
 
@@ -233,7 +240,7 @@ class ActionButton extends MoonShineComponent implements
         return $this->async(
             selector: $selector,
             events: $events,
-            callback: $callback
+            callback: $callback,
         );
     }
 
@@ -263,7 +270,7 @@ class ActionButton extends MoonShineComponent implements
         HttpMethod $method = HttpMethod::GET,
         null|string|array $selector = null,
         array $events = [],
-        ?AsyncCallback $callback = null
+        ?AsyncCallback $callback = null,
     ): static {
         $this->isAsync = true;
         $this->asyncHttpMethod = $method;
@@ -288,14 +295,14 @@ class ActionButton extends MoonShineComponent implements
     public function withSelectorsParams(array $selectors): static
     {
         return $this->customAttributes(
-            AlpineJs::asyncSelectorsParamsAttributes($selectors)
+            AlpineJs::asyncSelectorsParamsAttributes($selectors),
         );
     }
 
     public function withQueryParams(): static
     {
         return $this->customAttributes(
-            AlpineJs::asyncWithQueryParamsAttributes()
+            AlpineJs::asyncWithQueryParamsAttributes(),
         );
     }
 
@@ -362,7 +369,7 @@ class ActionButton extends MoonShineComponent implements
             array_keys(AlpineJs::asyncUrlDataAttributes(
                 events: ['events'],
                 selector: 'selector',
-            ))
+            )),
         );
 
         if ($this->getAttribute('x-on:click.prevent') === 'request') {
@@ -385,7 +392,7 @@ class ActionButton extends MoonShineComponent implements
             return $this;
         }
 
-        return $this->class('btn-primary');
+        return $this->removeClasses()->class('btn-primary');
     }
 
     public function secondary(Closure|bool|null $condition = null): static
@@ -394,7 +401,7 @@ class ActionButton extends MoonShineComponent implements
             return $this;
         }
 
-        return $this->class('btn-secondary');
+        return $this->removeClasses()->class('btn-secondary');
     }
 
     public function success(Closure|bool|null $condition = null): static
@@ -403,7 +410,7 @@ class ActionButton extends MoonShineComponent implements
             return $this;
         }
 
-        return $this->class('btn-success');
+        return $this->removeClasses()->class('btn-success');
     }
 
     public function warning(Closure|bool|null $condition = null): static
@@ -412,7 +419,7 @@ class ActionButton extends MoonShineComponent implements
             return $this;
         }
 
-        return $this->class('btn-warning');
+        return $this->removeClasses()->class('btn-warning');
     }
 
     public function info(Closure|bool|null $condition = null): static
@@ -421,7 +428,7 @@ class ActionButton extends MoonShineComponent implements
             return $this;
         }
 
-        return $this->class('btn-info');
+        return $this->removeClasses()->class('btn-info');
     }
 
     public function error(Closure|bool|null $condition = null): static
@@ -430,7 +437,12 @@ class ActionButton extends MoonShineComponent implements
             return $this;
         }
 
-        return $this->class('btn-error');
+        return $this->removeClasses()->class('btn-error');
+    }
+
+    private function removeClasses(): static
+    {
+        return $this->removeClass('btn-(primary|secondary|info|success|warning|error)');
     }
 
     protected function isSeeParams(): array
