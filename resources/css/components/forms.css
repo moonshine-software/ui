@@ -42,12 +42,12 @@ input[type='number'] {
 .__default {
   @apply text-2xs border outline-none transition-colors duration-200;
   @apply border-gray-300 bg-white; /* light theme */
-  @apply dark:border-dark-300 dark:bg-dark-800; /* dark theme */
+  @apply dark:border-dark-200 dark:bg-dark-800; /* dark theme */
 }
 .__focus {
   @apply ring;
-  @apply ring-offset-0 border-gray-300 ring-gray-200 ring-opacity-70; /* light theme */
-  @apply dark:border-dark-300 dark:ring-dark-100 dark:ring-opacity-30; /* dark theme */
+  @apply ring-offset-0 border-gray-300 ring-gray-300 ring-opacity-50; /* light theme */
+  @apply dark:border-dark-200 dark:ring-dark-100 dark:ring-opacity-30; /* dark theme */
 }
 .__read-only {
   @apply cursor-default opacity-60 focus:ring-0;
@@ -155,13 +155,13 @@ input[type='number'] {
     @apply __default h-6 w-11 rounded-full;
     @apply after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:border after:transition-all;
     @apply peer-checked:bg-primary after:border-gray-300; /* light theme */
-    @apply dark:peer-checked:bg-primary dark:after:border-dark-300; /* dark theme */
+    @apply dark:peer-checked:bg-primary dark:after:border-dark-200; /* dark theme */
   }
 
   .peer:checked + .form-switcher-toggler {
     @apply after:border-primary after:translate-x-full;
     @apply bg-primary after:border-gray-300; /* light theme */
-    @apply dark:bg-primary dark:after:border-dark-300; /* dark theme */
+    @apply dark:bg-primary dark:after:border-dark-200; /* dark theme */
   }
 
   .peer:not(:checked) + .form-switcher-toggler {
@@ -231,7 +231,7 @@ input[type='number'] {
     }
 
     button {
-      @apply hover:bg-gray-300 dark:hover:bg-dark-300;
+      @apply hover:bg-gray-300 dark:hover:bg-dark-200;
     }
   }
 
@@ -418,12 +418,12 @@ input[type='number'] {
   &[data-type*=select-one] {
     &:not(.is-open) {
       @apply after:border-t-gray-300; /* light theme */
-      @apply dark:after:border-t-dark-300; /* dark theme */
+      @apply dark:after:border-t-dark-200; /* dark theme */
     }
 
     &.is-open {
       @apply after:border-b-gray-300; /* light theme */
-      @apply dark:after:border-b-dark-300; /* dark theme */
+      @apply dark:after:border-b-dark-200; /* dark theme */
     }
   }
 
@@ -482,7 +482,7 @@ input[type='number'] {
 
   .choices__heading {
     @apply border-gray-300 text-gray-400; /* light theme */
-    @apply dark:border-dark-300 dark:text-gray-500; /* dark theme */
+    @apply dark:border-dark-200 dark:text-gray-500; /* dark theme */
   }
 
   /* Show browser errors */
@@ -495,7 +495,7 @@ input[type='number'] {
 .dropzone {
   @apply relative w-full rounded-lg border-2 border-dashed p-3;
   @apply border-gray-300; /* light theme */
-  @apply dark:border-dark-300; /* dark theme */
+  @apply dark:border-dark-200; /* dark theme */
 
   .dropzone-items {
     @apply flex flex-wrap gap-2;
@@ -540,6 +540,20 @@ input[type='number'] {
 
     & > svg {
       @apply h-3 w-3;
+    }
+  }
+}
+
+/* Json */
+.inner-json-object-mode {
+  .inner-json-object-mode {
+    @apply pl-6 relative;
+
+    &:before {
+      content: '';
+      @apply h-px w-4 absolute left-0 top-2.5;
+      @apply bg-gray-300; /* light theme */
+      @apply dark:bg-dark-200; /* dark theme */
     }
   }
 }
