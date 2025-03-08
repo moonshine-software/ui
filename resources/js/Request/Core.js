@@ -36,7 +36,7 @@ export default async function request(
       method: method,
       data: body,
       headers: headers,
-      responseType: componentRequestData.responseType
+      responseType: componentRequestData.responseType,
     }).then(function (response) {
       t.loading = false
 
