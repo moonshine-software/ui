@@ -1,7 +1,8 @@
+import axios from 'axios'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {dispatchEvents} from '../Support/DispatchEvents.js'
 
-export default function request(
+export default async function request(
   t,
   url,
   method = 'get',
@@ -9,9 +10,15 @@ export default function request(
   headers = {},
   componentRequestData = {},
 ) {
-  if (!url || !navigator.onLine) {
+  if (!url) {
     t.loading = false
-    MoonShine.ui.toast(!url ? 'Request URL not set' : 'No internet connection', 'error')
+    MoonShine.ui.toast('Request URL not set', 'error')
+    return
+  }
+
+  if (!navigator.onLine) {
+    t.loading = false
+    MoonShine.ui.toast('No internet connection', 'error')
     return
   }
 
@@ -23,14 +30,14 @@ export default function request(
     beforeRequest(componentRequestData.beforeRequest, t.$el, t)
   }
 
-  axios({
-    url: url,
-    method: method,
-    data: body,
-    headers: headers,
-    responseType: componentRequestData.responseType
-  })
-    .then(function (response) {
+  try {
+    const response = await axios({
+      url: url,
+      method: method,
+      data: body,
+      headers: headers,
+      responseType: componentRequestData.responseType
+    }).then(function (response) {
       t.loading = false
 
       const data = response.data ?? {}
@@ -66,6 +73,16 @@ export default function request(
         })
       }
 
+      if (!componentRequestData.selector && typeof data.html === 'object' && data.html !== null) {
+        Object.entries(data.html).forEach(function ([selector, html]) {
+          let elements = document.querySelectorAll(selector)
+
+          elements.forEach(element => {
+            element.innerHTML = html
+          })
+        })
+      }
+
       if (data.fields_values !== undefined) {
         for (let [selector, value] of Object.entries(data.fields_values)) {
           let el = document.querySelector(selector)
@@ -77,7 +94,7 @@ export default function request(
       }
 
       if (data.redirect) {
-        window.location = data.redirect
+        window.location.assign(data.redirect)
       }
 
       if (contentDisposition?.startsWith('attachment')) {
@@ -103,35 +120,35 @@ export default function request(
         afterResponse(afterResponseCallback, data, type, t)
       }
     })
-    .catch(errorResponse => {
-      t.loading = false
+  } catch (errorResponse) {
+    t.loading = false
 
-      if (componentRequestData.hasResponseHandler()) {
-        responseHandler(
-          componentRequestData.responseHandler,
-          errorResponse,
-          t.$el,
-          componentRequestData.events,
-          t,
-        )
-        return
-      }
+    if (componentRequestData.hasResponseHandler()) {
+      responseHandler(
+        componentRequestData.responseHandler,
+        errorResponse,
+        t.$el,
+        componentRequestData.events,
+        t,
+      )
+      return
+    }
 
-      if (!errorResponse?.response?.data) {
-        console.error(errorResponse.message)
+    if (!errorResponse?.response?.data) {
+      console.error(errorResponse.message)
 
-        MoonShine.ui.toast('Unknown Error', 'error')
-        return
-      }
+      MoonShine.ui.toast('Unknown Error', 'error')
+      return
+    }
 
-      const data = errorResponse.response.data
+    const data = errorResponse.response.data
 
-      if (componentRequestData.hasErrorCallback()) {
-        componentRequestData.errorCallback(data, t)
-      }
+    if (componentRequestData.hasErrorCallback()) {
+      componentRequestData.errorCallback(data, t)
+    }
 
-      MoonShine.ui.toast(data.message ?? data, 'error')
-    })
+    MoonShine.ui.toast(data.message ?? data, 'error')
+  }
 }
 
 export function urlWithQuery(url, append, callback = null) {

@@ -26,9 +26,8 @@
                 x-bind:max="max"
                 x-on:input="mintrigger"
                 x-model="minValue"
-                :attributes="$fromAttributes->except(['type'])->merge([
-                    'class' => 'form-range-input',
-                ])"
+                :disabled="$attributes->get('readonly')"
+                :attributes="$fromAttributes->except(['type'])"
             />
 
             <x-moonshine::form.input
@@ -38,9 +37,8 @@
                 x-bind:max="max"
                 x-on:input="maxtrigger"
                 x-model="maxValue"
-                :attributes="$toAttributes->except(['type'])->merge([
-                    'class' => 'form-range-input',
-                ])"
+                :disabled="$attributes->get('readonly')"
+                :attributes="$toAttributes->except(['type'])"
             />
 
             <div class="form-range-slider">

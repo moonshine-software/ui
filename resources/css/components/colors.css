@@ -1,3 +1,38 @@
+/* text colors */
+.text-success {
+  @apply text-success-text;
+}
+.text-error {
+  /*@apply text-error;*/
+}
+.text-warning {
+  @apply text-warning-text;
+}
+.text-info {
+  @apply text-info-text;
+}
+.text-purple {
+  @apply text-purple-500;
+}
+.text-pink {
+  @apply text-pink-500;
+}
+.text-blue {
+  @apply text-blue-500;
+}
+.text-green {
+  @apply text-green-500;
+}
+.text-yellow {
+  @apply text-yellow-500;
+}
+.text-red {
+  @apply text-red-500;
+}
+.text-gray {
+  @apply text-gray-500;
+}
+
 /* Background colors */
 .bgc-primary {
   @apply !bg-primary text-white;

@@ -49,7 +49,7 @@ trait WithModal
         $this->modal = static fn (mixed $item, ?DataWrapperContract $data, ActionButtonContract $ctx) => Modal::make(
             title: static fn () => value($title, $item, $ctx) ?? $ctx->getLabel(),
             content: static fn () => value($content, $item, $ctx) ?? '',
-            asyncUrl: $async ? $ctx->getUrl($item) : null,
+            asyncUrl: $async ? static fn (): string => $ctx->getUrl($item) : null,
         )
             ->name(value($name, $item, $ctx))
             ->when(

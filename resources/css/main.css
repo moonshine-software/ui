@@ -5,7 +5,7 @@
 
 /* Libs */
 @import 'tippy.js/dist/tippy';
-@import 'choices.js/public/assets/styles/choices';
+@import 'choices.js/public/assets/styles/choices.css';
 
 /* Tailwind Components */
 @import 'tailwindcss/components';

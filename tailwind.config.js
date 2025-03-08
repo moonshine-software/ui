@@ -1,15 +1,10 @@
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin';
 
 const vendorSafeList = [
   {
     // usage: column.blade.php
     pattern: /col-span-\d/,
     variants: isDevelopment() ? ['xl'] : ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
-  },
-  {
-    // usage: icons
-    pattern: /text-(pink|purple)/,
-    variants: isDevelopment() ? [] : ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
   },
   {
     // usage: flex align items
@@ -121,6 +116,7 @@ export default {
           text: 'rgba(var(--warning-text), <alpha-value>)',
         },
         error: {
+          DEFAULT: 'rgba(var(--error), <alpha-value>)',
           bg: 'rgba(var(--error-bg), <alpha-value>)',
           text: 'rgba(var(--error-text), <alpha-value>)',
         },
