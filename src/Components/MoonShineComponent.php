@@ -40,6 +40,8 @@ abstract class MoonShineComponent extends Component implements
         }
 
         $this->booted();
+
+        $this->class('moonshine-component');
     }
 
     protected function booted(): void
