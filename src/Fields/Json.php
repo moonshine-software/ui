@@ -156,7 +156,7 @@ class Json extends Field implements
 
     public function isGroup(): bool
     {
-        return !$this->isObjectMode() && $this->isGroup;
+        return ! $this->isObjectMode() && $this->isGroup;
     }
 
     public function creatable(
@@ -279,7 +279,7 @@ class Json extends Field implements
 
         return $fields
             ->prepareReindexNames(parent: $this, before: static function (self $parent, FieldContract $field): void {
-                if(!$parent->isObjectMode()) {
+                if (! $parent->isObjectMode()) {
                     $field->withoutWrapper();
                 } else {
                     $parent->customWrapperAttributes([
@@ -288,7 +288,7 @@ class Json extends Field implements
                 }
 
                 $field->setRequestKeyPrefix($parent->getRequestKeyPrefix());
-            }, except: fn(FieldContract $parent): bool => $parent instanceof self && $parent->isObjectMode());
+            }, except: fn (FieldContract $parent): bool => $parent instanceof self && $parent->isObjectMode());
     }
 
     protected function resolveRawValue(): mixed

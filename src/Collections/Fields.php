@@ -245,7 +245,7 @@ class Fields extends BaseCollection implements FieldsContract
 
             $ignore = $except instanceof Closure && $except($parent, $field) === true;
 
-            if($ignore) {
+            if ($ignore) {
                 $level--;
             }
 
@@ -257,7 +257,7 @@ class Fields extends BaseCollection implements FieldsContract
 
             $group = $field->getAttribute('multiple') || $field->isGroup();
 
-            if (!$ignore && $group) {
+            if (! $ignore && $group) {
                 $name .= '[]';
             }
 
