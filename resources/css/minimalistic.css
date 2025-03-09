@@ -160,6 +160,14 @@ body.theme-minimalistic {
         }
       }
     }
+
+    .search-wrapper {
+      @apply lg:pr-4 xl:pr-5;
+
+      .search-form-show {
+        @apply text-current;
+      }
+    }
   }
 
   /* Horizontal menu */
