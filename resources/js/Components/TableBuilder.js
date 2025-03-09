@@ -329,25 +329,25 @@ export default (
    *
    */
   updateStickyColumns() {
-    const trs = [];
+    const trs = []
     if (this.table) {
       if (this.table.tBodies.length > 0) {
-        trs.push(...Array.from(this.table.tBodies[0].rows));
+        trs.push(...Array.from(this.table.tBodies[0].rows))
       }
       if (this.table.tHead) {
-        trs.push(...Array.from(this.table.tHead.rows));
+        trs.push(...Array.from(this.table.tHead.rows))
       }
       if (this.table.tFoot) {
-        trs.push(...Array.from(this.table.tFoot.rows));
+        trs.push(...Array.from(this.table.tFoot.rows))
       }
     }
     const trsWithStickyCol = trs.filter(tr => tr.querySelector(`.${this.stickyColClass}`))
     if (trsWithStickyCol.length < 1) return
 
     const refRow = trsWithStickyCol[0]
-    const refRowCells = Array.from(refRow.children).filter(child =>
-      child.tagName === 'TD' || child.tagName === 'TH'
-    );
+    const refRowCells = Array.from(refRow.children).filter(
+      child => child.tagName === 'TD' || child.tagName === 'TH',
+    )
     const otherRows = trs.filter(tr => tr !== refRow)
 
     const stickyCells = refRowCells.filter(cell => cell.classList.contains(this.stickyColClass))
@@ -378,9 +378,9 @@ export default (
 
     // Apply the same values to TD cells
     otherRows.forEach(row => {
-      const cells = Array.from(row.children).filter(child =>
-        child.tagName === 'TD' || child.tagName === 'TH'
-      );
+      const cells = Array.from(row.children).filter(
+        child => child.tagName === 'TD' || child.tagName === 'TH',
+      )
       stickyCells.forEach(stCell => {
         const index = refRowCells.indexOf(stCell)
         const cell = cells[index]
