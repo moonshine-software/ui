@@ -119,21 +119,26 @@ export default (asyncUrl = '') => ({
               src: image,
               width: 10,
               height: 10,
-              objectFit: 'cover'
-            };
+              objectFit: 'cover',
+            }
           }
 
           return {
             src: image?.src ?? '',
             width: image?.width ?? 10,
             height: image?.height ?? 10,
-            objectFit: image?.objectFit ?? 'cover'
-          };
+            objectFit: image?.objectFit ?? 'cover',
+          }
         }
 
         return {
           item: ({classNames}, data, removeItemButton) => {
-            const { src: imgSrc, width, height, objectFit } = normalizeImageData(data.customProperties?.image);
+            const {
+              src: imgSrc,
+              width,
+              height,
+              objectFit,
+            } = normalizeImageData(data.customProperties?.image)
 
             return strToEl(`
               <div class="${classNames.item} ${
@@ -146,8 +151,14 @@ export default (asyncUrl = '') => ({
                 <div class="flex gap-x-2 items-center">
                   ${
                     imgSrc
-                      ? '<div class="zoom-in h-' + height + ' w-' + width + ' overflow-hidden rounded-md">' +
-                        '<img class="h-full w-full object-' + objectFit + '" src="' +
+                      ? '<div class="zoom-in h-' +
+                        height +
+                        ' w-' +
+                        width +
+                        ' overflow-hidden rounded-md">' +
+                        '<img class="h-full w-full object-' +
+                        objectFit +
+                        '" src="' +
                         escapeForTemplate(this.config.allowHTML, imgSrc) +
                         '" alt=""></div>'
                       : ''
@@ -167,7 +178,12 @@ export default (asyncUrl = '') => ({
             `)
           },
           choice: ({classNames}, data) => {
-            const { src: imgSrc, width, height, objectFit } = normalizeImageData(data.customProperties?.image);
+            const {
+              src: imgSrc,
+              width,
+              height,
+              objectFit,
+            } = normalizeImageData(data.customProperties?.image)
 
             return strToEl(`
               <div class="flex gap-x-2 items-center ${classNames.item} ${classNames.itemChoice} ${
@@ -184,8 +200,14 @@ export default (asyncUrl = '') => ({
                 <div class="flex gap-x-2 items-center">
                   ${
                     imgSrc
-                      ? '<div class="zoom-in h-' + height + ' w-' + width + ' overflow-hidden rounded-md">' +
-                        '<img class="h-full w-full object-' + objectFit + '" src="' +
+                      ? '<div class="zoom-in h-' +
+                        height +
+                        ' w-' +
+                        width +
+                        ' overflow-hidden rounded-md">' +
+                        '<img class="h-full w-full object-' +
+                        objectFit +
+                        '" src="' +
                         escapeForTemplate(this.config.allowHTML, imgSrc) +
                         '" alt=""></div>'
                       : ''
