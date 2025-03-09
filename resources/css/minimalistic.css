@@ -449,7 +449,7 @@ body.theme-minimalistic {
 
       .search-form-submit,
       .search-form-clear {
-        @apply px-1.5 right-0;
+        @apply right-0 px-1.5;
 
         & > svg {
           @apply h-4 w-4;
