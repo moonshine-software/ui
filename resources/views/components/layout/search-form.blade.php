@@ -18,7 +18,7 @@
                 @keyup.ctrl.k.window="$refs.searchInput.focus()"
                 @keyup.ctrl.period.window="$refs.searchInput.focus()"
                 type="search"
-                class="search-form-field form-input"
+                class="search-form-field"
                 placeholder="{{ $placeholder }}"
                 required
             />
