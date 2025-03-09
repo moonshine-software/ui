@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Collections;
 
+use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Conditionable;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
@@ -218,15 +219,16 @@ class Fields extends BaseCollection implements FieldsContract
     }
 
     /**
-     * @param  ?callable(FieldContract,FieldContract): FieldsContract  $before
-     * @param  ?callable(string,FieldContract,FieldContract): string  $performName
+     * @param  ?callable(FieldContract $parent, FieldContract $field): FieldsContract  $before
+     * @param  ?callable(string, FieldContract $parent, FieldContract $field): string  $performName
+     * @param  ?Closure(FieldContract $parent, FieldContract $field): bool  $except
      *
      * @throws Throwable
      */
-    public function prepareReindexNames(?FieldContract $parent = null, ?callable $before = null, ?callable $performName = null): static
+    public function prepareReindexNames(?FieldContract $parent = null, ?callable $before = null, ?callable $performName = null, ?Closure $except = null): static
     {
         /** @var static */
-        return $this->map(static function (FieldContract $field) use ($parent, $before, $performName): FieldContract {
+        return $this->map(static function (FieldContract $field) use ($parent, $before, $performName, $except): FieldContract {
             $modifyField = \is_null($before) ? $field : $before($parent, $field);
 
             if ($modifyField instanceof FieldContract) {
@@ -241,13 +243,21 @@ class Fields extends BaseCollection implements FieldsContract
                 $field->showValue();
             }
 
+            $ignore = $except instanceof Closure && $except($parent, $field) === true;
+
+            if($ignore) {
+                $level--;
+            }
+
             $name = $field->generateNameFrom(
                 $name->value(),
-                "\${index$level}",
+                $ignore ? "" : "\${index$level}",
                 $parent ? $field->getColumn() : null,
             );
 
-            if ($field->getAttribute('multiple') || $field->isGroup()) {
+            $group = $field->getAttribute('multiple') || $field->isGroup();
+
+            if (!$ignore && $group) {
                 $name .= '[]';
             }
 

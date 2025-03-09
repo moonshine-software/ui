@@ -154,6 +154,11 @@ class Json extends Field implements
         return $this->keyValue || $this->onlyValue;
     }
 
+    public function isGroup(): bool
+    {
+        return !$this->isObjectMode() && $this->isGroup;
+    }
+
     public function creatable(
         Closure|bool|null $condition = null,
         ?int $limit = null,
@@ -265,20 +270,25 @@ class Json extends Field implements
 
     protected function prepareFields(): FieldsContract
     {
+        $fields = $this->getFields()->prepareAttributes();
+
         if ($this->isObjectMode()) {
-            return $this->getFields()
-                ->wrapNames($this->getColumn())
-                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")))
-            ;
+            $fields = $fields
+                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")));
         }
 
-        return $this->getFields()
-            ->prepareAttributes()
+        return $fields
             ->prepareReindexNames(parent: $this, before: static function (self $parent, FieldContract $field): void {
-                $field
-                    ->withoutWrapper()
-                    ->setRequestKeyPrefix($parent->getRequestKeyPrefix());
-            });
+                if(!$parent->isObjectMode()) {
+                    $field->withoutWrapper();
+                } else {
+                    $parent->customWrapperAttributes([
+                        'class' => 'inner-json-object-mode',
+                    ]);
+                }
+
+                $field->setRequestKeyPrefix($parent->getRequestKeyPrefix());
+            }, except: fn(FieldContract $parent): bool => $parent instanceof self && $parent->isObjectMode());
     }
 
     protected function resolveRawValue(): mixed
@@ -390,8 +400,8 @@ class Json extends Field implements
 
         if ($this->isObjectMode()) {
             return FieldsGroup::make(
-                $fields,
-            )->fill($values->toArray())->mapFields(
+                Fields::make($fields)->fillCloned($values->toArray())
+            )->mapFields(
                 fn (FieldContract $field): FieldContract => $field
                     ->formName($this->getFormName())
                     ->setParent($this),
@@ -536,14 +546,16 @@ class Json extends Field implements
                     data_get($apply, $field->getColumn()),
                 );
             }
+
+            if ($this->isObjectMode()) {
+                $applyValues = $applyValues[$index] ?? [];
+            }
         }
 
         $preparedValues = $this->prepareOnApply($applyValues);
-        $values = $this->isKeyValue() ? $preparedValues : array_values($preparedValues);
-
-        if ($this->isObjectMode()) {
-            $values = $values[0] ?? [];
-        }
+        $values = $this->isObjectMode() || $this->isKeyValue()
+            ? $preparedValues
+            : array_values($preparedValues);
 
         return \is_null($response) ? data_set(
             $data,
