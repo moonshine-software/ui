@@ -117,6 +117,7 @@ export function crudFormQuery(formElements = null) {
     const name = element.getAttribute('name')
 
     if (
+      name &&
       element.getAttribute('type') !== 'file' &&
       element.tagName.toLowerCase() !== 'textarea' &&
       !name.startsWith('_') &&
