@@ -437,20 +437,27 @@ body.theme-minimalistic {
   }
 
   /* Search form */
-  .search-form {
-    @apply h-9;
+  .search {
+    .search-form {
+      @apply h-9;
 
-    &-field {
-      &.form-input {
-        @apply pr-8;
+      .search-form-field {
+        &.form-input {
+          @apply pr-14;
+        }
       }
-    }
 
-    &-submit {
-      @apply px-1.5;
+      .search-form-submit,
+      .search-form-clear {
+        @apply px-1.5 right-0;
 
-      > svg {
-        @apply h-5 w-5;
+        & > svg {
+          @apply h-4 w-4;
+        }
+      }
+
+      .search-form-clear {
+        @apply right-7;
       }
     }
   }
