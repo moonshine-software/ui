@@ -47,7 +47,6 @@
                         type="search"
                         value="{{ $searchValue }}"
                         placeholder="{{ $translates['search'] }}"
-                        required
                     />
                 </form>
             </div>
