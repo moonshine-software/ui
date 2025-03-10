@@ -39,7 +39,6 @@
             <x-moonshine::icon
                 icon="chevron-down"
                 size="6"
-                color="gray"
             />
         </span>
     </button>
