@@ -49,6 +49,27 @@
   &--info {
     @apply before:border-info-bg dark:before:border-info-bg;
   }
+  &--purple {
+    @apply before:border-purple-500 dark:before:border-purple-500;
+  }
+  &--pink {
+    @apply before:border-pink-500 dark:before:border-pink-500;
+  }
+  &--blue {
+    @apply before:border-blue-500 dark:before:border-blue-500;
+  }
+  &--green {
+    @apply before:border-green-500 dark:before:border-green-500;
+  }
+  &--yellow {
+    @apply before:border-yellow-500 dark:before:border-yellow-500;
+  }
+  &--red {
+    @apply before:border-red-500 dark:before:border-red-500;
+  }
+  &--gray {
+    @apply before:border-gray-500 dark:before:border-gray-500;
+  }
 }
 
 @keyframes ms-loader-rotate {
