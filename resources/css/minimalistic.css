@@ -756,4 +756,18 @@ body.theme-minimalistic {
       @apply pt-3;
     }
   }
+
+  .radial-progress {
+    border-radius: 100%;
+
+    &::before {
+      border-radius: 100%;
+    }
+  }
+
+  .spinner {
+    &::before {
+      border-radius: 100%;
+    }
+  }
 }
