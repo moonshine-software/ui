@@ -14,6 +14,7 @@
 @import 'components/menu';
 @import 'components/navigation';
 @import 'components/dropdowns';
+@import 'components/dropzone';
 @import 'components/buttons';
 @import 'components/social';
 @import 'components/forms';
