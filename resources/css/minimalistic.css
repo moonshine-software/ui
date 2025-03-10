@@ -619,7 +619,7 @@ body.theme-minimalistic {
   }
 
   /* Range slider */
-  .form-range-thumb {
+  .form-group-range .form-range-slider .form-range-thumb {
     @apply -mt-1 h-4 w-4;
   }
 
