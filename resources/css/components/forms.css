@@ -273,58 +273,58 @@ input[type='number'] {
   .form-group-range-wrapper {
     @apply relative w-full px-[var(--track-size)];
 
-    input[type="range"].form-range {
+    input[type='range'].form-range {
       width: calc(100% - var(--track-size));
-      @apply pointer-events-none absolute h-[var(--track-size)] bg-transparent first-of-type:left-0 last-of-type:right-0 z-4 appearance-none;
+      @apply pointer-events-none absolute z-4 h-[var(--track-size)] appearance-none bg-transparent first-of-type:left-0 last-of-type:right-0;
 
       &::-webkit-slider-runnable-track {
         @apply bg-transparent;
       }
 
       &::-webkit-slider-thumb {
-        @apply border-none rounded-full h-[var(--track-size)] w-[var(--track-size)] pointer-events-auto appearance-none;
+        @apply pointer-events-auto h-[var(--track-size)] w-[var(--track-size)] appearance-none rounded-full border-none;
       }
       &:first-of-type::-webkit-slider-thumb {
-        @apply bg-[var(--track-from-color)]
+        @apply bg-[var(--track-from-color)];
       }
       &:not(first-of-type)::-webkit-slider-thumb {
-        @apply bg-[var(--track-to-color)]
+        @apply bg-[var(--track-to-color)];
       }
       &:not([readonly], [disabled])::-webkit-slider-thumb {
         @apply cursor-pointer;
       }
 
-      input[type=range]::-moz-range-track {
+      input[type='range']::-moz-range-track {
         @apply bg-transparent;
       }
       &::-moz-range-thumb {
-        @apply border-none rounded-full h-[var(--track-size)] w-[var(--track-size)] pointer-events-auto appearance-none;
+        @apply pointer-events-auto h-[var(--track-size)] w-[var(--track-size)] appearance-none rounded-full border-none;
       }
       &:first-of-type::-moz-range-thumb {
-        @apply bg-[var(--track-from-color)]
+        @apply bg-[var(--track-from-color)];
       }
       &:not(first-of-type)::-moz-range-thumb {
-        @apply bg-[var(--track-to-color)]
+        @apply bg-[var(--track-to-color)];
       }
       &:not([readonly], [disabled])::-moz-range-thumb {
         @apply cursor-pointer;
       }
 
       &::-ms-thumb {
-        @apply pointer-events-auto border-none rounded-full h-[var(--track-size)] w-[var(--track-size)] appearance-none;
+        @apply pointer-events-auto h-[var(--track-size)] w-[var(--track-size)] appearance-none rounded-full border-none;
       }
       &:first-of-type::-ms-thumb {
-        @apply bg-[var(--track-from-color)]
+        @apply bg-[var(--track-from-color)];
       }
       &:not(first-of-type)::-ms-thumb {
-        @apply bg-[var(--track-to-color)]
+        @apply bg-[var(--track-to-color)];
       }
       &:not([readonly], [disabled])::-ms-thumb {
         @apply cursor-pointer;
       }
 
       &:disabled {
-        @apply __read-only bg-transparent cursor-not-allowed;
+        @apply __read-only cursor-not-allowed bg-transparent;
 
         & + .form-range-slider {
           @apply __read-only;
@@ -359,13 +359,13 @@ input[type='number'] {
       @apply relative z-0 h-[var(--track-size)];
 
       .form-range-tracker {
-        @apply absolute left-0 right-0 top-1/2 -translate-y-1/2 transform h-2 z-3 rounded-md -mx-[var(--track-size)];
+        @apply absolute left-0 right-0 top-1/2 z-3 -mx-[var(--track-size)] h-2 -translate-y-1/2 transform rounded-md;
         @apply bg-slate-100; /* light theme */
         @apply dark:bg-dark-800; /* dark theme */
       }
 
       .form-range-connect {
-        @apply absolute top-1/2 -translate-y-1/2 transform h-2 z-4 -mx-px;
+        @apply absolute top-1/2 z-4 -mx-px h-2 -translate-y-1/2 transform;
         background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
       }
     }
