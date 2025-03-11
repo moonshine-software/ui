@@ -264,96 +264,109 @@ input[type='number'] {
 .form-group-range {
   --gradient-start: rgb(var(--primary));
   --gradient-end: rgb(var(--primary));
+  --track-size: 1.25rem;
+  --track-from-color: rgb(var(--primary));
+  --track-to-color: rgb(var(--primary));
+
   @apply gap-4;
 
   .form-group-range-wrapper {
-    @apply relative w-full;
+    @apply relative w-full px-[var(--track-size)];
 
-    .form-range {
-      @apply pointer-events-none absolute top-1 z-4 h-0 w-full  cursor-pointer appearance-none opacity-0;
+    input[type="range"].form-range {
+      width: calc(100% - var(--track-size));
+      @apply pointer-events-none absolute h-[var(--track-size)] bg-transparent first-of-type:left-0 last-of-type:right-0 z-4 appearance-none;
 
-      &::-webkit-slider-thumb {
-        @apply pointer-events-auto h-5 w-5 appearance-none;
+      &::-webkit-slider-runnable-track {
+        @apply bg-transparent;
       }
 
+      &::-webkit-slider-thumb {
+        @apply border-none rounded-full h-[var(--track-size)] w-[var(--track-size)] pointer-events-auto appearance-none;
+      }
+      &:first-of-type::-webkit-slider-thumb {
+        @apply bg-[var(--track-from-color)]
+      }
+      &:not(first-of-type)::-webkit-slider-thumb {
+        @apply bg-[var(--track-to-color)]
+      }
+      &:not([readonly], [disabled])::-webkit-slider-thumb {
+        @apply cursor-pointer;
+      }
+
+      input[type=range]::-moz-range-track {
+        @apply bg-transparent;
+      }
       &::-moz-range-thumb {
-        @apply pointer-events-auto h-5 w-5 appearance-none;
+        @apply border-none rounded-full h-[var(--track-size)] w-[var(--track-size)] pointer-events-auto appearance-none;
+      }
+      &:first-of-type::-moz-range-thumb {
+        @apply bg-[var(--track-from-color)]
+      }
+      &:not(first-of-type)::-moz-range-thumb {
+        @apply bg-[var(--track-to-color)]
+      }
+      &:not([readonly], [disabled])::-moz-range-thumb {
+        @apply cursor-pointer;
       }
 
       &::-ms-thumb {
-        @apply pointer-events-auto h-5 w-5 appearance-none;
+        @apply pointer-events-auto border-none rounded-full h-[var(--track-size)] w-[var(--track-size)] appearance-none;
+      }
+      &:first-of-type::-ms-thumb {
+        @apply bg-[var(--track-from-color)]
+      }
+      &:not(first-of-type)::-ms-thumb {
+        @apply bg-[var(--track-to-color)]
+      }
+      &:not([readonly], [disabled])::-ms-thumb {
+        @apply cursor-pointer;
       }
 
       &:disabled {
-        @apply cursor-not-allowed;
-
-        & + .form-range-slider {
-          @apply __disabled;
-        }
-      }
-
-      &[readonly] {
-        @apply cursor-default;
+        @apply __read-only bg-transparent cursor-not-allowed;
 
         & + .form-range-slider {
           @apply __read-only;
         }
       }
 
-      &.form-invalid:first-child {
+      &[readonly] {
+        @apply __read-only cursor-default;
+
+        & + .form-range-slider {
+          @apply __read-only;
+        }
+      }
+
+      &.form-invalid:first-of-type {
+        --track-from-color: rgb(var(--error));
+
         & ~ .form-range-slider > .form-range-connect {
           --gradient-start: rgb(var(--error));
         }
-
-        & ~ .form-range-slider > .form-range-thumb-left {
-          @apply bg-error; /* light theme */
-          @apply dark:bg-error; /* dark theme */
-        }
       }
-      &:not(:first-of-type).form-invalid {
+      &.form-invalid:not(:first-of-type) {
+        --track-to-color: rgb(var(--error));
+
         & ~ .form-range-slider > .form-range-connect {
           --gradient-end: rgb(var(--error));
-        }
-
-        & ~ .form-range-slider > .form-range-thumb-right {
-          @apply bg-error; /* light theme */
-          @apply dark:bg-error; /* dark theme */
-        }
-      }
-
-      &:not(:first-of-type) {
-        @apply pointer-events-none;
-
-        @supports (-moz-appearance: none) {
-          @apply pointer-events-auto;
         }
       }
     }
 
     .form-range-slider {
-      @apply relative z-0 mx-4 my-1.5 h-2;
+      @apply relative z-0 h-[var(--track-size)];
 
       .form-range-tracker {
-        @apply absolute -left-4 -right-4 bottom-0 top-0 z-3 rounded-md;
+        @apply absolute left-0 right-0 top-1/2 -translate-y-1/2 transform h-2 z-3 rounded-md -mx-[var(--track-size)];
         @apply bg-slate-100; /* light theme */
         @apply dark:bg-dark-800; /* dark theme */
       }
 
       .form-range-connect {
-        @apply absolute bottom-0 top-0 z-4 rounded-md;
+        @apply absolute top-1/2 -translate-y-1/2 transform h-2 z-4 -mx-px;
         background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-      }
-
-      .form-range-thumb {
-        @apply absolute top-0 z-5 -mt-1.5 h-5 w-5 rounded-full bg-primary;
-
-        &.form-range-thumb-left {
-          @apply left-5 -ml-4;
-        }
-
-        &.form-range-thumb-right {
-          @apply right-5 -mr-4;
-        }
       }
     }
   }
