@@ -619,8 +619,8 @@ body.theme-minimalistic {
   }
 
   /* Range slider */
-  .form-group-range .form-range-slider .form-range-thumb {
-    @apply -mt-1 h-4 w-4;
+  .form-group-range {
+    --track-size: 1rem;
   }
 
   /* Choices */
