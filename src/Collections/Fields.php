@@ -257,7 +257,7 @@ class Fields extends BaseCollection implements FieldsContract
 
             $group = $field->getAttribute('multiple') || $field->isGroup();
 
-            if (! $ignore && $group) {
+            if ($group) {
                 $name .= '[]';
             }
 
