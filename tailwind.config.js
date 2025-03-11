@@ -18,6 +18,10 @@ const vendorSafeList = [
     // usage: icons
     pattern: /(w-|h-)[1-9]/,
   },
+  {
+    // usage: object-fit property
+    pattern: /object-(cover|contain|fill|none|scale-down)/,
+  },
 ]
 const clientSafeList = [
   'visible',
