@@ -274,7 +274,11 @@ class Json extends Field implements
 
         if ($this->isObjectMode()) {
             $fields = $fields
-                ->map(fn ($field) => $field->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}")));
+                ->map(
+                    fn ($field) => $field
+                        ->customAttributes($this->getReactiveAttributes("{$this->getColumn()}.{$field->getColumn()}"))
+                        ->customAttributes(['data-object-mode' => true])
+                );
         }
 
         return $fields
@@ -284,6 +288,7 @@ class Json extends Field implements
                 } else {
                     $parent->customWrapperAttributes([
                         'class' => 'inner-json-object-mode',
+                        'data-object-mode' => true,
                     ]);
                 }
 
