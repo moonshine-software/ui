@@ -8,7 +8,7 @@ export function getInputs(formId) {
     const fieldName = inputFieldName(value)
     const type = element.getAttribute('type')
 
-    if(type === 'radio' && !element.checked) {
+    if (type === 'radio' && !element.checked) {
       return
     }
 
@@ -128,11 +128,7 @@ export function showWhenVisibilityChange(showWhenFields, fieldName, inputs, form
     return
   }
 
-  showHideField(
-    showWhenFields.length === visibleFieldsCount,
-    inputElement,
-    showWhenSubmit
-  )
+  showHideField(showWhenFields.length === visibleFieldsCount, inputElement, showWhenSubmit)
 }
 
 function showHideField(isShow, inputElement, showWhenSubmit) {
@@ -168,22 +164,16 @@ function showHideTableInputs(isShow, table, fieldName, showWhenSubmit) {
   let cellIndexTd = null
 
   table.querySelectorAll('[data-show-when-field="' + fieldName + '"]').forEach(element => {
-    if(element.dataset.objectMode) {
-      showHideField(
-        isShow,
-        element
-      )
+    if (element.dataset.objectMode) {
+      showHideField(isShow, element)
 
       return
     }
 
     const td = element.closest('td')
 
-    if(td.dataset.objectMode) {
-      showHideField(
-        isShow,
-        element
-      )
+    if (td.dataset.objectMode) {
+      showHideField(isShow, element)
 
       return
     }
