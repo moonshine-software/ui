@@ -6,10 +6,15 @@ export function getInputs(formId) {
   form.querySelectorAll('[name]').forEach(element => {
     const value = element.getAttribute('name')
     const fieldName = inputFieldName(value)
+    const type = element.getAttribute('type')
+
+    if(type === 'radio' && !element.checked) {
+      return
+    }
 
     inputs[fieldName] = {
       value: inputGetValue(element),
-      type: element.getAttribute('type'),
+      type: type,
     }
   })
 
@@ -240,8 +245,10 @@ export function inputGetValue(element) {
         value.push(option.value)
       }
     }
-  } else if (type === 'checkbox' || type === 'radio') {
+  } else if (type === 'checkbox') {
     value = element.checked
+  } else if (type === 'radio') {
+    value = element.value
   } else {
     value = element.value
   }
