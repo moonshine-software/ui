@@ -8,6 +8,7 @@ use Closure;
 use MoonShine\Contracts\Core\DependencyInjection\AppliesRegisterContract;
 use MoonShine\Contracts\UI\ApplyContract;
 use MoonShine\Contracts\UI\FieldContract;
+use MoonShine\Contracts\UI\FormElementContract;
 
 trait Applies
 {
@@ -20,6 +21,36 @@ trait Applies
     protected ?Closure $onAfterApply = null;
 
     protected ?Closure $onAfterDestroy = null;
+
+    protected ?Closure $onRefreshAfterApply = null;
+
+    public function refreshAfterApply(?Closure $callback = null): static
+    {
+        $this->onRefreshAfterApply = $callback ?? static fn(FormElementContract $field): FormElementContract => $field;
+
+        return $this;
+    }
+
+    public function disableRefreshAfterApply(): static
+    {
+        $this->onRefreshAfterApply = null;
+
+        return $this;
+    }
+
+    public function isOnRefreshAfterApply(): bool
+    {
+        return $this->onRefreshAfterApply !== null;
+    }
+
+    public function resolveRefreshAfterApply(): static
+    {
+        if(!$this->isOnRefreshAfterApply()) {
+            return $this;
+        }
+
+        return \call_user_func($this->onRefreshAfterApply, $this);
+    }
 
     public function canApply(Closure $canApply): static
     {

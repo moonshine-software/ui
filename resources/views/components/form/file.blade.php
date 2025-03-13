@@ -7,10 +7,10 @@
     'dropzoneAttributes' => null,
     'imageable' => true,
 ])
-<div class="form-group form-group-dropzone">
+<div class="form-group form-group-dropzone" {{ $attributes->only('data-field-selector') }}>
     <x-moonshine::form.input
         type="file"
-        {{ $attributes->merge(['class' => 'form-file-upload'])->except(['id'])}}
+        {{ $attributes->merge(['class' => 'form-file-upload'])->except(['id', 'data-field-selector'])}}
     />
 
     @if($files !== [])

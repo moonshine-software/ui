@@ -313,6 +313,17 @@ class Fields extends BaseCollection implements FieldsContract
     }
 
     /**
+     * @throws Throwable
+     */
+    public function refreshFields(): static
+    {
+        /** @var static */
+        return $this->filter(
+            static fn (FieldContract $field): bool => $field->isOnRefreshAfterApply()
+        );
+    }
+
+    /**
      * @return array<string, string>
      * @throws Throwable
      */
