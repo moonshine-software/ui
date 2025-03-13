@@ -14,12 +14,12 @@
             'data-remove-item-button' => $attributes->get('multiple', false) || $nullable
         ])->when(!$native, fn($a) => $a->merge([
             'x-data' => 'select(\''. $asyncRoute .'\')',
-        ])) }}
+        ]))->when($nullable && !$native && $attributes->get('placeholder') === null, fn($a) => $a->merge(['placeholder' => '-'])) }}
 >
     @if($options ?? false)
         {{ $options }}
     @else
-        @if($nullable)
+        @if($nullable && $native)
             <option value="">{{ $attributes->get('placeholder', '-') }}</option>
         @endif
 

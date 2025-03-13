@@ -16,9 +16,8 @@
          data-min="{{ $attributes->get('min', $min) }}"
          data-max="{{ $attributes->get('max', $max) }}"
          data-step="{{ $attributes->get('step', 1) }}"
-         class="form-group-range-wrapper"
     >
-        <div>
+        <div class="form-group-range-wrapper">
             <x-moonshine::form.input
                 type="range"
                 step="{{ $attributes->get('step', 1) }}"
@@ -26,9 +25,8 @@
                 x-bind:max="max"
                 x-on:input="mintrigger"
                 x-model="minValue"
-                :attributes="$fromAttributes->except(['type'])->merge([
-                    'class' => 'form-range-input',
-                ])"
+                :disabled="$attributes->get('readonly')"
+                :attributes="$fromAttributes->except(['type'])"
             />
 
             <x-moonshine::form.input
@@ -38,16 +36,14 @@
                 x-bind:max="max"
                 x-on:input="maxtrigger"
                 x-model="maxValue"
-                :attributes="$toAttributes->except(['type'])->merge([
-                    'class' => 'form-range-input',
-                ])"
+                :disabled="$attributes->get('readonly')"
+                :attributes="$toAttributes->except(['type'])"
             />
+
 
             <div class="form-range-slider">
                 <div class="form-range-tracker"></div>
                 <div class="form-range-connect" x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"></div>
-                <div class="form-range-thumb form-range-thumb-left" x-bind:style="'left: '+minthumb+'%'"></div>
-                <div class="form-range-thumb form-range-thumb-right" x-bind:style="'right: '+maxthumb+'%'"></div>
             </div>
         </div>
 

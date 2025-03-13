@@ -72,6 +72,11 @@ class Flex extends AbstractWithComponents
         return $this->justifyAlign;
     }
 
+    public function wrap(): static
+    {
+        return $this->class('flex-wrap');
+    }
+
     protected function viewData(): array
     {
         return [

@@ -5,29 +5,41 @@
     'placeholder' => '',
 ])
 @if($enabled)
-    <div {{ $attributes->class(['search']) }}>
-        <form action="{{ $action }}"
-              x-ref="searchForm"
-              class="search-form"
-        >
-            <x-moonshine::form.input
-                x-data="{}"
-                x-ref="searchInput"
-                name="search"
-                @keyup.ctrl.k.window="$refs.searchInput.focus()"
-                @keyup.ctrl.period.window="$refs.searchInput.focus()"
-                type="search"
-                class="search-form-field form-input"
-                value="{{ $value }}"
-                placeholder="{{ $placeholder }}"
-            />
+    <div
+        x-data="{
+            isPopover: false,
+            observer: null,
+            init() {
+                this.observer = new ResizeObserver(entries => {
+                    for (let entry of entries) {
+                        const width = entry.contentRect.width;
+                        this.isPopover = width < 100;
+                    }
+                });
+                this.observer.observe(this.$el.parentElement);
+            },
+            destroy() {
+                this.observer.disconnect();
+            }
+        }"
+        x-init="init"
+        x-on:destroy.window="destroy"
+        class="search-wrapper"
+    >
+        <x-moonshine::popover x-show="isPopover" title="" placement="auto">
+            <x-slot:trigger>
+                <button class="flex justify-center w-full search-form-show">
+                    <x-moonshine::icon
+                        icon="magnifying-glass"
+                        size="6"
+                    />
+                </button>
+            </x-slot:trigger>
+            <x-moonshine::layout.search-form :action="$action" :value="$value" :placeholder="$placeholder"/>
+        </x-moonshine::popover>
 
-            <button class="search-form-submit" type="submit">
-                <x-moonshine::icon
-                    icon="magnifying-glass"
-                    size="6"
-                />
-            </button>
-        </form>
+        <div x-show="!isPopover">
+            <x-moonshine::layout.search-form :action="$action" :value="$value" :placeholder="$placeholder"/>
+        </div>
     </div>
 @endif

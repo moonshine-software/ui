@@ -130,6 +130,9 @@ trait WithModal
             )->when(
                 ! \is_null($formBuilder),
                 static fn (FormBuilderContract $form): FormBuilderContract => $formBuilder($form, $item)
+            )->when(
+                $ctx->getAttribute('data-async-response-type') !== null,
+                static fn (FormBuilder $form): FormBuilder => $form->download()
             ),
             name: $name,
             builder: $modalBuilder

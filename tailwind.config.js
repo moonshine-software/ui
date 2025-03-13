@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin';
 
 const vendorSafeList = [
   {
@@ -17,6 +17,10 @@ const vendorSafeList = [
   {
     // usage: icons
     pattern: /(w-|h-)[1-9]/,
+  },
+  {
+    // usage: object-fit property
+    pattern: /object-(cover|contain|fill|none|scale-down)/,
   },
 ]
 const clientSafeList = [
@@ -116,6 +120,7 @@ export default {
           text: 'rgba(var(--warning-text), <alpha-value>)',
         },
         error: {
+          DEFAULT: 'rgba(var(--error), <alpha-value>)',
           bg: 'rgba(var(--error-bg), <alpha-value>)',
           text: 'rgba(var(--error-text), <alpha-value>)',
         },

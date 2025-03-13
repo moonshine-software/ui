@@ -6,10 +6,15 @@ export function getInputs(formId) {
   form.querySelectorAll('[name]').forEach(element => {
     const value = element.getAttribute('name')
     const fieldName = inputFieldName(value)
+    const type = element.getAttribute('type')
+
+    if (type === 'radio' && !element.checked) {
+      return
+    }
 
     inputs[fieldName] = {
       value: inputGetValue(element),
-      type: element.getAttribute('type'),
+      type: type,
     }
   })
 
@@ -123,6 +128,10 @@ export function showWhenVisibilityChange(showWhenFields, fieldName, inputs, form
     return
   }
 
+  showHideField(showWhenFields.length === visibleFieldsCount, inputElement, showWhenSubmit)
+}
+
+function showHideField(isShow, inputElement, showWhenSubmit) {
   let fieldContainer = inputElement.closest('.moonshine-field')
   if (fieldContainer === null) {
     fieldContainer = inputElement.closest('.form-group')
@@ -131,7 +140,7 @@ export function showWhenVisibilityChange(showWhenFields, fieldName, inputs, form
     fieldContainer = inputElement
   }
 
-  if (showWhenFields.length === visibleFieldsCount) {
+  if (isShow) {
     fieldContainer.style.removeProperty('display')
 
     const nameAttr = inputElement.getAttribute('data-show-when-column')
@@ -155,15 +164,29 @@ function showHideTableInputs(isShow, table, fieldName, showWhenSubmit) {
   let cellIndexTd = null
 
   table.querySelectorAll('[data-show-when-field="' + fieldName + '"]').forEach(element => {
+    if (element.dataset.objectMode) {
+      showHideField(isShow, element)
+
+      return
+    }
+
+    const td = element.closest('td')
+
+    if (td.dataset.objectMode) {
+      showHideField(isShow, element)
+
+      return
+    }
+
     if (isShow) {
-      element.closest('td').style.removeProperty('display')
+      td.style.removeProperty('display')
 
       const nameAttr = element.getAttribute('data-show-when-column')
       if (nameAttr) {
         element.setAttribute('name', nameAttr)
       }
     } else {
-      element.closest('td').style.display = 'none'
+      td.style.display = 'none'
 
       if (!showWhenSubmit) {
         const nameAttr = element.getAttribute('name')
@@ -175,7 +198,7 @@ function showHideTableInputs(isShow, table, fieldName, showWhenSubmit) {
     }
 
     if (cellIndexTd === null) {
-      cellIndexTd = element.closest('td').cellIndex
+      cellIndexTd = td.cellIndex
     }
   })
 
@@ -212,8 +235,10 @@ export function inputGetValue(element) {
         value.push(option.value)
       }
     }
-  } else if (type === 'checkbox' || type === 'radio') {
+  } else if (type === 'checkbox') {
     value = element.checked
+  } else if (type === 'radio') {
+    value = element.value
   } else {
     value = element.value
   }

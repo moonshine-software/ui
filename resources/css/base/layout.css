@@ -3,6 +3,14 @@
   &-wrapper {
     @apply relative flex min-h-screen flex-col gap-y-5 py-3 transition-all md:p-5 lg:flex-row lg:p-6;
 
+    .layout-menu,
+    .layout-menu-horizontal,
+    .layout-menu-mobile {
+      & > * {
+        @apply text-gray-800 dark:text-slate-300;
+      }
+    }
+
     .layout-menu-horizontal ~ .layout-menu,
     .layout-menu ~ .layout-menu-horizontal {
       @apply mobile:!hidden;
@@ -93,8 +101,8 @@
     @apply fixed inset-y-0 left-5 z-[101] box-content flex shrink-0 flex-col justify-between lg:pt-6;
     height: calc(100vh - 4rem);
 
-    .search {
-      @apply hidden xl:block;
+    .search-wrapper .search-form-field {
+      @apply focus:ring-0;
     }
   }
 

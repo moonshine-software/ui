@@ -5,7 +5,7 @@
 
 /* Libs */
 @import 'tippy.js/dist/tippy';
-@import 'choices.js/public/assets/styles/choices';
+@import 'choices.js/public/assets/styles/choices.css';
 
 /* Tailwind Components */
 @import 'tailwindcss/components';
@@ -14,6 +14,7 @@
 @import 'components/menu';
 @import 'components/navigation';
 @import 'components/dropdowns';
+@import 'components/dropzone';
 @import 'components/buttons';
 @import 'components/social';
 @import 'components/forms';
@@ -25,7 +26,6 @@
 @import 'components/tabs';
 @import 'components/accordions';
 @import 'components/alerts';
-@import 'components/loader';
 @import 'components/colors';
 @import 'components/cards';
 @import 'components/progressbars';

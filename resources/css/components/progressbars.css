@@ -24,6 +24,27 @@
     &--info {
       @apply bg-info-bg text-info-text dark:bg-info-bg dark:text-info-text;
     }
+    &--purple {
+      @apply bg-purple-500 dark:bg-purple-500;
+    }
+    &--pink {
+      @apply bg-pink-500 dark:bg-pink-500;
+    }
+    &--blue {
+      @apply bg-blue-500 dark:bg-blue-500;
+    }
+    &--green {
+      @apply bg-green-500 dark:bg-green-500;
+    }
+    &--yellow {
+      @apply bg-yellow-500 dark:bg-yellow-500;
+    }
+    &--red {
+      @apply bg-red-500 dark:bg-red-500;
+    }
+    &--gray {
+      @apply bg-gray-500 dark:bg-gray-500;
+    }
   }
 }
 
@@ -98,6 +119,27 @@
   }
   &--info {
     @apply text-info-bg;
+  }
+  &--purple {
+    @apply text-purple-500;
+  }
+  &--pink {
+    @apply text-pink-500;
+  }
+  &--blue {
+    @apply text-blue-500;
+  }
+  &--green {
+    @apply text-green-500;
+  }
+  &--yellow {
+    @apply text-yellow-500;
+  }
+  &--red {
+    @apply text-red-500;
+  }
+  &--gray {
+    @apply text-gray-500;
   }
 
   @media (min-width: 1024px) {

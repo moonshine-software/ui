@@ -24,4 +24,9 @@ class HiddenIds extends Field
             'data-for-component' => $this->forComponent,
         ]);
     }
+
+    public function hasWrapper(): bool
+    {
+        return false;
+    }
 }
