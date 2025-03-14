@@ -18,6 +18,7 @@ use MoonShine\Contracts\UI\WithoutExtractionContract;
 use MoonShine\Core\Collections\BaseCollection;
 use MoonShine\UI\Contracts\FieldsWrapperContract;
 use MoonShine\UI\Contracts\FileableContract;
+use MoonShine\UI\Contracts\WrapperWithApplyContract;
 use MoonShine\UI\Fields\ID;
 use Throwable;
 
@@ -50,7 +51,7 @@ class Fields extends BaseCollection implements FieldsContract
     /**
      * @throws Throwable
      */
-    public function onlyFields(bool $withWrappers = false): static
+    public function onlyFields(bool $withWrappers = false, bool $withApplyWrappers = false): static
     {
         $data = [];
 
@@ -59,7 +60,7 @@ class Fields extends BaseCollection implements FieldsContract
         /** @var static */
         return static::make($data)->when(
             ! $withWrappers,
-            static fn (FieldsContract $fields): FieldsContract => $fields->withoutWrappers()
+            static fn (FieldsContract $fields): FieldsContract => $fields->withoutWrappers($withApplyWrappers)
         );
     }
 
@@ -84,13 +85,22 @@ class Fields extends BaseCollection implements FieldsContract
             );
     }
 
-    public function unwrapElements(string $class): static
+    /**
+     * @param  class-string  $class
+     * @param  class-string|null  $except
+     */
+    public function unwrapElements(string $class, ?string $except = null): static
     {
         $modified = self::make();
 
         $this->each(
-            static function ($element) use ($class, $modified): void {
-                if ($element instanceof $class) {
+            static function ($element) use ($class, $except, $modified): void {
+                $isUnwrapped = $except !== null
+                    ? $element instanceof $class && !$element instanceof $except
+                    : $element instanceof $class;
+
+
+                if ($isUnwrapped) {
                     $element->getFields()->each(
                         static fn ($inner): Collection => $modified->push($inner)
                     );
@@ -105,10 +115,10 @@ class Fields extends BaseCollection implements FieldsContract
         return $modified;
     }
 
-    public function withoutWrappers(): static
+    public function withoutWrappers(bool $applyWrappers = false): static
     {
         /** @var static */
-        return $this->unwrapElements(FieldsWrapperContract::class);
+        return $this->unwrapElements(FieldsWrapperContract::class, $applyWrappers ? WrapperWithApplyContract::class : null);
     }
 
     /**
@@ -145,7 +155,7 @@ class Fields extends BaseCollection implements FieldsContract
         ?FieldsContract $preparedFields = null
     ): static {
         /** @var static */
-        return ($preparedFields ?? $this->onlyFields())->map(
+        return ($preparedFields ?? $this->onlyFields(withApplyWrappers: true))->map(
             static fn (FieldContract $field): FieldContract => (clone $field)
                 ->fillData(\is_null($casted) ? $raw : $casted, $index)
         );
@@ -178,7 +188,7 @@ class Fields extends BaseCollection implements FieldsContract
      */
     public function fill(array $raw = [], ?DataWrapperContract $casted = null, int $index = 0): void
     {
-        $this->onlyFields()->map(
+        $this->onlyFields(withApplyWrappers: true)->map(
             static fn (FieldContract $field): FieldContract => $field
                 ->fillData(\is_null($casted) ? $raw : $casted, $index)
         );

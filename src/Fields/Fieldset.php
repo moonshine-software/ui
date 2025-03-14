@@ -13,6 +13,7 @@ use MoonShine\Contracts\UI\HasFieldsContract;
 use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Components\FieldsGroup;
 use MoonShine\UI\Contracts\FieldsWrapperContract;
+use MoonShine\UI\Contracts\WrapperWithApplyContract;
 use MoonShine\UI\Traits\WithFields;
 use Throwable;
 
@@ -20,7 +21,7 @@ use Throwable;
  * @implements  HasFieldsContract<Fields|FieldsContract>
  * @method static static make(string|Closure|null $label, iterable|Closure|FieldsContract $fields = [])
  */
-class Fieldset extends Field implements HasFieldsContract, FieldsWrapperContract
+class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContract, FieldsWrapperContract
 {
     use WithFields;
 
@@ -37,16 +38,23 @@ class Fieldset extends Field implements HasFieldsContract, FieldsWrapperContract
 
     protected function resolveFill(array $raw = [], ?DataWrapperContract $casted = null, int $index = 0): static
     {
+        $this
+            ->setData($casted)
+            ->setValue($casted ?? $raw)
+            ->setRawValue($raw)
+            ->setRowIndex($index);
+
         $this->getFields()->fill($raw, $casted, $index);
 
-        return parent::resolveFill($raw, $casted, $index);
+        return $this;
     }
 
     protected function prepareFields(): FieldsContract
     {
         return $this
             ->getFields()
-            ->fillClonedRecursively($this->getData()?->toArray() ?? [], $this->getData(), $this->getRowIndex());
+            ->fillClonedRecursively($this->getData()?->toArray() ?? [], $this->getData(), $this->getRowIndex())
+        ;
     }
 
     /**

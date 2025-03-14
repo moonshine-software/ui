@@ -17,7 +17,9 @@ use MoonShine\Core\TypeCasts\MixedDataWrapper;
 use MoonShine\Support\Components\MoonShineComponentAttributeBag;
 use MoonShine\Support\VO\FieldEmptyValue;
 use MoonShine\UI\Components\MoonShineComponent;
+use MoonShine\UI\Contracts\FieldsWrapperContract;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
+use MoonShine\UI\Contracts\WrapperWithApplyContract;
 use MoonShine\UI\Traits\Fields\Applies;
 use MoonShine\UI\Traits\Fields\ShowWhen;
 use MoonShine\UI\Traits\Fields\WithQuickFormElementAttributes;
@@ -267,7 +269,9 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     public function fill(mixed $value = null, ?DataWrapperContract $casted = null, int $index = 0): static
     {
-        return $this->resolveFill([
+        $wrapper = $this instanceof WrapperWithApplyContract || $this instanceof FieldsWrapperContract;
+
+        return $this->resolveFill($wrapper ? $value : [
             $this->getColumn() => $value,
         ], $casted, $index);
     }

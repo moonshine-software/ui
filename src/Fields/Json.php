@@ -298,6 +298,10 @@ class Json extends Field implements
 
     protected function resolveRawValue(): mixed
     {
+        if(is_array($this->rawValue)) {
+            return json_encode($this->rawValue, JSON_THROW_ON_ERROR);
+        }
+
         return (string) $this->rawValue;
     }
 
@@ -320,6 +324,10 @@ class Json extends Field implements
 
     protected function reformatFilledValue(mixed $data): mixed
     {
+        if(is_string($data)) {
+            $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        }
+
         if ($this->isKeyOrOnlyValue() && ! $this->isFilterMode()) {
             return collect($data)->map(fn ($data, $key): array => $this->extractKeyValue(
                 $this->isOnlyValue() ? [$data] : [$key => $data],
