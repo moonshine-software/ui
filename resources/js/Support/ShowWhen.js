@@ -136,9 +136,9 @@ function showHideField(isShow, inputElementField, showWhenSubmit) {
 
   // If the field is wrapper and there is inputs inside
   const wrapper = inputElementField.querySelector('[data-validation-wrapper]')
-  if(wrapper !== null) {
+  if (wrapper !== null) {
     let inputs = wrapper.querySelectorAll('[name]')
-    if(inputs.length === 0) {
+    if (inputs.length === 0) {
       // If the fields were hidden, then their attribute name is data-show-when-column
       inputs = wrapper.querySelectorAll('[data-show-when-column]')
     }
