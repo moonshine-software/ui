@@ -394,7 +394,7 @@ class Json extends Field implements
 
         $fields = $this->getPreparedFields();
 
-        if ($this->isObjectMode() && !$this->isPreviewMode()) {
+        if ($this->isObjectMode() && ! $this->isPreviewMode()) {
             return FieldsGroup::make(
                 Fields::make($fields)->fillCloned($values->toArray())
             )->mapFields(
@@ -420,7 +420,7 @@ class Json extends Field implements
             );
         }
 
-        if($this->isPreviewMode() && $this->isObjectMode()) {
+        if ($this->isPreviewMode() && $this->isObjectMode()) {
             $values = [$values];
         }
 
