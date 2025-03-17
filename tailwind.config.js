@@ -25,7 +25,6 @@ const vendorSafeList = [
 ]
 const clientSafeList = [
   'visible',
-  'text-ellipsis',
   '!hidden',
   '!block',
   'overflow-auto',
