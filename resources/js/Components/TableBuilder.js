@@ -103,9 +103,9 @@ export default (
     if (!cell) return
 
     if (cell.scrollWidth <= cell.clientWidth) {
-      cell.classList.add("fit-content")
+      cell.classList.add('fit-content')
     } else {
-      cell.classList.add("min-content")
+      cell.classList.add('min-content')
     }
   },
   add(force = false) {

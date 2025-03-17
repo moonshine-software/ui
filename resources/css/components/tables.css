@@ -97,19 +97,19 @@ table {
 
   td,
   th {
-    @apply relative bg-inherit max-w-md whitespace-nowrap overflow-hidden;
+    @apply relative max-w-md overflow-hidden whitespace-nowrap bg-inherit;
 
     &.fit-content {
       @apply min-w-fit;
     }
 
     &.min-content {
-      @apply whitespace-normal min-w-96;
+      @apply min-w-96 whitespace-normal;
     }
   }
 
   .text-ellipsis {
-    @apply whitespace-nowrap overflow-hidden;
+    @apply overflow-hidden whitespace-nowrap;
   }
 
   .text-clamp {
