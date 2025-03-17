@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Fields;
 
 use Illuminate\Contracts\Support\Renderable;
-use MoonShine\UI\Components\Layout\Div;
+use Illuminate\Support\Str;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
@@ -49,13 +49,13 @@ class Text extends Field implements HasDefaultValueContract, CanBeString, HasUpd
 
     protected function resolvePreview(): Renderable|string
     {
-        return Div::make([
+        return Str::wrap(
             $this->isUnescape()
                 ? parent::resolvePreview()
-                : $this->escapeValue((string) parent::resolvePreview())
-        ])
-            ->class('text-ellipsis')
-            ->render();
+                : $this->escapeValue((string) parent::resolvePreview()),
+            '<div class="text-ellipsis">',
+            '</div>'
+        );
     }
 
     protected function viewData(): array
