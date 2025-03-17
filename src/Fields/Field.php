@@ -6,6 +6,7 @@ namespace MoonShine\UI\Fields;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Core\PageContract;
 use MoonShine\Contracts\Core\ResourceContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
@@ -13,6 +14,7 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Support\AlpineJs;
 use MoonShine\Support\DTOs\AsyncCallback;
 use MoonShine\Support\Enums\HttpMethod;
+use MoonShine\Support\Enums\TextWrap;
 use MoonShine\UI\Components\Badge;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Traits\Fields\Reactivity;
@@ -66,6 +68,8 @@ abstract class Field extends FormElement implements FieldContract
     protected bool $isInsideLabel = false;
 
     protected ?Closure $onChangeUrl = null;
+
+    protected ?TextWrap $textWrap = null;
 
     public function defaultMode(): static
     {
@@ -386,6 +390,30 @@ abstract class Field extends FormElement implements FieldContract
         return ! \is_null($this->renderCallback);
     }
 
+    public function textWrap(TextWrap $wrap): static
+    {
+        $this->textWrap = $wrap;
+
+        return $this;
+    }
+
+    public function getTextWrap(): ?TextWrap
+    {
+        return $this->textWrap;
+    }
+
+    public function hasTextWrap(): bool
+    {
+        return $this->textWrap !== null;
+    }
+
+    public function withoutTextWrap(): static
+    {
+        $this->textWrap = null;
+
+        return $this;
+    }
+
     public function preview(): Renderable|string
     {
         if ($this->isRawMode()) {
@@ -401,8 +429,17 @@ abstract class Field extends FormElement implements FieldContract
         }
 
         $preview = $this->resolvePreview();
+        $decorated = $this->previewDecoration($preview);
 
-        return $this->previewDecoration($preview);
+        if($this->hasTextWrap()) {
+            return Str::wrap(
+                (string) $decorated,
+                '<div class="text-'.$this->getTextWrap()->value.'">',
+                '</div>'
+            );
+        }
+
+        return $decorated;
     }
 
     protected function resolvePreview(): Renderable|string

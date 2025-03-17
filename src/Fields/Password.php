@@ -6,12 +6,15 @@ namespace MoonShine\UI\Fields;
 
 use Closure;
 use Illuminate\Contracts\Hashing\Hasher;
+use MoonShine\Support\Enums\TextWrap;
 
 class Password extends Text
 {
     protected string $type = 'password';
 
     protected bool $hasOld = false;
+
+    protected ?TextWrap $textWrap = null;
 
     protected function resolvePreview(): string
     {

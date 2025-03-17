@@ -6,6 +6,7 @@ namespace MoonShine\UI\Fields;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use MoonShine\Support\Enums\TextWrap;
 use MoonShine\UI\Components\Url as UrlComponent;
 
 class Url extends Text
@@ -15,6 +16,8 @@ class Url extends Text
     protected ?Closure $titleCallback = null;
 
     protected bool $blank = false;
+
+    protected ?TextWrap $textWrap = null;
 
     public function title(Closure $callback): static
     {
