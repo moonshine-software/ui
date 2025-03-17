@@ -77,6 +77,8 @@ export default (
           this.initStickyColumns()
         })
       }
+
+      this.$nextTick().then(() => this.initCellWidth())
     }
 
     if (this.container?.dataset?.lazy) {
@@ -84,6 +86,26 @@ export default (
       this.container.removeAttribute('data-lazy')
 
       this.$nextTick(() => dispatchEvents(event, 'success', this))
+    }
+  },
+  initCellWidth() {
+    if (!this.table || !this.table.classList.contains('table-list')) return
+
+    const cells = this.table.querySelectorAll('th, td')
+
+    cells.forEach(cell => {
+      if (cell.closest('table') === this.table) {
+        this.updateCellWidth(cell)
+      }
+    })
+  },
+  updateCellWidth(cell) {
+    if (!cell) return
+
+    if (cell.scrollWidth <= cell.clientWidth) {
+      cell.classList.add("fit-content")
+    } else {
+      cell.classList.add("min-content")
     }
   },
   add(force = false) {
