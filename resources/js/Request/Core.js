@@ -67,7 +67,7 @@ export default async function request(
           let elements = document.querySelectorAll(selector)
           elements.forEach(element => {
             let htmlMode = HtmlMode.INNER_HTML
-            if(data.html_mode !== null) {
+            if(data.html_mode !== undefined) {
               htmlMode = data.html_mode
             }
 
