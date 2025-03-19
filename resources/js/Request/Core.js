@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {dispatchEvents} from '../Support/DispatchEvents.js'
+import {HtmlMode} from "../Support/HtmlMode.js";
 
 export default async function request(
   t,
@@ -65,10 +66,22 @@ export default async function request(
         selectors.forEach(function (selector) {
           let elements = document.querySelectorAll(selector)
           elements.forEach(element => {
-            element.innerHTML =
-              data.html && typeof data.html === 'object'
+            let htmlMode = HtmlMode.INNER_HTML
+            if(data.html_mode !== null) {
+              htmlMode = data.html_mode
+            }
+
+            const resultHtml = data.html && typeof data.html === 'object'
                 ? (data.html[selector] ?? data.html)
                 : (data.html ?? data)
+
+            if(htmlMode === HtmlMode.INNER_HTML) {
+              element.innerHTML = resultHtml
+            } else if(htmlMode === HtmlMode.OUTER_HTML) {
+              element.outerHTML = resultHtml
+            } else {
+              element.insertAdjacentHTML(htmlMode, resultHtml)
+            }
           })
         })
       }
