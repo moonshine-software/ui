@@ -64,9 +64,6 @@ export default async function request(
         data.htmlData.forEach(function (htmlDataItem) {
           let selectors = htmlDataItem.selector.split(',')
           selectors.forEach(function (selector) {
-
-            console.log('selector', selector)
-
             let elements = document.querySelectorAll(selector)
             elements.forEach(element => {
               htmlReplace(
@@ -85,9 +82,6 @@ export default async function request(
       if (componentRequestData.selector) {
         let selectors = componentRequestData.selector.split(',')
         selectors.forEach(function (selector) {
-
-          console.log('selector2', selector)
-
           let elements = document.querySelectorAll(selector)
           elements.forEach(element => {
               htmlReplace(
@@ -275,9 +269,6 @@ function htmlReplace(html, mode, selector, element) {
   if(mode !== undefined) {
     htmlMode = mode
   }
-
-  console.log('html r', html)
-
   if(htmlMode === HtmlMode.INNER_HTML) {
     element.innerHTML = html
   } else if(htmlMode === HtmlMode.OUTER_HTML) {
