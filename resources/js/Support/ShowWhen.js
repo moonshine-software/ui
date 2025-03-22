@@ -134,17 +134,14 @@ export function showWhenVisibilityChange(showWhenFields, fieldName, inputs, form
 function showHideField(isShow, inputElementField, showWhenSubmit) {
   showHideInputElement(isShow, inputElementField, showWhenSubmit)
 
-  // If the field is wrapper and there is inputs inside
-  const wrapper = inputElementField.querySelector('[data-validation-wrapper]')
-  if (wrapper !== null) {
-    let inputs = wrapper.querySelectorAll('[name]')
-    if (inputs.length === 0) {
-      // If the fields were hidden, then their attribute name is data-show-when-column
-      inputs = wrapper.querySelectorAll('[data-show-when-column]')
-    }
-    for (let i = 0; i < inputs.length; i++) {
-      showHideInputElement(isShow, inputs[i], showWhenSubmit)
-    }
+  // If inside the field there are entry fields with the name attribute
+  let inputs = inputElementField.querySelectorAll('[name]')
+  if (inputs.length === 0) {
+    // If the fields were hidden, then their attribute name is data-show-when-column
+    inputs = inputElementField.querySelectorAll('[data-show-when-column]')
+  }
+  for (let i = 0; i < inputs.length; i++) {
+    showHideInputElement(isShow, inputs[i], showWhenSubmit)
   }
 }
 
