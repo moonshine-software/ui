@@ -194,6 +194,8 @@ final class TableBuilder extends IterableComponent implements
      */
     public function getRows(): TableRowsContract
     {
+        $this->resolvePaginator();
+
         if ($this->rows instanceof TableRowsContract) {
             return $this->rows;
         }
