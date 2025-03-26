@@ -514,3 +514,16 @@ input[type='number'] {
     }
   }
 }
+
+fieldset {
+  @apply relative min-w-0 w-full border border-gray-200 dark:border-dark-200 p-3 sm:p-4 rounded-lg;
+
+  legend {
+    @apply absolute top-0 left-3 sm:left-4 -ms-1 -translate-y-1/2 px-1 text-2xs;
+
+    &:before {
+      content: '';
+      @apply absolute inset-0 w-full h-full bg-[inherit] backdrop-blur-sm -z-1;
+    }
+  }
+}
