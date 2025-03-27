@@ -131,7 +131,21 @@ export function showWhenVisibilityChange(showWhenFields, fieldName, inputs, form
   showHideField(showWhenFields.length === visibleFieldsCount, inputElement, showWhenSubmit)
 }
 
-function showHideField(isShow, inputElement, showWhenSubmit) {
+function showHideField(isShow, inputElementField, showWhenSubmit) {
+  showHideInputElement(isShow, inputElementField, showWhenSubmit)
+
+  // If inside the field there are entry fields with the name attribute
+  let inputs = inputElementField.querySelectorAll('[name]')
+  if (inputs.length === 0) {
+    // If the fields were hidden, then their attribute name is data-show-when-column
+    inputs = inputElementField.querySelectorAll('[data-show-when-column]')
+  }
+  for (let i = 0; i < inputs.length; i++) {
+    showHideInputElement(isShow, inputs[i], showWhenSubmit)
+  }
+}
+
+function showHideInputElement(isShow, inputElement, showWhenSubmit) {
   let fieldContainer = inputElement.closest('.moonshine-field')
   if (fieldContainer === null) {
     fieldContainer = inputElement.closest('.form-group')

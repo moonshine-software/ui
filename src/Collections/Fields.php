@@ -101,7 +101,7 @@ class Fields extends BaseCollection implements FieldsContract
 
 
                 if ($isUnwrapped) {
-                    $element->getFields()->each(
+                    $element->getFields()->onlyFields()->each(
                         static fn ($inner): Collection => $modified->push($inner)
                     );
                 } else {

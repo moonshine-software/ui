@@ -81,7 +81,7 @@ table {
     }
     td,
     th {
-      @apply max-w-lg whitespace-nowrap px-5 py-3 first:rounded-l-lg last:rounded-r-lg dark:border-dark-300 lg:whitespace-normal;
+      @apply px-5 py-3 first:rounded-l-lg last:rounded-r-lg dark:border-dark-300;
     }
   }
 
@@ -91,13 +91,29 @@ table {
     }
     td:not([class$='-bulk-actions']),
     th {
-      @apply max-w-lg whitespace-nowrap px-5 py-3 first:rounded-l-lg last:rounded-r-lg dark:border-dark-300 lg:whitespace-normal;
+      @apply px-5 py-3 first:rounded-l-lg last:rounded-r-lg dark:border-dark-300;
     }
   }
 
   td,
   th {
-    @apply bg-inherit;
+    @apply relative max-w-md overflow-hidden whitespace-nowrap bg-inherit;
+
+    &.fit-content {
+      @apply min-w-fit;
+    }
+
+    &.min-content {
+      @apply min-w-96 whitespace-normal;
+    }
+  }
+
+  .text-ellipsis {
+    @apply overflow-hidden whitespace-nowrap;
+  }
+
+  .text-clamp {
+    @apply line-clamp-3 md:line-clamp-none;
   }
 
   &[data-click-action] {
