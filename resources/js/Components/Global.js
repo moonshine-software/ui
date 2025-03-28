@@ -5,11 +5,19 @@ import {prepareFormData} from '../Support/Forms.js'
 
 export default () => ({
   saveField(route, column, value = null) {
+    if (value === null && this.$el.type === 'checkbox') {
+      const checkboxes = document.querySelectorAll(`input[type="checkbox"][name="${this.$el.name}"]`)
+
+      value = checkboxes.length > 1 ? Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value) : this.$el.value
+    }
+
     if (value === null) {
       value = this.$el.value
     }
 
-    if (value === null && (this.$el.type === 'checkbox' || this.$el.type === 'radio')) {
+    if (value === null && (this.$el.type === 'radio' || this.$el.type === 'checkbox')) {
       value = this.$el.checked
     }
 
