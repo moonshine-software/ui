@@ -1,10 +1,11 @@
 export class UI {
-  toast(text, type = 'default') {
+  toast(text, type = 'default', duration = null) {
     dispatchEvent(
       new CustomEvent('toast', {
         detail: {
           type: type,
           text: text,
+          duration: duration
         },
       }),
     )

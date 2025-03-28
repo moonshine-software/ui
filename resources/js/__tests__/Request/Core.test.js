@@ -72,7 +72,7 @@ describe('request function', () => {
     await request(t, '/test-url', 'get', {}, {}, componentRequestData)
 
     expect(t.loading).toBe(false) // Loading should be false after response
-    expect(MoonShine.ui.toast).toHaveBeenCalledWith('Success', 'success') // Show success toast
+    expect(MoonShine.ui.toast).toHaveBeenCalledWith('Success', 'success', null) // Show success toast
   })
 
   it('should handle fields_values in response', async () => {
@@ -226,11 +226,11 @@ describe('request function', () => {
 
   it('should handle messages in response', async () => {
     const componentRequestData = new ComponentRequestData()
-    mockAxios.onGet('/test-url').reply(200, {message: 'Test Message', messageType: 'info'})
+    mockAxios.onGet('/test-url').reply(200, {message: 'Test Message', messageType: 'info', messageDuration: 2000})
 
     await request(t, '/test-url', 'get', {}, {}, componentRequestData)
 
-    expect(MoonShine.ui.toast).toHaveBeenCalledWith('Test Message', 'info')
+    expect(MoonShine.ui.toast).toHaveBeenCalledWith('Test Message', 'info', 2000)
   })
 
   it('should call afterResponse if specified', async () => {

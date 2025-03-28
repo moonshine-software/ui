@@ -12,5 +12,5 @@
 @endif
 
 @if($withToast && $toast)
-    <x-moonshine::toast :type="$toast['type']" :content="$toast['message']" />
+    <x-moonshine::toast :type="$toast['type']" :content="$toast['message']" :duration="$toast['duration'] ?? null" />
 @endif
