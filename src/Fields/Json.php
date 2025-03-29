@@ -300,7 +300,7 @@ class Json extends Field implements
 
     protected function resolveRawValue(): mixed
     {
-        if(is_array($this->rawValue)) {
+        if (\is_array($this->rawValue)) {
             return json_encode($this->rawValue, JSON_THROW_ON_ERROR);
         }
 
@@ -317,7 +317,7 @@ class Json extends Field implements
 
     protected function reformatFilledValue(mixed $data): mixed
     {
-        if(is_string($data)) {
+        if (\is_string($data)) {
             $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
         }
 
@@ -522,7 +522,7 @@ class Json extends Field implements
 
     private function filterEmpty(mixed $value): bool
     {
-        if(!$this->isFilterEmpty()) {
+        if (! $this->isFilterEmpty()) {
             return true;
         }
 

@@ -69,14 +69,14 @@ class Number extends Field implements HasDefaultValueContract, CanBeNumeric, Has
                 return $item;
             }
 
-            $value = is_string($value) ? str_replace(",", ".", $value) : $value;
+            $value = \is_string($value) ? str_replace(",", ".", $value) : $value;
             $value = str_contains((string) $value, ".") ? (float) $value : (int) $value;
 
-            if(!\is_null($this->max) && $value > $this->max) {
+            if (! \is_null($this->max) && $value > $this->max) {
                 $value = $this->max;
             }
 
-            if(!\is_null($this->min) && $value < $this->min) {
+            if (! \is_null($this->min) && $value < $this->min) {
                 $value = $this->min;
             }
 

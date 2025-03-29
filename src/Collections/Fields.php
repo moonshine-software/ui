@@ -96,7 +96,7 @@ class Fields extends BaseCollection implements FieldsContract
         $this->each(
             static function ($element) use ($class, $except, $modified): void {
                 $isUnwrapped = $except !== null
-                    ? $element instanceof $class && !$element instanceof $except
+                    ? $element instanceof $class && ! $element instanceof $except
                     : $element instanceof $class;
 
 

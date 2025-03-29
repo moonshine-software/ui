@@ -120,7 +120,7 @@ class Checkbox extends Field implements
         return function ($item) {
             $value = $this->getOnValue() == $this->getRequestValue() ? $this->getOnValue() : $this->getOffValue();
 
-            if(is_numeric($value)) {
+            if (is_numeric($value)) {
                 $value = (int) $value;
             }
 
