@@ -516,14 +516,14 @@ input[type='number'] {
 }
 
 fieldset {
-  @apply relative min-w-0 w-full border border-gray-200 dark:border-dark-200 p-3 sm:p-4 rounded-lg;
+  @apply relative w-full min-w-0 rounded-lg border border-gray-200 p-3 dark:border-dark-200 sm:p-4;
 
   legend {
-    @apply absolute top-0 left-3 sm:left-4 -ms-1 -translate-y-1/2 px-1 text-2xs;
+    @apply absolute left-3 top-0 -ms-1 -translate-y-1/2 px-1 text-2xs sm:left-4;
 
     &:before {
       content: '';
-      @apply absolute inset-0 w-full h-full bg-[inherit] backdrop-blur-sm -z-1;
+      @apply absolute inset-0 -z-1 h-full w-full bg-[inherit] backdrop-blur-sm;
     }
   }
 }
