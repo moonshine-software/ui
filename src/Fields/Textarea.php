@@ -6,6 +6,7 @@ namespace MoonShine\UI\Fields;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
+use MoonShine\Support\Enums\TextWrap;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Traits\Fields\HasPlaceholder;
@@ -20,14 +21,12 @@ class Textarea extends Field implements HasDefaultValueContract, CanBeString
 
     protected string $view = 'moonshine::fields.textarea';
 
+    protected ?TextWrap $textWrap = TextWrap::CLAMP;
+
     protected function resolvePreview(): Renderable|string
     {
-        return Str::wrap(
-            $this->isUnescape()
-                ? parent::resolvePreview()
-                : $this->escapeValue((string) parent::resolvePreview()),
-            '<div class="text-clamp">',
-            '</div>'
-        );
+        return $this->isUnescape()
+            ? parent::resolvePreview()
+            : $this->escapeValue((string) parent::resolvePreview());
     }
 }
