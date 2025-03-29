@@ -129,7 +129,7 @@ export default async function request(
       const type = data.messageType ? data.messageType : 'success'
 
       if (data.message) {
-        MoonShine.ui.toast(data.message, type)
+        MoonShine.ui.toast(data.message, type, data.messageDuration ?? null)
       }
 
       const events = data.events ?? componentRequestData.events

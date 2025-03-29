@@ -4,11 +4,22 @@ import {UI} from './Support/UI.js'
 import {ComponentRequestData} from './DTOs/ComponentRequestData.js'
 import {dispatchEvents} from './Support/DispatchEvents.js'
 
+const _config = {
+  toastDuration: undefined,
+}
+
 export class MoonShine {
   constructor() {
     this.callbacks = {}
     this.iterable = new Iterable()
     this.ui = new UI()
+  }
+
+  config() {
+    return {
+      getToastDuration: () => _config.toastDuration,
+      setToastDuration: (value) => { _config.toastDuration = value },
+    }
   }
 
   onCallback(name, callback) {
