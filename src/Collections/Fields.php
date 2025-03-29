@@ -91,7 +91,7 @@ class Fields extends BaseCollection implements FieldsContract
         $this->each(
             static function ($element) use ($class, $modified): void {
                 if ($element instanceof $class) {
-                    $element->getFields()->each(
+                    $element->getFields()->onlyFields()->each(
                         static fn ($inner): Collection => $modified->push($inner)
                     );
                 } else {

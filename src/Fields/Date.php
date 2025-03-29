@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Fields;
 
-use Illuminate\Support\Carbon;
+use DateTimeInterface;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
@@ -34,7 +34,7 @@ class Date extends Field implements HasDefaultValueContract, CanBeString, HasUpd
             return $this->isNullable() ? null : '';
         }
 
-        if ($value instanceof Carbon) {
+        if ($value instanceof DateTimeInterface) {
             return $value->format($this->getInputFormat());
         }
 
@@ -45,7 +45,7 @@ class Date extends Field implements HasDefaultValueContract, CanBeString, HasUpd
     {
         $value = $this->toFormattedValue();
 
-        if ($value instanceof Carbon) {
+        if ($value instanceof DateTimeInterface) {
             return $value->format($this->getFormat());
         }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Fields;
 
 use Illuminate\Contracts\Support\Renderable;
+use MoonShine\Support\Enums\TextWrap;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeString;
 use MoonShine\UI\Contracts\HasDefaultValueContract;
 use MoonShine\UI\Contracts\HasUpdateOnPreviewContract;
@@ -25,6 +26,8 @@ class Text extends Field implements HasDefaultValueContract, CanBeString, HasUpd
     use WithEscapedValue;
 
     protected string $view = 'moonshine::fields.input';
+
+    protected ?TextWrap $textWrap = TextWrap::ELLIPSIS;
 
     protected string $type = 'text';
 

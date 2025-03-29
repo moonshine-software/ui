@@ -303,16 +303,7 @@ class Json extends Field implements
 
     protected function resolvePreview(): Renderable|string
     {
-        $component = $this->getComponent();
-
-        // FieldsGroup component
-        if ($this->isObjectMode()) {
-            return $component
-                ->previewMode()
-                ->render();
-        }
-
-        return $component
+        return $this->getComponent()
             ->simple()
             ->preview()
             ->render();
@@ -403,7 +394,7 @@ class Json extends Field implements
 
         $fields = $this->getPreparedFields();
 
-        if ($this->isObjectMode()) {
+        if ($this->isObjectMode() && ! $this->isPreviewMode()) {
             return FieldsGroup::make(
                 Fields::make($fields)->fillCloned($values->toArray())
             )->mapFields(
@@ -429,6 +420,10 @@ class Json extends Field implements
             );
         }
 
+        if ($this->isPreviewMode() && $this->isObjectMode()) {
+            $values = [$values];
+        }
+
         $component = TableBuilder::make($fields, $values)
             ->name('repeater_' . $this->getColumn())
             ->inside('field')
@@ -449,7 +444,7 @@ class Json extends Field implements
                 static fn (TableBuilderContract $table): TableBuilderContract => $table->reorderable(),
             )
             ->when(
-                $this->isVertical(),
+                ($this->isObjectMode() && $this->isPreviewMode()) || $this->isVertical(),
                 fn (TableBuilderContract $table): TableBuilderContract => $table->vertical(
                     title: $reorderable ? fn (FieldContract $field, ComponentContract $default): Column => Column::make([
                         $field->getColumn() === '__handle' ? $field : Div::make([
