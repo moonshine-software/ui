@@ -26,7 +26,7 @@ trait Applies
 
     public function refreshAfterApply(?Closure $callback = null): static
     {
-        $this->onRefreshAfterApply = $callback ?? static fn(FormElementContract $field): FormElementContract => $field;
+        $this->onRefreshAfterApply = $callback ?? static fn (FormElementContract $field): FormElementContract => $field;
 
         return $this;
     }
@@ -45,7 +45,7 @@ trait Applies
 
     public function resolveRefreshAfterApply(): static
     {
-        if(!$this->isOnRefreshAfterApply()) {
+        if (! $this->isOnRefreshAfterApply()) {
             return $this;
         }
 

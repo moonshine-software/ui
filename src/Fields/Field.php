@@ -493,7 +493,7 @@ abstract class Field extends FormElement implements FieldContract
 
     protected function resolveSelector(): void
     {
-        if($this->hasWrapper()) {
+        if ($this->hasWrapper()) {
             $this->customWrapperAttributes([
                 'data-field-selector' => $this->getNameDot(),
             ]);
