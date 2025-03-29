@@ -431,10 +431,10 @@ abstract class Field extends FormElement implements FieldContract
         $preview = $this->resolvePreview();
         $decorated = $this->previewDecoration($preview);
 
-        if($this->hasTextWrap()) {
+        if ($this->hasTextWrap()) {
             return Str::wrap(
                 (string) $decorated,
-                '<div class="text-'.$this->getTextWrap()->value.'">',
+                '<div class="text-' . $this->getTextWrap()->value . '">',
                 '</div>'
             );
         }
