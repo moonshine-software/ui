@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Fields;
 
+use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use MoonShine\Support\AlpineJs;
 use MoonShine\UI\Components\Boolean;
@@ -112,6 +113,21 @@ class Checkbox extends Field implements
         }
 
         return $additionally;
+    }
+
+    protected function resolveOnApply(): ?Closure
+    {
+        return function ($item) {
+            $value = $this->getOnValue() == $this->getRequestValue() ? $this->getOnValue() : $this->getOffValue();
+
+            if(is_numeric($value)) {
+                $value = (int) $value;
+            }
+
+            data_set($item, $this->getColumn(), $value);
+
+            return $item;
+        };
     }
 
     protected function viewData(): array

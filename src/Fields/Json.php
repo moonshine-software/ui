@@ -78,6 +78,8 @@ class Json extends Field implements
 
     protected null|TableBuilderContract|FieldsGroup $resolvedComponent = null;
 
+    protected bool $isFilterEmpty = true;
+
     /**
      * @throws Throwable
      */
@@ -506,8 +508,24 @@ class Json extends Field implements
         )->filter(fn ($value): bool => $this->filterEmpty($value))->toArray();
     }
 
+    public function isFilterEmpty(): bool
+    {
+        return $this->isFilterEmpty;
+    }
+
+    public function stopFilteringEmpty(): static
+    {
+        $this->isFilterEmpty = false;
+
+        return $this;
+    }
+
     private function filterEmpty(mixed $value): bool
     {
+        if(!$this->isFilterEmpty()) {
+            return true;
+        }
+
         if (is_iterable($value) && filled($value)) {
             return collect($value)
                 ->filter(fn ($v): bool => $this->filterEmpty($v))

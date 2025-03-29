@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Fields;
 
+use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use MoonShine\UI\Components\Rating;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeNumeric;
@@ -51,6 +52,38 @@ class Number extends Field implements HasDefaultValueContract, CanBeNumeric, Has
         }
 
         return parent::resolvePreview();
+    }
+
+    protected function resolveOnApply(): ?Closure
+    {
+        return function ($item) {
+            $value = $this->getRequestValue();
+
+            if ($value === false && ! $this->isNullable()) {
+                return $item;
+            }
+
+            if ($value === false && $this->isNullable()) {
+                data_set($item, $this->getColumn(), null);
+
+                return $item;
+            }
+
+            $value = is_string($value) ? str_replace(",", ".", $value) : $value;
+            $value = str_contains((string) $value, ".") ? (float) $value : (int) $value;
+
+            if(!\is_null($this->max) && $value > $this->max) {
+                $value = $this->max;
+            }
+
+            if(!\is_null($this->min) && $value < $this->min) {
+                $value = $this->min;
+            }
+
+            data_set($item, $this->getColumn(), $value);
+
+            return $item;
+        };
     }
 
     protected function viewData(): array
