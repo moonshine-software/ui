@@ -18,7 +18,9 @@ export class MoonShine {
   config() {
     return {
       getToastDuration: () => _config.toastDuration,
-      setToastDuration: (value) => { _config.toastDuration = value },
+      setToastDuration: value => {
+        _config.toastDuration = value
+      },
     }
   }
 

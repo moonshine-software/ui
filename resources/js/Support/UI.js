@@ -5,7 +5,7 @@ export class UI {
         detail: {
           type: type,
           text: text,
-          duration: duration
+          duration: duration,
         },
       }),
     )

@@ -226,7 +226,9 @@ describe('request function', () => {
 
   it('should handle messages in response', async () => {
     const componentRequestData = new ComponentRequestData()
-    mockAxios.onGet('/test-url').reply(200, {message: 'Test Message', messageType: 'info', messageDuration: 2000})
+    mockAxios
+      .onGet('/test-url')
+      .reply(200, {message: 'Test Message', messageType: 'info', messageDuration: 2000})
 
     await request(t, '/test-url', 'get', {}, {}, componentRequestData)
 

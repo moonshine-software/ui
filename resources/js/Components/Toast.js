@@ -11,11 +11,12 @@ export default () => ({
   },
 
   fire(id) {
-    const toast = this.toasts.find((toast) => toast.id === id)
+    const toast = this.toasts.find(toast => toast.id === id)
     this.visible.push(toast)
-    const timeShown = toast.duration ?? MoonShine.config().getToastDuration() ?? 2000 * this.visible.length
+    const timeShown =
+      toast.duration ?? MoonShine.config().getToastDuration() ?? 2000 * this.visible.length
 
-    if(timeShown > 0) {
+    if (timeShown > 0) {
       setTimeout(() => {
         this.remove(id)
       }, timeShown)
