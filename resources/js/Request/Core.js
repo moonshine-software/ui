@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {dispatchEvents} from '../Support/DispatchEvents.js'
-import {HtmlMode} from "../Support/HtmlMode.js";
+import {HtmlMode} from '../Support/HtmlMode.js'
 
 export default async function request(
   t,
@@ -60,19 +60,19 @@ export default async function request(
         return
       }
 
-      if(data.htmlData) {
+      if (data.htmlData) {
         data.htmlData.forEach(function (htmlDataItem) {
           let selectors = htmlDataItem.selector.split(',')
           selectors.forEach(function (selector) {
             let elements = document.querySelectorAll(selector)
             elements.forEach(element => {
               htmlReplace(
-                  htmlDataItem.html && typeof htmlDataItem.html === 'object'
-                      ? (htmlDataItem.html[selector] ?? htmlDataItem.html)
-                      : htmlDataItem.html,
-                  htmlDataItem.htmlMode,
-                  selector,
-                  element
+                htmlDataItem.html && typeof htmlDataItem.html === 'object'
+                  ? (htmlDataItem.html[selector] ?? htmlDataItem.html)
+                  : htmlDataItem.html,
+                htmlDataItem.htmlMode,
+                selector,
+                element,
               )
             })
           })
@@ -84,14 +84,14 @@ export default async function request(
         selectors.forEach(function (selector) {
           let elements = document.querySelectorAll(selector)
           elements.forEach(element => {
-              htmlReplace(
-                  data.html && typeof data.html === 'object'
-                      ? (data.html[selector] ?? data.html)
-                      : (data.html ?? data),
-                  data.htmlMode,
-                  selector,
-                  element
-              )
+            htmlReplace(
+              data.html && typeof data.html === 'object'
+                ? (data.html[selector] ?? data.html)
+                : (data.html ?? data),
+              data.htmlMode,
+              selector,
+              element,
+            )
           })
         })
       }
@@ -266,12 +266,12 @@ function downloadFile(fileName, data) {
 
 function htmlReplace(html, mode, selector, element) {
   let htmlMode = HtmlMode.INNER_HTML
-  if(mode !== undefined) {
+  if (mode !== undefined) {
     htmlMode = mode
   }
-  if(htmlMode === HtmlMode.INNER_HTML) {
+  if (htmlMode === HtmlMode.INNER_HTML) {
     element.innerHTML = html
-  } else if(htmlMode === HtmlMode.OUTER_HTML) {
+  } else if (htmlMode === HtmlMode.OUTER_HTML) {
     element.outerHTML = html
   } else {
     element.insertAdjacentHTML(htmlMode, html)

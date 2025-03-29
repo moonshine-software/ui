@@ -38,6 +38,13 @@ class File extends Field implements FileableContract, RemovableContract
         'accept',
     ];
 
+    protected function booted(): void
+    {
+        parent::booted();
+
+        $this->refreshAfterApply();
+    }
+
     public function accept(string $value): static
     {
         $this->accept = $value;

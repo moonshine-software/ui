@@ -491,8 +491,23 @@ abstract class Field extends FormElement implements FieldContract
         return $view;
     }
 
+    protected function resolveSelector(): void
+    {
+        if($this->hasWrapper()) {
+            $this->customWrapperAttributes([
+                'data-field-selector' => $this->getNameDot(),
+            ]);
+        } else {
+            $this->customAttributes([
+                'data-field-selector' => $this->getNameDot(),
+            ]);
+        }
+    }
+
     protected function resolveRender(): Renderable|Closure|string
     {
+        $this->resolveSelector();
+
         if (! $this->isDefaultMode() && $this->isRawMode()) {
             $this->previewMode();
         }
