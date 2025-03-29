@@ -13,33 +13,48 @@ use MoonShine\Contracts\UI\HasFieldsContract;
 use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Components\FieldsGroup;
 use MoonShine\UI\Contracts\FieldsWrapperContract;
+use MoonShine\UI\Contracts\WrapperWithApplyContract;
 use MoonShine\UI\Traits\WithFields;
 use Throwable;
 
 /**
  * @implements  HasFieldsContract<Fields|FieldsContract>
- * @deprecated will be removed in 4.0
- * @since 3.8
- * @see Fieldset
+ * @method static static make(string|Closure|null $label, iterable|Closure|FieldsContract $fields = [])
  */
-class StackFields extends Field implements HasFieldsContract, FieldsWrapperContract
+class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContract, FieldsWrapperContract
 {
     use WithFields;
 
-    protected string $view = 'moonshine::fields.stack';
+    protected string $view = 'moonshine::fields.fieldset';
 
-    /**
-     * @throws Throwable
-     */
-    protected function resolveFill(
-        array $raw = [],
-        ?DataWrapperContract $casted = null,
-        int $index = 0
-    ): static {
-        return $this
-            ->setRawValue($raw)
+    protected bool $withWrapper = false;
+
+    public function __construct(string|Closure|null $label, iterable|Closure|FieldsContract $fields = [])
+    {
+        parent::__construct($label);
+
+        $this->fields($fields);
+    }
+
+    protected function resolveFill(array $raw = [], ?DataWrapperContract $casted = null, int $index = 0): static
+    {
+        $this
             ->setData($casted)
+            ->setValue($casted ?? $raw)
+            ->setRawValue($raw)
             ->setRowIndex($index);
+
+        $this->getFields()->fill($raw, $casted, $index);
+
+        return $this;
+    }
+
+    protected function prepareFields(): FieldsContract
+    {
+        return $this
+            ->getFields()
+            ->fillClonedRecursively($this->getData()?->toArray() ?? [], $this->getData(), $this->getRowIndex())
+        ;
     }
 
     /**
@@ -47,21 +62,15 @@ class StackFields extends Field implements HasFieldsContract, FieldsWrapperContr
      */
     protected function resolvePreview(): Renderable|string
     {
-        return FieldsGroup::make(
-            $this->getFields()
-        )
-            ->mapFields(
-                fn (FieldContract $field, int $index): FieldContract => $field
-                ->fillData($this->getData())
-                ->previewMode()
-            )
+        return FieldsGroup::make($this->getPreparedFields())
+            ->previewMode()
             ->render();
     }
 
     protected function resolveOnApply(): ?Closure
     {
         return function ($item) {
-            $this->getFields()->onlyFields()->each(
+            $this->getPreparedFields()->onlyFields()->each(
                 static function (FieldContract $field) use ($item): void {
                     $field->apply(
                         static function (mixed $item) use ($field): mixed {
@@ -85,7 +94,7 @@ class StackFields extends Field implements HasFieldsContract, FieldsWrapperContr
      */
     protected function resolveBeforeApply(mixed $data): mixed
     {
-        $this->getFields()
+        $this->getPreparedFields()
             ->onlyFields()
             ->each(static fn (FieldContract $field): mixed => $field->beforeApply($data));
 
@@ -97,7 +106,7 @@ class StackFields extends Field implements HasFieldsContract, FieldsWrapperContr
      */
     protected function resolveAfterApply(mixed $data): mixed
     {
-        $this->getFields()
+        $this->getPreparedFields()
             ->onlyFields()
             ->each(static fn (FieldContract $field): mixed => $field->afterApply($data));
 
@@ -109,7 +118,7 @@ class StackFields extends Field implements HasFieldsContract, FieldsWrapperContr
      */
     protected function resolveAfterDestroy(mixed $data): mixed
     {
-        $this->getFields()
+        $this->getPreparedFields()
             ->onlyFields()
             ->each(
                 static fn (FieldContract $field): mixed => $field
@@ -126,23 +135,7 @@ class StackFields extends Field implements HasFieldsContract, FieldsWrapperContr
     protected function viewData(): array
     {
         return [
-            'fields' => $this->getFields(),
+            'fields' => $this->getPreparedFields(),
         ];
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function __clone()
-    {
-        if (! $this->fields instanceof Closure) {
-            $fields = [];
-
-            foreach ($this->getRawFields() as $index => $field) {
-                $fields[$index] = clone $field;
-            }
-
-            $this->fields($fields);
-        }
     }
 }

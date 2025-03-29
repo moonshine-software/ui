@@ -388,7 +388,7 @@ final class FormBuilder extends MoonShineComponent implements
         try {
             $fields = $this
                 ->getPreparedFields()
-                ->onlyFields()
+                ->onlyFields(withApplyWrappers: true)
                 ->exceptElements(
                     fn (ComponentContract $element): bool => $element instanceof FieldContract && \in_array($element->getColumn(), $this->getExcludedFields(), true)
                 );
