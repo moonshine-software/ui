@@ -404,7 +404,7 @@ abstract class Field extends FormElement implements FieldContract
 
     public function hasTextWrap(): bool
     {
-        return $this->textWrap !== null;
+        return $this->textWrap instanceof TextWrap;
     }
 
     public function withoutTextWrap(): static
