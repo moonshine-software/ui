@@ -403,7 +403,7 @@ input[type='number'] {
 
 /* Choices (Single/Multiple Select) */
 .choices {
-  @apply __default rounded-md;
+  @apply __default rounded-md w-full;
 
   &.is-focused {
     @apply __focus;
