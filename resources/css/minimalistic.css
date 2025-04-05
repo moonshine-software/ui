@@ -591,6 +591,16 @@ body.theme-minimalistic {
     @apply text-3xs;
   }
 
+  .form-color {
+    .form-color-thumb {
+      @apply w-6 h-6;
+    }
+
+    input {
+      @apply pl-8;
+    }
+  }
+
   .form-group {
     &:not(.form-group-expansion) {
       @apply gap-1;
