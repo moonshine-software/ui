@@ -384,6 +384,23 @@ input[type='number'] {
   }
 }
 
+/* Checkbox */
+.form-color {
+  @apply relative;
+
+  .form-color-thumb {
+    @apply absolute left-1 top-1/2 -translate-y-1/2 w-8 h-8 rounded-md overflow-hidden;
+
+    input[type="color"] {
+      @apply p-0 m-0 absolute -top-2 -left-2 w-16 h-16 cursor-pointer;
+    }
+  }
+
+  input {
+    @apply pl-10;
+  }
+}
+
 /* Form Group */
 .form-group {
   @apply flex w-full flex-col gap-2;
