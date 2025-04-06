@@ -593,7 +593,7 @@ body.theme-minimalistic {
 
   .form-color {
     .form-color-thumb {
-      @apply w-6 h-6;
+      @apply h-6 w-6;
     }
 
     input {

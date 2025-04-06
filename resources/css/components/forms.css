@@ -389,10 +389,10 @@ input[type='number'] {
   @apply relative;
 
   .form-color-thumb {
-    @apply absolute left-1 top-1/2 -translate-y-1/2 w-8 h-8 rounded-md overflow-hidden;
+    @apply absolute left-1 top-1/2 h-8 w-8 -translate-y-1/2 overflow-hidden rounded-md;
 
-    input[type="color"] {
-      @apply p-0 m-0 absolute -top-2 -left-2 w-16 h-16 cursor-pointer;
+    input[type='color'] {
+      @apply absolute -left-2 -top-2 m-0 h-16 w-16 cursor-pointer p-0;
     }
   }
 
