@@ -292,7 +292,7 @@ final class TableBuilder extends IterableComponent implements
                     TableCells::make([
                         TableTd::make(
                             static fn () => Components::make($components),
-                        )->class('space-elements')->when(
+                        )->class(['space-elements', 'table-grid'])->when(
                             true,
                             static fn (TableCellContract $td): TableCellContract => $tdAttributes($td)
                         ),

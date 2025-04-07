@@ -135,6 +135,10 @@ table {
       }
     }
   }
+
+  td.table-grid {
+    @apply min-w-96 overflow-auto;
+  }
 }
 
 .table-responsive {
