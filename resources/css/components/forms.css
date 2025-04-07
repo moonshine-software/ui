@@ -384,6 +384,23 @@ input[type='number'] {
   }
 }
 
+/* Checkbox */
+.form-color {
+  @apply relative;
+
+  .form-color-thumb {
+    @apply absolute left-1 top-1/2 h-8 w-8 -translate-y-1/2 overflow-hidden rounded-md;
+
+    input[type='color'] {
+      @apply absolute -left-2 -top-2 m-0 h-16 w-16 cursor-pointer p-0;
+    }
+  }
+
+  input {
+    @apply pl-10;
+  }
+}
+
 /* Form Group */
 .form-group {
   @apply flex w-full flex-col gap-2;
@@ -403,7 +420,7 @@ input[type='number'] {
 
 /* Choices (Single/Multiple Select) */
 .choices {
-  @apply __default rounded-md;
+  @apply __default w-full rounded-md;
 
   &.is-focused {
     @apply __focus;
