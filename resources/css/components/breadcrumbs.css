@@ -1,12 +1,12 @@
 .breadcrumbs {
-  @apply overflow-hidden flex-grow w-full md:w-auto;
+  @apply w-full flex-grow overflow-hidden md:w-auto;
 
   &-list {
-    @apply flex flex-wrap lg:flex-nowrap gap-x-1.5 gap-y-1;
+    @apply flex flex-wrap gap-x-1.5 gap-y-1 lg:flex-nowrap;
   }
 
   &-item {
-    @apply flex items-center gap-x-1.5 text-3xs md:text-2xs overflow-hidden min-w-5;
+    @apply flex min-w-5 items-center gap-x-1.5 overflow-hidden text-3xs md:text-2xs;
 
     &:not(:first-child) {
       &::before {
@@ -22,7 +22,7 @@
     }
 
     & > a {
-      @apply dark:text-slate-500 dark:hover:text-secondary truncate;
+      @apply truncate dark:text-slate-500 dark:hover:text-secondary;
 
       & > svg {
         @apply h-5 w-5;
@@ -30,7 +30,7 @@
     }
 
     & > span {
-      @apply dark:text-slate-500 truncate;
+      @apply truncate dark:text-slate-500;
     }
   }
 }
