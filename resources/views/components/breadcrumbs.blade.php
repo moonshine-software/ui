@@ -3,10 +3,10 @@
 ])
 @if($items)
     <!-- Breadcrumbs -->
-    <div {{ $attributes->class(['breadcrumbs', 'grow']) }}>
+    <div {{ $attributes->class(['breadcrumbs']) }}>
         <ul class="breadcrumbs-list">
             @foreach($items as $url => $data)
-                <li class="breadcrumbs-item">
+                <li @class(['breadcrumbs-item', 'flex-shrink-0' => !empty($data['icon'])])>
                     @if($loop->last && count($items) > 1)
                         <span>
                             {{ $data['title'] }}

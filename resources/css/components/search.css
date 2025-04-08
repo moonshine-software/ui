@@ -6,7 +6,7 @@
     @apply relative h-12 w-full xl:max-w-[16rem];
 
     .search-form-field {
-      @apply h-full w-full rounded-full bg-gray-200 pr-20 transition-all placeholder:text-3xs placeholder:font-normal placeholder:text-slate-600 focus:border-gray-300 focus:bg-white dark:bg-dark-600 dark:placeholder:text-slate-500 focus:dark:border-dark-200;
+      @apply h-full w-full rounded-full bg-gray-200 pr-20 transition-all placeholder:text-3xs placeholder:font-normal placeholder:text-slate-600 border-transparent focus:border-gray-300 focus:bg-white dark:bg-dark-600 dark:placeholder:text-slate-500 focus:dark:border-dark-200;
     }
 
     .search-form-submit,

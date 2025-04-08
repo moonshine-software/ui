@@ -115,7 +115,7 @@
   }
 
   &-navigation {
-    @apply relative flex flex-wrap items-center gap-4 border-b border-gray-200 pb-4 dark:border-dark-200;
+    @apply relative flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between gap-4 border-b border-gray-200 pb-4 dark:border-dark-200;
   }
 
   &-content {
