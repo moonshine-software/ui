@@ -19,7 +19,7 @@
     @if($options ?? false)
         {{ $options }}
     @else
-        @if($nullable)
+        @if($nullable && !$attributes->has('multiple'))
             <option value="">{{ $attributes->get('placeholder', '-') }}</option>
         @endif
 
