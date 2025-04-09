@@ -38,6 +38,7 @@ const clientSafeList = [
   'text-center',
   'flex-wrap',
   'w-full',
+  'grow',
   {
     pattern: /text-dark-\d/,
     variants: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
