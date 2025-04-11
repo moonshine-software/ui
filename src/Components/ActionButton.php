@@ -19,6 +19,7 @@ use MoonShine\UI\Traits\ActionButton\InDropdownOrLine;
 use MoonShine\UI\Traits\ActionButton\WithModal;
 use MoonShine\UI\Traits\ActionButton\WithOffCanvas;
 use MoonShine\UI\Traits\Components\WithComponents;
+use MoonShine\UI\Traits\Components\WithSlotContent;
 use MoonShine\UI\Traits\WithBadge;
 use MoonShine\UI\Traits\WithIcon;
 use MoonShine\UI\Traits\WithLabel;
@@ -40,6 +41,7 @@ class ActionButton extends MoonShineComponent implements
     use WithModal;
     use InDropdownOrLine;
     use WithComponents;
+    use WithSlotContent;
 
     protected string $view = 'moonshine::components.action-button';
 
@@ -201,6 +203,35 @@ class ActionButton extends MoonShineComponent implements
              )",
             'prevent',
         );
+    }
+
+    /**
+     * @param non-empty-array<string> $keys
+     */
+    public function hotKeys(array $keys, bool $withBadge = false): static
+    {
+        $hotKeys = implode(',', $keys);
+        $badge = $withBadge ? str($hotKeys)
+            ->explode(',')
+            ->map(function (string $key) {
+                $key = trim($key);
+                $map = [
+                    'meta' => '⌘',
+                    'shift' => '⇧',
+                    'control' => '^',
+                    'alt' => '⌥',
+                    'backspace' => '⌫',
+                    'enter' => '⏎',
+                ];
+
+                return ucfirst($map[$key] ?? $key);
+            })
+            ->implode('+') : null;
+
+        return $this->customAttributes([
+            'x-data' => 'actionButton',
+            'data-hot-keys' => $hotKeys,
+        ])->badge($badge);
     }
 
     public function download(): static
@@ -466,6 +497,7 @@ class ActionButton extends MoonShineComponent implements
             'url' => $this->getUrl(),
             'icon' => $this->getIcon(4),
             'badge' => $this->hasBadge() ? $this->getBadge() : false,
+            'slot' => $this->getSlot(),
         ];
     }
 }

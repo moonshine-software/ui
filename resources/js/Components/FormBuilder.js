@@ -316,8 +316,8 @@ export default (name = '', initData = {}, reactive = {}) => ({
 function submitState(form, loading = true, reset = false) {
   clearErrors(form)
 
-  const button = form.querySelector('.js-form-submit-button')
-  const loader = form.querySelector('.js-form-submit-button-loader')
+  const button = form.querySelector('[type="submit"]')
+  const loader = button.querySelector('.js-form-submit-button-loader')
 
   if (!button) {
     return

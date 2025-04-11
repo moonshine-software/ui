@@ -13,6 +13,7 @@ use MoonShine\Support\AlpineJs;
 use MoonShine\Support\Enums\FormMethod;
 use MoonShine\Support\Enums\HttpMethod;
 use MoonShine\Support\Enums\JsEvent;
+use MoonShine\UI\Components\ActionButton;
 use MoonShine\UI\Components\FormBuilder;
 use MoonShine\UI\Components\Heading;
 use MoonShine\UI\Components\Modal;
@@ -125,10 +126,11 @@ trait WithModal
                 $async,
                 static fn (FormBuilderContract $form): FormBuilderContract => $form->async(events: $events, callback: $callback)
             )->submit(
-                \is_null($button)
-                    ? $ctx->getCore()->getTranslator()->get('moonshine::ui.confirm')
-                    : value($button, $item),
-                ['class' => 'btn-secondary']
+                button: ActionButton::make(
+                    \is_null($button)
+                        ? $ctx->getCore()->getTranslator()->get('moonshine::ui.confirm')
+                        : value($button, $item)
+                )->error()
             )->when(
                 ! \is_null($formBuilder),
                 static fn (FormBuilderContract $form): FormBuilderContract => $formBuilder($form, $item)
