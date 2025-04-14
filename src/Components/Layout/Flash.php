@@ -6,8 +6,6 @@ namespace MoonShine\UI\Components\Layout;
 
 use MoonShine\Support\Enums\FlashType;
 use MoonShine\UI\Components\MoonShineComponent;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * @method static static make(string $key = 'alert', string|FlashType $type = FlashType::INFO, bool $withToast = true, bool $removable = true)
@@ -29,8 +27,6 @@ class Flash extends MoonShineComponent
 
     /**
      * @return array<string, mixed>
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     protected function viewData(): array
     {
