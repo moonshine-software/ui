@@ -183,6 +183,12 @@ export default (name = '', initData = {}, reactive = {}) => ({
       .getAttributeNames()
       .some(attr => attr.startsWith('x-on:submit'))
 
+    if (!this.$el.checkValidity()) {
+      this.$el.reportValidity()
+
+      return
+    }
+
     if (hasSubmitAttribute) {
       this.$el.dispatchEvent(new Event('submit'))
     } else {
