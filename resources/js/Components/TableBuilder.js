@@ -293,12 +293,15 @@ export default (
           path instanceof HTMLAnchorElement ||
           path instanceof HTMLButtonElement ||
           path instanceof HTMLInputElement ||
+          path instanceof HTMLSelectElement ||
           path instanceof HTMLLabelElement,
       )
 
     if (isIgnoredElement || window.getSelection()?.toString()) {
       return
     }
+
+    event.stopPropagation()
 
     const rowElement = this.$el.parentNode
 

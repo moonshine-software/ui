@@ -270,7 +270,7 @@ trait TableStates
             'data-click-action-selector' => $selector,
         ]))->tdAttributes(
             static fn (): array => [
-                '@click.stop' => 'rowClickAction',
+                '@click' => 'rowClickAction',
             ]
         );
     }
