@@ -43,7 +43,9 @@ export default () => ({
     let extra = {}
 
     if (form) {
-      extra = formToJSON(prepareFormExtraData(new FormData(form), '_component_name,_token,_method,page'))
+      extra = formToJSON(
+        prepareFormExtraData(new FormData(form), '_component_name,_token,_method,page'),
+      )
     }
 
     request(

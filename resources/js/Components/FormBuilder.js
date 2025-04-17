@@ -262,7 +262,8 @@ export default (name = '', initData = {}, reactive = {}) => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const form = this.$el.tagName === 'FORM' ? this.$el : this.$el.closest('form')
 
-    extra['_data'] = exclude === '*' ? {} : formToJSON(prepareFormExtraData(new FormData(form), exclude))
+    extra['_data'] =
+      exclude === '*' ? {} : formToJSON(prepareFormExtraData(new FormData(form), exclude))
 
     de(componentEvent, '', this, extra)
   },
