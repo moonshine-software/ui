@@ -3,7 +3,7 @@ import {
   addInvalidListener,
   containsAttribute,
   isTextInput,
-  prepareFormData,
+  prepareFormExtraData,
   prepareFormQueryString,
 } from '../Support/Forms.js'
 import request, {initCallback} from '../Request/Core.js'
@@ -262,7 +262,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
     const form = this.$el.tagName === 'FORM' ? this.$el : this.$el.closest('form')
 
-    extra['_data'] = exclude === '*' ? {} : formToJSON(prepareFormData(new FormData(form), exclude))
+    extra['_data'] = exclude === '*' ? {} : formToJSON(prepareFormExtraData(new FormData(form), exclude))
 
     de(componentEvent, '', this, extra)
   },

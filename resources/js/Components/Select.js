@@ -1,7 +1,7 @@
 import Choices from 'choices.js'
 import {createPopper} from '@popperjs/core'
 import debounce from '../Support/Debounce.js'
-import {crudFormQuery, getQueryString, prepareFormData} from '../Support/Forms.js'
+import {crudFormQuery, getQueryString, prepareFormExtraData} from '../Support/Forms.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {formToJSON} from 'axios'
 import {DEFAULT_CONFIG} from '../../../node_modules/choices.js/src/scripts/defaults'
@@ -391,7 +391,7 @@ export default (asyncUrl = '') => ({
 
     if (exclude !== '*') {
       extra['_data'] = form
-        ? formToJSON(prepareFormData(new FormData(form), exclude))
+        ? formToJSON(prepareFormExtraData(new FormData(form), exclude))
         : {value: this.choicesInstance.getValue(true)}
     }
 

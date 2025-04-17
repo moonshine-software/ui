@@ -132,19 +132,20 @@ export function crudFormQuery(formElements = null) {
     .join('&')
 }
 
-export function prepareFormData(formData, exclude = null) {
+/** extra _data **/
+export function prepareFormExtraData(formData, exclude = null) {
   return excludeFromParams(limitFormDataParams(formData), exclude)
 }
 
 export function prepareFormQueryString(formData, exclude = null) {
-  return prepareQueryParams(limitFormDataParams(formData), exclude).toString()
+  return prepareQueryParams(limitFormDataParams(formData, false), exclude).toString()
 }
 
 export function limitFormDataParams(formData, maxLength = 50) {
   const filtered = new FormData()
 
   for (const [key, value] of formData) {
-    if (value.length <= maxLength) {
+    if (maxLength === false || value.length <= maxLength) {
       filtered.append(key, value)
     }
   }
