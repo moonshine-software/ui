@@ -222,6 +222,7 @@ class ActionButton extends MoonShineComponent implements
                     'alt' => '⌥',
                     'backspace' => '⌫',
                     'enter' => '⏎',
+                    'escape' => 'esc',
                 ];
 
                 return ucfirst($map[$key] ?? $key);
