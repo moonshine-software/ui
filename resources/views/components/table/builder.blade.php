@@ -20,6 +20,8 @@
     'columnSelection' => false,
     'searchValue' => '',
     'translates' => [],
+    'topLeft' => null,
+    'topRight' => null,
 ])
 <div
     class="js-table-builder-container"
@@ -38,9 +40,11 @@
         {{ $attributes }}
     >
         @if($async && $searchable)
-            <div class="flex items-center gap-2">
-                <form action="{{ $asyncUrl }}"
-                      @submit.prevent="asyncFormRequest"
+            <x-moonshine::layout.flex justify-align="start">
+                <x-moonshine::form
+                    raw
+                    action="{{ $asyncUrl }}"
+                    @submit.prevent="asyncFormRequest"
                 >
                     <x-moonshine::form.input
                         name="search"
@@ -48,12 +52,16 @@
                         value="{{ $searchValue }}"
                         placeholder="{{ $translates['search'] }}"
                     />
-                </form>
-            </div>
+                </x-moonshine::form>
+
+                {!! $topLeft ?? '' !!}
+            </x-moonshine::layout.flex>
         @endif
 
         @if($columnSelection)
             <x-moonshine::layout.flex justify-align="end">
+                {!! $topRight ?? '' !!}
+
                 <x-moonshine::dropdown>
                     <div class="p-2 space-y-2">
                         @foreach($columns as $column => $label)
@@ -73,7 +81,9 @@
                     </div>
 
                     <x-slot:toggler>
-                        <x-moonshine::icon icon="table-cells" />
+                        <x-moonshine::link-button>
+                            <x-slot:icon><x-moonshine::icon icon="table-cells" size="4"/></x-slot:icon>
+                        </x-moonshine::link-button>
                     </x-slot:toggler>
                 </x-moonshine::dropdown>
             </x-moonshine::layout.flex>

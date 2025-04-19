@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Components\Table;
 
 use Closure;
+use Illuminate\View\ComponentSlot;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
@@ -73,6 +74,10 @@ final class TableBuilder extends IterableComponent implements
     protected ComponentAttributesBagContract $footAttributes;
 
     protected ?Closure $modifyRowCheckbox = null;
+
+    protected ?Closure $topLeft = null;
+
+    protected ?Closure $topRight = null;
 
     public function __construct(
         iterable $fields = [],
@@ -585,6 +590,26 @@ final class TableBuilder extends IterableComponent implements
         );
     }
 
+    /**
+     * @param  Closure(self): string  $callback
+     */
+    public function topLeft(Closure $callback): self
+    {
+        $this->topLeft = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param  Closure(self): string  $callback
+     */
+    public function topRight(Closure $callback): self
+    {
+        $this->topRight = $callback;
+
+        return $this;
+    }
+
     protected function prepareBeforeRender(): void
     {
         parent::prepareBeforeRender();
@@ -653,6 +678,8 @@ final class TableBuilder extends IterableComponent implements
             'headAttributes' => $this->headAttributes,
             'bodyAttributes' => $this->bodyAttributes,
             'footAttributes' => $this->footAttributes,
+            'topLeft' => new ComponentSlot(!\is_null($this->topLeft) ? \call_user_func($this->topLeft) : ''),
+            'topRight' => new ComponentSlot(!\is_null($this->topRight) ? \call_user_func($this->topRight) : ''),
             ...$this->statesToArray(),
         ];
     }

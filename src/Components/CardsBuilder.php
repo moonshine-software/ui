@@ -6,6 +6,7 @@ namespace MoonShine\UI\Components;
 
 use Closure;
 use Illuminate\Support\Collection;
+use Illuminate\View\ComponentSlot;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
@@ -33,6 +34,7 @@ final class CardsBuilder extends IterableComponent implements
     protected string $view = 'moonshine::components.cards';
 
     protected array $translates = [
+        'search' => 'moonshine::ui.search',
         'notfound' => 'moonshine::ui.notfound',
     ];
 
@@ -79,6 +81,12 @@ final class CardsBuilder extends IterableComponent implements
      * @var (Closure(mixed, int, self): array)|array
      */
     protected array|Closure $componentAttributes = [];
+
+    protected ?Closure $topLeft = null;
+
+    protected ?Closure $topRight = null;
+
+    protected bool $searchable = false;
 
     public function __construct(
         iterable $items = [],
@@ -239,6 +247,38 @@ final class CardsBuilder extends IterableComponent implements
         ];
     }
 
+    /**
+     * @param  Closure(self): string  $callback
+     */
+    public function topLeft(Closure $callback): self
+    {
+        $this->topLeft = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param  Closure(self): string  $callback
+     */
+    public function topRight(Closure $callback): self
+    {
+        $this->topRight = $callback;
+
+        return $this;
+    }
+
+    public function searchable(): static
+    {
+        $this->searchable = true;
+
+        return $this;
+    }
+
+    public function isSearchable(): bool
+    {
+        return $this->searchable;
+    }
+
     protected function prepareBeforeRender(): void
     {
         parent::prepareBeforeRender();
@@ -283,6 +323,10 @@ final class CardsBuilder extends IterableComponent implements
             'asyncUrl' => $this->getAsyncUrl(),
             'colSpan' => $this->getColumnSpanValue(),
             'adaptiveColSpan' => $this->getAdaptiveColumnSpanValue(),
+            'topLeft' => new ComponentSlot(!\is_null($this->topLeft) ? \call_user_func($this->topLeft) : ''),
+            'topRight' => new ComponentSlot(!\is_null($this->topRight) ? \call_user_func($this->topRight) : ''),
+            'searchable' => $this->isSearchable(),
+            'searchValue' => $this->getCore()->getRequest()->getScalar('search', ''),
         ];
     }
 }
