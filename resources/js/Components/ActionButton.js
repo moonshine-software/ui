@@ -58,7 +58,9 @@ export default () => ({
       return
     }
 
-    this.loading = true
+    if(!this.$el.dataset?.withoutLoading) {
+      this.loading = true
+    }
 
     if (this.withParams !== undefined && this.withParams) {
       this.method = this.method.toLowerCase() === 'get' ? 'post' : this.method

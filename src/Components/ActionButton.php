@@ -210,6 +210,14 @@ class ActionButton extends MoonShineComponent implements
             'data-async-response-type' => 'blob',
         ]);
     }
+
+    public function withoutLoading(): static
+    {
+        return $this->customAttributes([
+            'data-without-loading' => true,
+        ]);
+    }
+
     /**
      * @param array|(Closure(mixed $original): array) $params = []
      * @throws Throwable
