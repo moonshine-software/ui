@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MoonShine\UI\Components\Table;
 
 use Closure;
-use Illuminate\View\ComponentSlot;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
@@ -22,8 +21,11 @@ use MoonShine\Support\Enums\JsEvent;
 use MoonShine\UI\Collections\Fields;
 use MoonShine\UI\Collections\TableCells;
 use MoonShine\UI\Collections\TableRows;
+use MoonShine\UI\Components\ActionButton;
 use MoonShine\UI\Components\ActionGroup;
 use MoonShine\UI\Components\Components;
+use MoonShine\UI\Components\Dropdown;
+use MoonShine\UI\Components\FieldsGroup;
 use MoonShine\UI\Components\FlexibleRender;
 use MoonShine\UI\Components\IterableComponent;
 use MoonShine\UI\Components\Layout\Column;
@@ -32,6 +34,7 @@ use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Layout\Grid;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Fields\Checkbox;
+use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Traits\HasAsync;
 use MoonShine\UI\Traits\Table\TableStates;
 use MoonShine\UI\Traits\WithFields;
@@ -591,7 +594,7 @@ final class TableBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(self): string  $callback
+     * @param  Closure(self): array  $callback
      */
     public function topLeft(Closure $callback): self
     {
@@ -601,13 +604,43 @@ final class TableBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(self): string  $callback
+     * @param  Closure(self): array  $callback
      */
     public function topRight(Closure $callback): self
     {
         $this->topRight = $callback;
 
         return $this;
+    }
+
+    private function getTopLeft(): Components
+    {
+        $components = !\is_null($this->topLeft) ? \call_user_func($this->topLeft) : [];
+
+        return Components::make($components);
+    }
+
+    private function getTopRight(array $columns = []): Components
+    {
+        $components = !\is_null($this->topRight) ? \call_user_func($this->topRight) : [];
+
+        if($this->isColumnSelection()) {
+            $selectionFields = [];
+
+            foreach ($columns as $column => $label) {
+                $selectionFields[]  = Switcher::make($label, $column)->customAttributes([
+                    'data-column-selection-checker' => true,
+                    'data-column' => $column,
+                    '@change' => "columnSelection()",
+                ]);
+            }
+
+            $components[] = Dropdown::make()
+                ->content(fn(): FieldsGroup => FieldsGroup::make($selectionFields))->class('p-2 space-y-2')
+                ->toggler(fn(): ActionButton => ActionButton::make('')->icon('table-cells'));
+        }
+
+        return Components::make($components);
     }
 
     protected function prepareBeforeRender(): void
@@ -678,8 +711,8 @@ final class TableBuilder extends IterableComponent implements
             'headAttributes' => $this->headAttributes,
             'bodyAttributes' => $this->bodyAttributes,
             'footAttributes' => $this->footAttributes,
-            'topLeft' => new ComponentSlot(!\is_null($this->topLeft) ? \call_user_func($this->topLeft) : ''),
-            'topRight' => new ComponentSlot(!\is_null($this->topRight) ? \call_user_func($this->topRight) : ''),
+            'topLeft' => $this->getTopLeft(),
+            'topRight' => $this->getTopRight($columns),
             ...$this->statesToArray(),
         ];
     }

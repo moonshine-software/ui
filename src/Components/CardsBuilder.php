@@ -248,7 +248,7 @@ final class CardsBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(self): string  $callback
+     * @param  Closure(self): array  $callback
      */
     public function topLeft(Closure $callback): self
     {
@@ -258,7 +258,7 @@ final class CardsBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(self): string  $callback
+     * @param  Closure(self): array  $callback
      */
     public function topRight(Closure $callback): self
     {
@@ -272,6 +272,20 @@ final class CardsBuilder extends IterableComponent implements
         $this->searchable = true;
 
         return $this;
+    }
+
+    private function getTopLeft(): Components
+    {
+        $components = !\is_null($this->topLeft) ? \call_user_func($this->topLeft) : [];
+
+        return Components::make($components);
+    }
+
+    private function getTopRight(): Components
+    {
+        $components = !\is_null($this->topRight) ? \call_user_func($this->topRight) : [];
+
+        return Components::make($components);
     }
 
     public function isSearchable(): bool
@@ -323,8 +337,8 @@ final class CardsBuilder extends IterableComponent implements
             'asyncUrl' => $this->getAsyncUrl(),
             'colSpan' => $this->getColumnSpanValue(),
             'adaptiveColSpan' => $this->getAdaptiveColumnSpanValue(),
-            'topLeft' => new ComponentSlot(!\is_null($this->topLeft) ? \call_user_func($this->topLeft) : ''),
-            'topRight' => new ComponentSlot(!\is_null($this->topRight) ? \call_user_func($this->topRight) : ''),
+            'topLeft' => $this->getTopLeft(),
+            'topRight' => $this->getTopRight(),
             'searchable' => $this->isSearchable(),
             'searchValue' => $this->getCore()->getRequest()->getScalar('search', ''),
         ];

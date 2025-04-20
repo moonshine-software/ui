@@ -21,32 +21,20 @@
         @defineEventWhen($async, 'cards_updated', $name, 'asyncRequest')
         {{ $attributes }}
     >
-        @if($async && $searchable)
-            <x-moonshine::layout.flex justify-align="start">
-                <x-moonshine::form
-                    raw
-                    action="{{ $asyncUrl }}"
-                    @submit.prevent="asyncFormRequest"
-                >
-                    <x-moonshine::form.input
-                        name="search"
-                        type="search"
-                        value="{{ $searchValue }}"
-                        placeholder="{{ $translates['search'] }}"
-                    />
-                </x-moonshine::form>
-
+        <x-moonshine::iterable-wrapper
+            :searchable="$async && $searchable"
+            :search-placeholder="$translates['search']"
+            :search-value="$searchValue"
+            :search-url="$asyncUrl"
+        >
+            <x-slot:topLeft>
                 {!! $topLeft ?? '' !!}
-            </x-moonshine::layout.flex>
-        @endif
+            </x-slot:topLeft>
 
+            <x-slot:topRight>
+                {!! $topRight ?? '' !!}
+            </x-slot:topRight>
 
-        <x-moonshine::layout.flex justify-align="end">
-            {!! $topRight ?? '' !!}
-        </x-moonshine::layout.flex>
-
-        <x-moonshine::loader x-show="loading" />
-        <div x-show="!loading">
             @if($components->isNotEmpty())
                 <x-moonshine::layout.grid>
                     @foreach($components as $card)
@@ -64,6 +52,6 @@
                     {{ $translates['notfound'] }}
                 </x-moonshine::alert>
             @endif
-        </div>
+        </x-moonshine::iterable-wrapper>
     </div>
 </div>
