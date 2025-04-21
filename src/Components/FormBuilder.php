@@ -291,11 +291,11 @@ final class FormBuilder extends MoonShineComponent implements
     {
         $this->submit = $button ?: $this->getSubmit();
 
-        if(!\is_null($label) && \is_null($button)) {
+        if (! \is_null($label) && \is_null($button)) {
             $this->submit = $this->getSubmit()->setLabel($label);
         }
 
-        if($attributes !== [] && \is_null($button)) {
+        if ($attributes !== [] && \is_null($button)) {
             $this->submit = $this->getSubmit()->customAttributes($attributes);
         }
 
@@ -308,13 +308,14 @@ final class FormBuilder extends MoonShineComponent implements
             $this->getCore()->getTranslator()->get('moonshine::ui.save'),
         );
 
-        if($this->isHideSubmit()) {
+        if ($this->isHideSubmit()) {
             $submit->style('display: none');
         }
 
         return $submit->customAttributes([
             'type' => 'submit',
-        ])->content(fn(): Spinner => Spinner::make()
+        ])->content(
+            fn (): Spinner => Spinner::make()
             ->class('js-form-submit-button-loader')
             ->style('display: none')
         );
