@@ -24,8 +24,6 @@ use MoonShine\UI\Traits\Fields\Applies;
 use MoonShine\UI\Traits\Fields\ShowWhen;
 use MoonShine\UI\Traits\Fields\WithQuickFormElementAttributes;
 use MoonShine\UI\Traits\WithLabel;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 abstract class FormElement extends MoonShineComponent implements FormElementContract
 {
@@ -609,10 +607,6 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
         return $this->requestKeyPrefix;
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     protected function resolveValidationErrorClasses(): void
     {
         $this->class([

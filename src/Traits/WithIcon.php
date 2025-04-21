@@ -6,9 +6,6 @@ namespace MoonShine\UI\Traits;
 
 use MoonShine\Support\Enums\Color;
 use MoonShine\UI\Components\Icon;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Throwable;
 
 trait WithIcon
 {
@@ -27,11 +24,6 @@ trait WithIcon
         return $this;
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws Throwable
-     */
     public function getIcon(
         int $size = 8,
         Color|string $color = '',
