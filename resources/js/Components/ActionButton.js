@@ -68,7 +68,7 @@ export default () => ({
       return
     }
 
-    if(!this.$el.dataset?.withoutLoading) {
+    if (!this.$el.dataset?.withoutLoading) {
       this.loading = true
     }
 
