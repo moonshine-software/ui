@@ -266,7 +266,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
 
     const urlSearchParams = new URLSearchParams(window.location.search)
 
-    if(form.dataset.reset) {
+    if (form.dataset.reset) {
       formData = new FormData()
       exclude = '*'
     }
@@ -298,14 +298,12 @@ export default (name = '', initData = {}, reactive = {}) => ({
       element.innerHTML = filledFields.size
     })
 
-    const resetBtn = form
-      ?.closest('.offcanvas-template')
-      ?.querySelector('.js-async-reset-button')
+    const resetBtn = form?.closest('.offcanvas-template')?.querySelector('.js-async-reset-button')
 
-    if(filledFields.size && resetBtn) {
-      resetBtn.style.display = 'block';
-    } else if(resetBtn) {
-      resetBtn.style.display = 'none';
+    if (filledFields.size && resetBtn) {
+      resetBtn.style.display = 'block'
+    } else if (resetBtn) {
+      resetBtn.style.display = 'none'
     }
 
     return filledFields.size
