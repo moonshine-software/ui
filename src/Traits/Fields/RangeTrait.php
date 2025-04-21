@@ -39,7 +39,7 @@ trait RangeTrait
                 ->merge($attributes)
                 ->when(
                     $this->fromAttributes,
-                    fn (ComponentAttributesBagContract $attributes) => $attributes->merge($this->fromAttributes->all())
+                    fn (ComponentAttributesBagContract $attributes) => $attributes->merge($this->fromAttributes->getAttributes())
                 )
         ;
 
@@ -74,7 +74,7 @@ trait RangeTrait
             ->merge($attributes)
             ->when(
                 $this->toAttributes,
-                fn (ComponentAttributesBagContract $attributes) => $attributes->merge($this->toAttributes->all())
+                fn (ComponentAttributesBagContract $attributes) => $attributes->merge($this->toAttributes->getAttributes())
             )
         ;
 
