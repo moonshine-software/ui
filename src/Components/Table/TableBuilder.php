@@ -624,11 +624,11 @@ final class TableBuilder extends IterableComponent implements
     {
         $components = \is_null($this->topRight) ? [] : \call_user_func($this->topRight);
 
-        if($this->isColumnSelection()) {
+        if ($this->isColumnSelection()) {
             $selectionFields = [];
 
             foreach ($columns as $column => $label) {
-                $selectionFields[]  = Switcher::make($label, $column)->customAttributes([
+                $selectionFields[] = Switcher::make($label, $column)->customAttributes([
                     'data-column-selection-checker' => true,
                     'data-column' => $column,
                     '@change' => "columnSelection()",
@@ -636,8 +636,8 @@ final class TableBuilder extends IterableComponent implements
             }
 
             $components[] = Dropdown::make()
-                ->content(fn(): FieldsGroup => FieldsGroup::make($selectionFields))->class('p-2 space-y-2')
-                ->toggler(fn(): ActionButton => ActionButton::make('')->icon('table-cells'));
+                ->content(fn (): FieldsGroup => FieldsGroup::make($selectionFields))->class('p-2 space-y-2')
+                ->toggler(fn (): ActionButton => ActionButton::make('')->icon('table-cells'));
         }
 
         return Components::make($components);
