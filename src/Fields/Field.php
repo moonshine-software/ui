@@ -22,8 +22,6 @@ use MoonShine\UI\Traits\Fields\WithBadge;
 use MoonShine\UI\Traits\Fields\WithHint;
 use MoonShine\UI\Traits\Fields\WithLink;
 use MoonShine\UI\Traits\Fields\WithSorts;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * The Field class complements the FormElement class with sugar and rendering logic
@@ -349,10 +347,6 @@ abstract class Field extends FormElement implements FieldContract
             : \call_user_func($this->afterRender, $this);
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     protected function prepareBeforeRender(): void
     {
         if (! \is_null($this->onChangeUrl) && $this->isOnChangeCondition()) {

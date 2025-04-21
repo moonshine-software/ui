@@ -30,6 +30,16 @@ export default () => ({
         ? '<div class="spinner spinner--primary spinner-sm"></div>' + btnText
         : btnText
     })
+
+    if (this.$el.dataset.hotKeys) {
+      const hotkeys = this.$el.dataset.hotKeys.split(',').map(s => s.trim())
+
+      if ((modal = this.$el.closest('.modal'))) {
+        this._modalHotkey(modal, hotkeys)
+      } else {
+        document.addEventListener('keydown', event => this._hotKey(event, hotkeys))
+      }
+    }
   },
 
   dispatchEvents(componentEvent, exclude = null, extra = {}) {
@@ -84,5 +94,43 @@ export default () => ({
       .withErrorCallback(stopLoading)
 
     request(this, this.url, this.method, body, {}, componentRequestData)
+  },
+  _hotKey(event, hotKeys) {
+    const normalizedHotkey = hotKeys.map(k => k.toLowerCase())
+
+    const pressed = []
+
+    if (event.shiftKey) pressed.push('shift')
+    if (event.ctrlKey) pressed.push('ctrl')
+    if (event.altKey) pressed.push('alt')
+    if (event.metaKey) pressed.push('meta') // mac cmd
+
+    if (!['shift', 'ctrl', 'alt', 'meta'].includes(event.key.toLowerCase())) {
+      pressed.push(event.key.toLowerCase())
+    }
+
+    const match =
+      normalizedHotkey.every(k => pressed.includes(k)) && pressed.length === normalizedHotkey.length
+
+    if (match) {
+      event.preventDefault()
+      this.$el.click()
+    }
+  },
+  _modalHotkey(modal, hotKeys) {
+    const handler = event => this._hotKey(event, hotKeys)
+
+    const observer = new MutationObserver(() => {
+      if (getComputedStyle(modal).display === 'none') {
+        document.removeEventListener('keydown', handler)
+      } else {
+        document.addEventListener('keydown', handler)
+      }
+    })
+
+    observer.observe(modal, {
+      attributes: true,
+      attributeFilter: ['style'],
+    })
   },
 })
