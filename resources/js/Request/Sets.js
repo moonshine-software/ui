@@ -104,13 +104,22 @@ export function listComponentRequest(component, pushState = false) {
   function prepareListComponentRequestUrl(url) {
     const resultUrl = url.startsWith('/') ? new URL(url, window.location.origin) : new URL(url)
 
+    if (resultUrl.searchParams.get('reset')) {
+      resultUrl.searchParams.delete('reset')
+    }
+
     if (resultUrl.searchParams.get('query-tag')) {
       resultUrl.searchParams.delete('query-tag')
     }
 
     Array.from(resultUrl.searchParams).map(function (values) {
       let [index] = values
+
       if (index.indexOf('filter[') === 0) {
+        resultUrl.searchParams.delete(index)
+      }
+
+      if (index.indexOf('_data[') === 0) {
         resultUrl.searchParams.delete(index)
       }
     })

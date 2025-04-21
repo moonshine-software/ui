@@ -8,6 +8,10 @@
     'adaptiveColSpan' => 12,
     'name' => 'default',
     'translates' => [],
+    'searchable' => false,
+    'searchValue' => '',
+    'topLeft' => null,
+    'topRight' => null,
 ])
 <div class="js-cards-builder-container">
     <div x-data="cardsBuilder(
@@ -17,8 +21,20 @@
         @defineEventWhen($async, 'cards_updated', $name, 'asyncRequest')
         {{ $attributes }}
     >
-        <x-moonshine::loader x-show="loading" />
-        <div x-show="!loading">
+        <x-moonshine::iterable-wrapper
+            :searchable="$async && $searchable"
+            :search-placeholder="$translates['search']"
+            :search-value="$searchValue"
+            :search-url="$asyncUrl"
+        >
+            <x-slot:topLeft>
+                {!! $topLeft ?? '' !!}
+            </x-slot:topLeft>
+
+            <x-slot:topRight>
+                {!! $topRight ?? '' !!}
+            </x-slot:topRight>
+
             @if($components->isNotEmpty())
                 <x-moonshine::layout.grid>
                     @foreach($components as $card)
@@ -36,6 +52,6 @@
                     {{ $translates['notfound'] }}
                 </x-moonshine::alert>
             @endif
-        </div>
+        </x-moonshine::iterable-wrapper>
     </div>
 </div>

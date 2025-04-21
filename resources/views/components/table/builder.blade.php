@@ -20,6 +20,8 @@
     'columnSelection' => false,
     'searchValue' => '',
     'translates' => [],
+    'topLeft' => null,
+    'topRight' => null,
 ])
 <div
     class="js-table-builder-container"
@@ -37,50 +39,20 @@
         @defineEventWhen($async, 'table_updated', $name, 'asyncRequest')
         {{ $attributes }}
     >
-        @if($async && $searchable)
-            <div class="flex items-center gap-2">
-                <form action="{{ $asyncUrl }}"
-                      @submit.prevent="asyncFormRequest"
-                >
-                    <x-moonshine::form.input
-                        name="search"
-                        type="search"
-                        value="{{ $searchValue }}"
-                        placeholder="{{ $translates['search'] }}"
-                    />
-                </form>
-            </div>
-        @endif
+        <x-moonshine::iterable-wrapper
+            :searchable="$async && $searchable"
+            :search-placeholder="$translates['search']"
+            :search-value="$searchValue"
+            :search-url="$asyncUrl"
+        >
+            <x-slot:topLeft>
+                {!! $topLeft ?? '' !!}
+            </x-slot:topLeft>
 
-        @if($columnSelection)
-            <x-moonshine::layout.flex justify-align="end">
-                <x-moonshine::dropdown>
-                    <div class="p-2 space-y-2">
-                        @foreach($columns as $column => $label)
-                            <div class="form-group form-group-inline">
-                                <x-moonshine::form.switcher
-                                    :id="'column_selection_' . $column"
-                                    data-column-selection-checker="true"
-                                    data-column="{{ $column }}"
-                                    @change="columnSelection()"
-                                />
+            <x-slot:topRight>
+                {!! $topRight ?? '' !!}
+            </x-slot:topRight>
 
-                                <x-moonshine::form.label :for="'column_selection_' . $column">
-                                    {{ $label }}
-                                </x-moonshine::form.label>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <x-slot:toggler>
-                        <x-moonshine::icon icon="table-cells" />
-                    </x-slot:toggler>
-                </x-moonshine::dropdown>
-            </x-moonshine::layout.flex>
-        @endif
-
-        <x-moonshine::loader x-show="loading" />
-        <div x-show="!loading">
             <x-moonshine::table
                 :simple="$simple"
                 :notfound="$notfound"
@@ -127,6 +99,6 @@
             @if($hasPaginator)
                 {!! $paginator !!}
             @endif
-        </div>
+        </x-moonshine::iterable-wrapper>
     </div>
 </div>
