@@ -74,6 +74,8 @@ class Json extends Field implements
 
     protected ?Closure $modifyRemoveButton = null;
 
+    protected ?Closure $modifyCreateButton = null;
+
     protected bool $resolveValueOnce = true;
 
     protected null|TableBuilderContract|FieldsGroup $resolvedComponent = null;
@@ -180,7 +182,13 @@ class Json extends Field implements
 
     public function getCreateButton(): ?ActionButtonContract
     {
-        return $this->creatableButton;
+        $button = $this->creatableButton;
+
+        if (! \is_null($this->modifyCreateButton)) {
+            $button = \call_user_func($this->modifyCreateButton, $button, $this);
+        }
+
+        return $button;
     }
 
     public function isCreatable(): bool
@@ -234,6 +242,16 @@ class Json extends Field implements
     public function modifyRemoveButton(Closure $callback): self
     {
         $this->modifyRemoveButton = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param  Closure(ActionButton $button, self $field): ActionButton  $callback
+     */
+    public function modifyCreateButton(Closure $callback): self
+    {
+        $this->modifyCreateButton = $callback;
 
         return $this;
     }
