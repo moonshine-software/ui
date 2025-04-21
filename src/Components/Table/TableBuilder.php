@@ -615,14 +615,14 @@ final class TableBuilder extends IterableComponent implements
 
     private function getTopLeft(): Components
     {
-        $components = !\is_null($this->topLeft) ? \call_user_func($this->topLeft) : [];
+        $components = \is_null($this->topLeft) ? [] : \call_user_func($this->topLeft);
 
         return Components::make($components);
     }
 
     private function getTopRight(array $columns = []): Components
     {
-        $components = !\is_null($this->topRight) ? \call_user_func($this->topRight) : [];
+        $components = \is_null($this->topRight) ? [] : \call_user_func($this->topRight);
 
         if($this->isColumnSelection()) {
             $selectionFields = [];

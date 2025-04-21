@@ -6,7 +6,6 @@ namespace MoonShine\UI\Components;
 
 use Closure;
 use Illuminate\Support\Collection;
-use Illuminate\View\ComponentSlot;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
@@ -276,14 +275,14 @@ final class CardsBuilder extends IterableComponent implements
 
     private function getTopLeft(): Components
     {
-        $components = !\is_null($this->topLeft) ? \call_user_func($this->topLeft) : [];
+        $components = \is_null($this->topLeft) ? [] : \call_user_func($this->topLeft);
 
         return Components::make($components);
     }
 
     private function getTopRight(): Components
     {
-        $components = !\is_null($this->topRight) ? \call_user_func($this->topRight) : [];
+        $components = \is_null($this->topRight) ? [] : \call_user_func($this->topRight);
 
         return Components::make($components);
     }
