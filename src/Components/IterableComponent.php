@@ -27,6 +27,8 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
 
     protected iterable $items = [];
 
+    protected iterable $originalItems = [];
+
     protected ?PaginatorContract $paginator = null;
 
     protected iterable $buttons = [];
@@ -48,6 +50,7 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
     public function items(iterable $items = []): static
     {
         $this->items = $items;
+        $this->originalItems = $items;
 
         return $this;
     }
@@ -62,6 +65,11 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
             $this->items = $items->getOriginalData();
             $this->paginator($items);
         }
+    }
+
+    public function getOriginalItems(): iterable
+    {
+        return $this->items;
     }
 
     public function getItems(): Collection

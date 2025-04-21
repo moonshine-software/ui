@@ -636,7 +636,9 @@ final class TableBuilder extends IterableComponent implements
             }
 
             $components[] = Dropdown::make()
-                ->content(fn (): FieldsGroup => FieldsGroup::make($selectionFields))->class('p-2 space-y-2')
+                ->content(
+                    fn (): Div => Div::make($selectionFields)->class('p-2 space-y-2')
+                )
                 ->toggler(fn (): ActionButton => ActionButton::make('')->icon('table-cells'));
         }
 

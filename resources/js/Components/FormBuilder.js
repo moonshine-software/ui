@@ -299,9 +299,10 @@ export default (name = '', initData = {}, reactive = {}) => ({
     })
 
     const resetBtn = form?.closest('.offcanvas-template')?.querySelector('.js-async-reset-button')
+    const resetShow = !form.dataset.reset && filledFields.size
 
-    if (filledFields.size && resetBtn) {
-      resetBtn.style.display = 'block'
+    if (resetShow && resetBtn) {
+      resetBtn.removeAttribute('style')
     } else if (resetBtn) {
       resetBtn.style.display = 'none'
     }
