@@ -213,7 +213,7 @@ class ActionButton extends MoonShineComponent implements
         $hotKeys = implode(',', $keys);
         $badge = $withBadge ? str($hotKeys)
             ->explode(',')
-            ->map(function (string $key) {
+            ->map(function (string $key): string {
                 $key = trim($key);
                 $map = [
                     'meta' => '⌘',
