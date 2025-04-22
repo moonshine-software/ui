@@ -88,7 +88,7 @@ class File extends Field implements FileableContract, RemovableContract
             ->mapWithKeys(fn (string $path, int $index): array => [
                 $index => new FileItem(
                     fullPath: $path,
-                    rawValue: data_get($this->toValue(), $index, $this->toValue()),
+                    rawValue: data_get($this->toValue(), $index, $this->toValue()) ?? $path,
                     name: \call_user_func($this->resolveNames(), $path, $index, $this),
                     attributes: \call_user_func($this->resolveItemAttributes(), $path, $index, $this),
                     extra: \call_user_func($this->resolveExtraAttributes(), $path, $index, $this),
