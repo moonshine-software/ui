@@ -6,10 +6,12 @@
     'label' => '',
     'component' => null,
     'badge' => false,
+    'raw' => false,
 ])
-@if($attributes->get('type') === 'submit')
+@if($attributes->has('type'))
     <x-moonshine::form.button
         :attributes="$attributes"
+        :raw="$raw"
     >
         {!! $slot !!}
 
@@ -26,6 +28,7 @@
         :attributes="$attributes"
         :href="$url"
         :badge="$badge"
+        :raw="$raw"
     >
         {!! $slot !!}
 

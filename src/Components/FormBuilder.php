@@ -67,6 +67,8 @@ final class FormBuilder extends MoonShineComponent implements
 
     protected bool $hideSubmit = false;
 
+    protected bool $raw = false;
+
     protected bool $errorsAbove = true;
 
     protected ?ActionButtonContract $submit = null;
@@ -285,6 +287,18 @@ final class FormBuilder extends MoonShineComponent implements
     public function isHideSubmit(): bool
     {
         return $this->hideSubmit;
+    }
+
+    public function rawMode(): self
+    {
+        $this->raw = true;
+
+        return $this;
+    }
+
+    public function isRaw(): bool
+    {
+        return $this->raw;
     }
 
     public function submit(?string $label = null, array $attributes = [], ?ActionButtonContract $button = null): self
@@ -523,6 +537,7 @@ final class FormBuilder extends MoonShineComponent implements
             'submit' => $this->getSubmit(),
             'errors' => $this->getCore()->getRequest()->getFormErrors($this->getName()),
             'errorsAbove' => $this->hasErrorsAbove(),
+            'raw' => $this->isRaw(),
         ];
     }
 }

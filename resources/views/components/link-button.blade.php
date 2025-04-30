@@ -2,8 +2,9 @@
     'icon' => null,
     'filled' => false,
     'badge' => false,
+    'raw' => false,
 ])
-<a {{ $attributes->class(['btn', 'btn-primary' => $filled]) }}>
+<a {{ $attributes->class($raw ? [] : ['btn', 'btn-primary' => $filled]) }}>
     {{ $icon ?? '' }}
     {{ $slot ?? '' }}
     @if($badge !== false)

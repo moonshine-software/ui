@@ -51,6 +51,8 @@ class ActionButton extends MoonShineComponent implements
 
     protected bool $isAsync = false;
 
+    protected bool $raw = false;
+
     protected ?HttpMethod $asyncHttpMethod = null;
 
     protected ?AsyncCallback $asyncCallback = null;
@@ -426,6 +428,18 @@ class ActionButton extends MoonShineComponent implements
         return value($this->url, $data ?? $this->getData()?->getOriginal(), $this->getData(), $this);
     }
 
+    public function rawMode(): self
+    {
+        $this->raw = true;
+
+        return $this;
+    }
+
+    public function isRaw(): bool
+    {
+        return $this->raw;
+    }
+
     public function primary(Closure|bool|null $condition = null): static
     {
         if (! (value($condition, $this) ?? true)) {
@@ -506,6 +520,7 @@ class ActionButton extends MoonShineComponent implements
             'url' => $this->getUrl(),
             'icon' => $this->getIcon(4),
             'badge' => $this->hasBadge() ? $this->getBadge() : false,
+            'raw' => $this->isRaw(),
             'slot' => $this->getSlot(),
         ];
     }

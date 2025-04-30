@@ -2,6 +2,7 @@
     'name' => '',
     'precognitive' => false,
     'hideSubmit' => false,
+    'raw' => false,
     'fields' => [],
     'submit' => '',
     'buttons' => [],
@@ -17,6 +18,7 @@
     :name="$name"
     :precognitive="$precognitive"
     :errors="$errors"
+    :raw="$raw"
 >
     <x-moonshine::fields-group
         :components="$fields"
