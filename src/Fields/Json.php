@@ -290,7 +290,11 @@ class Json extends Field implements
 
     protected function prepareFields(): FieldsContract
     {
-        $fields = $this->getFields()->prepareAttributes();
+        $fields = $this->getFields();
+
+        if(!$this->isPreviewMode()) {
+            $fields->prepareAttributes();
+        }
 
         if ($this->isObjectMode()) {
             $fields = $fields
