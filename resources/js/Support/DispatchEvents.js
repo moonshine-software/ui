@@ -1,3 +1,5 @@
+import DOMUpdater, {extractFromEventDetails} from './DOMUpdater.js'
+
 export function dispatchEvents(events, type, component, extraProperties = {}) {
   if (!events) {
     return
@@ -48,6 +50,11 @@ export function dispatchEvents(events, type, component, extraProperties = {}) {
             cancelable: true,
           }),
         )
+
+        DOMUpdater({
+          htmlData: extractFromEventDetails(attributes.selectors, ['selector', 'html']),
+          fields_values: extractFromEventDetails(attributes.fields_values),
+        })
       }, attributes['_delay'] ?? 0)
     })
   }

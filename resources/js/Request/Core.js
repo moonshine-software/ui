@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {ComponentRequestData} from '../DTOs/ComponentRequestData.js'
 import {dispatchEvents} from '../Support/DispatchEvents.js'
-import {HtmlMode} from '../Support/HtmlMode.js'
+import DOMUpdater from '../Support/DOMUpdater.js'
 
 export default async function request(
   t,
@@ -60,61 +60,15 @@ export default async function request(
         return
       }
 
-      if (data.htmlData) {
-        data.htmlData.forEach(function (htmlDataItem) {
-          let selectors = htmlDataItem.selector.split(',')
-          selectors.forEach(function (selector) {
-            let elements = document.querySelectorAll(selector)
-            elements.forEach(element => {
-              htmlReplace(
-                htmlDataItem.html && typeof htmlDataItem.html === 'object'
-                  ? (htmlDataItem.html[selector] ?? htmlDataItem.html)
-                  : htmlDataItem.html,
-                htmlDataItem.htmlMode,
-                selector,
-                element,
-              )
-            })
-          })
-        })
+      if(data.html !== undefined) {
+        data.htmlData = [{html: data.html}]
       }
 
-      if (componentRequestData.selector) {
-        let selectors = componentRequestData.selector.split(',')
-        selectors.forEach(function (selector) {
-          let elements = document.querySelectorAll(selector)
-          elements.forEach(element => {
-            htmlReplace(
-              data.html && typeof data.html === 'object'
-                ? (data.html[selector] ?? data.html)
-                : (data.html ?? data),
-              data.htmlMode,
-              selector,
-              element,
-            )
-          })
-        })
-      }
-
-      if (!componentRequestData.selector && typeof data.html === 'object' && data.html !== null) {
-        Object.entries(data.html).forEach(function ([selector, html]) {
-          let elements = document.querySelectorAll(selector)
-
-          elements.forEach(element => {
-            element.innerHTML = html
-          })
-        })
-      }
-
-      if (data.fields_values !== undefined) {
-        for (let [selector, value] of Object.entries(data.fields_values)) {
-          let el = document.querySelector(selector)
-          if (el !== null) {
-            el.value = value
-            el.dispatchEvent(new Event('change'))
-          }
-        }
-      }
+      DOMUpdater({
+        htmlData: data.htmlData,
+        selectors: componentRequestData.selector ? componentRequestData.selector.split(',') : undefined,
+        fields_values: data.fields_values,
+      })
 
       if (data.redirect) {
         window.location.assign(data.redirect)
@@ -262,18 +216,4 @@ function downloadFile(fileName, data) {
   document.body.appendChild(a)
   a.click()
   window.URL.revokeObjectURL(url)
-}
-
-function htmlReplace(html, mode, selector, element) {
-  let htmlMode = HtmlMode.INNER_HTML
-  if (mode !== undefined) {
-    htmlMode = mode
-  }
-  if (htmlMode === HtmlMode.INNER_HTML) {
-    element.innerHTML = html
-  } else if (htmlMode === HtmlMode.OUTER_HTML) {
-    element.outerHTML = html
-  } else {
-    element.insertAdjacentHTML(htmlMode, html)
-  }
 }
