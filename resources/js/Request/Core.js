@@ -60,13 +60,15 @@ export default async function request(
         return
       }
 
-      if(data.html !== undefined) {
+      if (data.html !== undefined) {
         data.htmlData = [{html: data.html}]
       }
 
       DOMUpdater({
         htmlData: data.htmlData,
-        selectors: componentRequestData.selector ? componentRequestData.selector.split(',') : undefined,
+        selectors: componentRequestData.selector
+          ? componentRequestData.selector.split(',')
+          : undefined,
         fields_values: data.fields_values,
       })
 

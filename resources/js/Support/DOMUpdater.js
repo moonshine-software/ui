@@ -9,23 +9,24 @@ export function extractFromEventDetails(attributes, mapTo = undefined) {
     selectors.forEach(function (selector) {
       let parts = selector.split('{->}')
 
-      if(mapTo !== undefined) {
-        data.push({ [mapTo[0]]: parts[0], [mapTo[1]]: parts[1] })
+      if (mapTo !== undefined) {
+        data.push({[mapTo[0]]: parts[0], [mapTo[1]]: parts[1]})
       } else {
         data[parts[0]] = parts[1]
       }
-
     })
   }
 
   return data
 }
 
-export default function DOMUpdater(data = {
-  htmlData: undefined,
-  selectors: undefined,
-  fields_values: undefined,
-}) {
+export default function DOMUpdater(
+  data = {
+    htmlData: undefined,
+    selectors: undefined,
+    fields_values: undefined,
+  },
+) {
   console.log(data)
 
   if (data.htmlData !== undefined && typeof data.htmlData == 'object') {
