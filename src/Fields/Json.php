@@ -292,7 +292,7 @@ class Json extends Field implements
     {
         $fields = $this->getFields();
 
-        if(!$this->isPreviewMode()) {
+        if (! $this->isPreviewMode()) {
             $fields->prepareAttributes();
         }
 
