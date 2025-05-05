@@ -1,8 +1,6 @@
 @props([
     'enabled' => $isEnabled ?? true,
-    'action' => '',
-    'value' => '',
-    'placeholder' => '',
+    'form' => '',
 ])
 @if($enabled)
     <div
@@ -35,11 +33,16 @@
                     />
                 </button>
             </x-slot:trigger>
-            <x-moonshine::layout.search-form :action="$action" :value="$value" :placeholder="$placeholder"/>
+
+            <div {{ $attributes->class(['search']) }}>
+                {!! $form ?? $slot !!}
+            </div>
         </x-moonshine::popover>
 
         <div x-show="!isPopover">
-            <x-moonshine::layout.search-form :action="$action" :value="$value" :placeholder="$placeholder"/>
+            <div {{ $attributes->class(['search']) }}>
+                {!! $form ?? $slot !!}
+            </div>
         </div>
     </div>
 @endif
