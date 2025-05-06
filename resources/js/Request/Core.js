@@ -60,12 +60,21 @@ export default async function request(
         return
       }
 
+      let htmlData = data.htmlData ?? []
+
+      /**
+       * TODO(4.0) remove legacy
+       */
       if (data.html !== undefined) {
-        data.htmlData = [{html: data.html}]
+        htmlData = [{html: data.html}]
+      }
+
+      if (componentRequestData.selector && typeof data === 'string') {
+        htmlData = [{html: data}]
       }
 
       DOMUpdater({
-        htmlData: data.htmlData,
+        htmlData: htmlData,
         selectors: componentRequestData.selector
           ? componentRequestData.selector.split(',')
           : undefined,

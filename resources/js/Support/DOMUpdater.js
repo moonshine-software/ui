@@ -22,14 +22,12 @@ export function extractFromEventDetails(attributes, mapTo = undefined) {
 
 export default function DOMUpdater(
   data = {
-    htmlData: undefined,
-    selectors: undefined,
-    fields_values: undefined,
+    htmlData: undefined, // array
+    selectors: undefined, // array
+    fields_values: undefined, // object
   },
 ) {
-  console.log(data)
-
-  if (data.htmlData !== undefined && typeof data.htmlData == 'object') {
+  if (data.htmlData !== undefined) {
     data.htmlData.forEach(function (htmlDataItem) {
       let selectors = data.selectors ?? htmlDataItem.selector.split(',')
       selectors.forEach(function (selector) {
