@@ -478,9 +478,12 @@ final class FormBuilder extends MoonShineComponent implements
         $onlyFields->each(
             fn (FieldContract $field): FieldContract => $field->formName($this->getName()),
         );
-        $fields->prepend(
-            Hidden::make('_component_name')->formName($this->getName())->setValue($this->getName()),
-        );
+
+        if(!$this->rawMode()) {
+            $fields->prepend(
+                Hidden::make('_component_name')->formName($this->getName())->setValue($this->getName()),
+            );
+        }
 
         $reactiveFields = $onlyFields->reactiveFields()
             ->mapWithKeys(static fn (FieldContract $field): array => [$field->getColumn() => $field->getReactiveValue()]);
