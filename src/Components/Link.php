@@ -73,7 +73,11 @@ final class Link extends MoonShineComponent implements HasIconContract, HasLabel
     protected function prepareBeforeRender(): void
     {
         $this->customAttributes([
-            'href' => value($this->href, $this),
+            'href' => htmlspecialchars(
+                value($this->href, $this),
+                ENT_QUOTES | ENT_SUBSTITUTE,
+                'UTF-8',
+            ),
         ]);
     }
 

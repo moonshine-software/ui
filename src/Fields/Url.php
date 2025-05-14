@@ -7,7 +7,7 @@ namespace MoonShine\UI\Fields;
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use MoonShine\Support\Enums\TextWrap;
-use MoonShine\UI\Components\Url as UrlComponent;
+use MoonShine\UI\Components\Link;
 
 class Url extends Text
 {
@@ -36,6 +36,7 @@ class Url extends Text
     protected function resolvePreview(): Renderable|string
     {
         $value = $this->toFormattedValue() ?? '';
+
         $title = $this->isUnescape()
             ? $value
             : $this->escapeValue($value);
@@ -44,12 +45,14 @@ class Url extends Text
             return '';
         }
 
-        return UrlComponent::make(
+        return Link::make(
             href: $value,
-            value: \is_null($this->titleCallback)
+            label: \is_null($this->titleCallback)
                 ? $title
                 : (string) \call_user_func($this->titleCallback, $title, $this),
-            blank: $this->blank
-        )->render();
+        )->when(
+            $this->blank,
+            fn (Link $ctx): Link => $ctx->blank()
+        )->icon('link')->render();
     }
 }
