@@ -479,7 +479,7 @@ final class FormBuilder extends MoonShineComponent implements
             fn (FieldContract $field): FieldContract => $field->formName($this->getName()),
         );
 
-        if(!$this->isRaw()) {
+        if (! $this->isRaw()) {
             $fields->prepend(
                 Hidden::make('_component_name')->formName($this->getName())->setValue($this->getName()),
             );
