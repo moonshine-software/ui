@@ -17,6 +17,13 @@ trait DateTrait
         return $this;
     }
 
+    public function inputFormat(string $format): static
+    {
+        $this->inputFormat = $format;
+
+        return $this;
+    }
+
     public function getFormat(): string
     {
         return $this->format;
