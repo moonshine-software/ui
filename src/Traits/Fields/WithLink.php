@@ -27,11 +27,7 @@ trait WithLink
 
     public function getLinkValue(mixed $value = null): string
     {
-        return htmlspecialchars(
-            (string) value($this->linkValue, $value ?? $this->toValue(withDefault: false), $this),
-            ENT_QUOTES | ENT_SUBSTITUTE,
-            'UTF-8',
-        );
+        return (string) value($this->linkValue, $value ?? $this->toValue(withDefault: false), $this);
     }
 
     public function getLinkName(mixed $value = null): string
