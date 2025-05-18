@@ -245,8 +245,12 @@ class ActionButton extends MoonShineComponent implements
         ]);
     }
 
-    public function withoutLoading(): static
+    public function withoutLoading(Closure|bool|null $condition = null): static
     {
+        if (! (value($condition, $this) ?? true)) {
+            return $this->removeAttribute('data-without-loading');
+        }
+
         return $this->customAttributes([
             'data-without-loading' => true,
         ]);
