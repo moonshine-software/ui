@@ -24,6 +24,7 @@ use MoonShine\UI\Traits\Fields\Applies;
 use MoonShine\UI\Traits\Fields\ShowWhen;
 use MoonShine\UI\Traits\Fields\WithQuickFormElementAttributes;
 use MoonShine\UI\Traits\WithLabel;
+use WeakReference;
 
 abstract class FormElement extends MoonShineComponent implements FormElementContract
 {
@@ -35,7 +36,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     protected array $propertyAttributes = ['type'];
 
-    protected ?FormElementContract $parent = null;
+    protected ?WeakReference $parent = null;
 
     protected ?string $formName = null;
 
@@ -139,17 +140,17 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     public function getParent(): ?FormElementContract
     {
-        return $this->parent;
+        return $this->parent?->get();
     }
 
     public function hasParent(): bool
     {
-        return ! \is_null($this->parent);
+        return ! \is_null($this->parent) && $this->parent->get() !== null;
     }
 
     public function setParent(FormElementContract $field): static
     {
-        $this->parent = $field;
+        $this->parent = WeakReference::create($field);
 
         return $this;
     }

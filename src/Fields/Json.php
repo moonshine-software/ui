@@ -184,6 +184,12 @@ class Json extends Field implements
     {
         $button = $this->creatableButton;
 
+        if($button === null){
+            $button = ActionButton::make($this->getCore()->getTranslator()->get('moonshine::ui.add'))
+                ->icon('plus-circle')
+                ->customAttributes(['@click.prevent' => 'add()', 'class' => 'w-full']);
+        }
+
         if (! \is_null($this->modifyCreateButton)) {
             $button = \call_user_func($this->modifyCreateButton, $button, $this);
         }

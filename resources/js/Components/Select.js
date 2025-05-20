@@ -375,7 +375,8 @@ export default (asyncUrl = '') => ({
       }
 
       if (form === null) {
-        formQuery = getQueryString({value: this.choicesInstance.getValue(true)})
+        const value = this.choicesInstance.getValue(true)
+        formQuery = getQueryString({value: value === undefined || value === null ? '' : value})
       }
 
       options = await this.fromUrl(url.toString() + (formQuery.length ? '&' + formQuery : ''))
