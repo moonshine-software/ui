@@ -184,7 +184,7 @@ class Json extends Field implements
     {
         $button = $this->creatableButton;
 
-        if($button === null){
+        if(!$button instanceof ActionButtonContract){
             $button = ActionButton::make($this->getCore()->getTranslator()->get('moonshine::ui.add'))
                 ->icon('plus-circle')
                 ->customAttributes(['@click.prevent' => 'add()', 'class' => 'w-full']);
