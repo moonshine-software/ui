@@ -118,7 +118,7 @@ class Checkbox extends Field implements
     protected function resolveOnApply(): ?Closure
     {
         return function ($item) {
-            if($this->getAttribute('disabled')) {
+            if ($this->getAttribute('disabled')) {
                 return $item;
             }
 
