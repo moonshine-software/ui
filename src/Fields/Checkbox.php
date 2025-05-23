@@ -118,6 +118,10 @@ class Checkbox extends Field implements
     protected function resolveOnApply(): ?Closure
     {
         return function ($item) {
+            if($this->getAttribute('disabled')) {
+                return $item;
+            }
+
             $value = $this->getOnValue() == $this->getRequestValue() ? $this->getOnValue() : $this->getOffValue();
 
             if (is_numeric($value)) {
