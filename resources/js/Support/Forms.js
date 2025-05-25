@@ -125,9 +125,9 @@ export function crudFormQuery(formElements = null, maxLength = 50) {
     ) {
       const value = inputGetValue(element)
 
-      if(maxLength !== null && typeof value === 'string' && value.length <= maxLength) {
+      if (maxLength !== null && typeof value === 'string' && value.length <= maxLength) {
         values[inputFieldName(name)] = value
-      } else if(maxLength === null) {
+      } else if (maxLength === null) {
         values[inputFieldName(name)] = value
       }
     }
