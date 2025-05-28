@@ -107,7 +107,7 @@ export function getQueryString(obj, encode = false) {
   return encode === true ? encodeURI(str) : str
 }
 
-export function crudFormQuery(formElements = null) {
+export function crudFormQuery(formElements = null, maxLength = 50) {
   if (formElements.length === 0) {
     return ''
   }
@@ -123,7 +123,13 @@ export function crudFormQuery(formElements = null) {
       !name.startsWith('_') &&
       !name.startsWith('hidden_')
     ) {
-      values[inputFieldName(name)] = inputGetValue(element)
+      const value = inputGetValue(element)
+
+      if (maxLength !== null && typeof value === 'string' && value.length <= maxLength) {
+        values[inputFieldName(name)] = value
+      } else if (maxLength === null) {
+        values[inputFieldName(name)] = value
+      }
     }
   })
 
