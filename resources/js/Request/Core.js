@@ -38,11 +38,10 @@ export default async function request(
       data: body,
       headers: headers,
       responseType: componentRequestData.responseType,
-    }).then(function (response) {
+    }).then(async function (response) {
       t.loading = false
 
-      const data = response.data ?? {}
-      const contentDisposition = response.headers['content-disposition']
+      const { isAttachment, data, fileName } = await getResponseData(response, componentRequestData.responseType)
 
       if (componentRequestData.hasBeforeHandleResponse()) {
         componentRequestData.beforeHandleResponse(data, t)
@@ -85,9 +84,7 @@ export default async function request(
         window.location.assign(data.redirect)
       }
 
-      if (contentDisposition?.startsWith('attachment')) {
-        let fileName = contentDisposition.split('filename=')[1]
-
+      if (isAttachment) {
         downloadFile(fileName, data)
       }
 
@@ -122,20 +119,54 @@ export default async function request(
       return
     }
 
-    if (!errorResponse?.response?.data) {
+    let data = errorResponse?.response?.data
+
+    if (componentRequestData.responseType === 'blob' && data instanceof Blob) {
+      try {
+        const text = await data.text()
+        data = JSON.parse(text)
+      } catch (e) {
+        console.error(e.message)
+
+        MoonShine.ui.toast('Unknown Error', 'error')
+        return
+      }
+    }
+
+    if (!data) {
       console.error(errorResponse.message)
 
       MoonShine.ui.toast('Unknown Error', 'error')
       return
     }
 
-    const data = errorResponse.response.data
-
     if (componentRequestData.hasErrorCallback()) {
       componentRequestData.errorCallback(data, t)
     }
 
     MoonShine.ui.toast(data.message ?? data, 'error')
+  }
+
+  async function getResponseData(response, expectedType) {
+    if (expectedType === 'blob') {
+      const contentDisposition = response.headers?.['content-disposition']
+      const isBlob = response.data instanceof Blob
+
+      if (contentDisposition?.startsWith('attachment')) {
+        return {
+          isAttachment: true,
+          fileName: contentDisposition.split('filename=')[1],
+          data: response.data,
+        }
+      }
+
+      if (isBlob && typeof response.data.text === 'function') {
+        const text = await response.data.text()
+        return { isAttachment: false, data: JSON.parse(text) }
+      }
+    }
+
+    return { isAttachment: false, data: response.data }
   }
 }
 

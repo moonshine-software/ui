@@ -123,7 +123,9 @@ describe('request function', () => {
       'content-disposition': `attachment; filename=${filename}`,
     })
 
-    await request(t, '/test-url')
+    const componentRequestData = new ComponentRequestData()
+
+    await request(t, '/test-url', 'get', {}, {}, componentRequestData.withResponseType('blob'))
 
     const anchorElement = createElementSpy.mock.results[0].value
     expect(createObjectURLSpy).toHaveBeenCalledWith(new Blob([data]))
@@ -133,6 +135,29 @@ describe('request function', () => {
     expect(anchorElement.href).toBe('mock-url')
     expect(anchorElement.download).toBe(filename)
     expect(createElementSpy).toHaveBeenCalledWith('a')
+  })
+
+  it('should handle errors in axios response with blob non 200', async () => {
+    const componentRequestData = new ComponentRequestData()
+    mockAxios.onGet('/test-url').reply(500, {message: 'Error'})
+
+    await request(t, '/test-url', 'get', {}, {}, componentRequestData.withResponseType('blob'))
+
+    expect(t.loading).toBe(false)
+    expect(MoonShine.ui.toast).toHaveBeenCalledWith('Error', 'error')
+  })
+
+  it('should handle errors in axios response with blob', async () => {
+    const errorData = JSON.stringify({ message: 'Error' })
+    const blob = new Blob([errorData], { type: 'application/json' })
+
+    const componentRequestData = new ComponentRequestData()
+    mockAxios.onGet('/test-url').reply(200, {message: 'Error', messageType: 'error'})
+
+    await request(t, '/test-url', 'get', blob, {}, componentRequestData.withResponseType('blob'))
+
+    expect(t.loading).toBe(false)
+    expect(MoonShine.ui.toast).toHaveBeenCalledWith('Error', 'error', null)
   })
 
   it('should handle errors in axios response', async () => {
