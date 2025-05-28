@@ -41,7 +41,10 @@ export default async function request(
     }).then(async function (response) {
       t.loading = false
 
-      const { isAttachment, data, fileName } = await getResponseData(response, componentRequestData.responseType)
+      const {isAttachment, data, fileName} = await getResponseData(
+        response,
+        componentRequestData.responseType,
+      )
 
       if (componentRequestData.hasBeforeHandleResponse()) {
         componentRequestData.beforeHandleResponse(data, t)
@@ -162,11 +165,11 @@ export default async function request(
 
       if (isBlob && typeof response.data.text === 'function') {
         const text = await response.data.text()
-        return { isAttachment: false, data: JSON.parse(text) }
+        return {isAttachment: false, data: JSON.parse(text)}
       }
     }
 
-    return { isAttachment: false, data: response.data }
+    return {isAttachment: false, data: response.data}
   }
 }
 

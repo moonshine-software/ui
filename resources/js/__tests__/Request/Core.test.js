@@ -148,8 +148,8 @@ describe('request function', () => {
   })
 
   it('should handle errors in axios response with blob', async () => {
-    const errorData = JSON.stringify({ message: 'Error' })
-    const blob = new Blob([errorData], { type: 'application/json' })
+    const errorData = JSON.stringify({message: 'Error'})
+    const blob = new Blob([errorData], {type: 'application/json'})
 
     const componentRequestData = new ComponentRequestData()
     mockAxios.onGet('/test-url').reply(200, {message: 'Error', messageType: 'error'})
