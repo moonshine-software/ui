@@ -29,20 +29,25 @@ export default function DOMUpdater(
 ) {
   if (data.htmlData !== undefined) {
     data.htmlData.forEach(function (htmlDataItem) {
-      let selectors = data.selectors ?? htmlDataItem.selector.split(',')
-      selectors.forEach(function (selector) {
-        let elements = document.querySelectorAll(selector)
-        elements.forEach(element => {
-          htmlReplace(
-            htmlDataItem.html && typeof htmlDataItem.html === 'object'
-              ? (htmlDataItem.html[selector] ?? htmlDataItem.html)
-              : htmlDataItem.html,
-            htmlDataItem.htmlMode,
-            selector,
-            element,
-          )
+      let selectors = data.selectors ?? htmlDataItem.selector
+
+      if(selectors) {
+        selectors = typeof selectors === 'string' ? selectors.split(',') : selectors
+
+        selectors.forEach(function(selector) {
+          let elements = document.querySelectorAll(selector)
+          elements.forEach(element => {
+            htmlReplace(
+              htmlDataItem.html && typeof htmlDataItem.html === 'object'
+                ? (htmlDataItem.html[selector] ?? htmlDataItem.html)
+                : htmlDataItem.html,
+              htmlDataItem.htmlMode,
+              selector,
+              element,
+            )
+          })
         })
-      })
+      }
     })
   }
 

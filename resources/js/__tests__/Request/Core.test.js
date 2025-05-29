@@ -249,6 +249,33 @@ describe('request function', () => {
     expect(document.querySelectorAll(selector)[0].innerHTML).toBe(content)
   })
 
+  it('should update elements based on response with selector in data', async () => {
+    const content = '<div>New Content</div>'
+
+    const selector = '.test'
+    mockAxios.onGet('/test-url').reply(200, {htmlData: [{html: content, selector: selector}]})
+
+    document.querySelectorAll = jest.fn().mockReturnValue([{innerHTML: ''}])
+    await request(t, '/test-url', 'get')
+
+    expect(document.querySelectorAll).toHaveBeenCalledWith(selector)
+    expect(document.querySelectorAll(selector)[0].innerHTML).toBe(content)
+  })
+
+  it('should update elements based on response with empty selector', async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    const content = '<div>New Content</div>'
+
+    const selector = ''
+    mockAxios.onGet('/test-url').reply(200, {htmlData: [{html: content, selector: selector}]})
+
+    document.querySelectorAll = jest.fn().mockReturnValue([{innerHTML: ''}])
+    await request(t, '/test-url', 'get')
+
+    expect(console.error).not.toHaveBeenCalled()
+  })
+
   it('should handle messages in response', async () => {
     const componentRequestData = new ComponentRequestData()
     mockAxios
