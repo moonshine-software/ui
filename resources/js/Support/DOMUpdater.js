@@ -31,10 +31,10 @@ export default function DOMUpdater(
     data.htmlData.forEach(function (htmlDataItem) {
       let selectors = data.selectors ?? htmlDataItem.selector
 
-      if(selectors) {
+      if (selectors) {
         selectors = typeof selectors === 'string' ? selectors.split(',') : selectors
 
-        selectors.forEach(function(selector) {
+        selectors.forEach(function (selector) {
           let elements = document.querySelectorAll(selector)
           elements.forEach(element => {
             htmlReplace(
