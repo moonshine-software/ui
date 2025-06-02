@@ -66,6 +66,7 @@ trait WithComponents
 
     public function setComponents(iterable $components): static
     {
+        // TODO remove in 4.0
         if ($this->getCore()->runningInConsole()) {
             $components = collect($components)
                 ->map(static fn (object $component): object => clone $component)
