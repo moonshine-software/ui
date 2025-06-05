@@ -33,7 +33,7 @@ export default async function request(
 
   try {
     const response = await axios({
-      url: url,
+      url: prepareUrl(url),
       method: method,
       data: body,
       headers: headers,
@@ -171,6 +171,16 @@ export default async function request(
 
     return {isAttachment: false, data: response.data}
   }
+}
+
+export function prepareUrl(url) {
+  if (MoonShine.config().isForceRelativeUrls() === true) {
+    const parsed = new URL(url)
+
+    return parsed.pathname + parsed.search + parsed.hash
+  }
+
+  return url
 }
 
 export function urlWithQuery(url, append, callback = null) {

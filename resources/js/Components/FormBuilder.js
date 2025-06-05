@@ -6,7 +6,7 @@ import {
   prepareFormExtraData,
   prepareFormQueryString,
 } from '../Support/Forms.js'
-import request, {initCallback} from '../Request/Core.js'
+import request, {initCallback, prepareUrl} from '../Request/Core.js'
 import {dispatchEvents as de} from '../Support/DispatchEvents.js'
 import {getInputs, showWhenChange, showWhenVisibilityChange} from '../Support/ShowWhen.js'
 import {formToJSON} from 'axios'
@@ -146,7 +146,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
     submitState(form, true)
 
     axios
-      .post(form.getAttribute('action'), new FormData(form), {
+      .post(prepareUrl(form.getAttribute('action')), new FormData(form), {
         headers: {
           Precognition: true,
           Accept: 'application/json',
