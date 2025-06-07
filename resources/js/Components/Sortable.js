@@ -1,6 +1,6 @@
 import Sortable from 'sortablejs'
 import {filterAttributeStartsWith} from '../Support/Forms.js'
-import {prepareUrl} from '../Request/Core.js';
+import {prepareUrl} from '../Request/Core.js'
 
 export default (url = null, group = null, element = null, events = null, attributes = null) => ({
   init(onSort = null) {

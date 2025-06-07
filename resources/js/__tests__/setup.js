@@ -22,7 +22,7 @@ global.MoonShine = {
         _config.forceRelativeUrls = condition
       },
     }
-  }
+  },
 }
 
 jest.spyOn(console, 'error').mockImplementation(msg => {})

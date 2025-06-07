@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {prepareUrl} from '../Request/Core.js';
+import {prepareUrl} from '../Request/Core.js'
 
 // Modal/OffCanvas async content
 export default async function load(url, id) {
