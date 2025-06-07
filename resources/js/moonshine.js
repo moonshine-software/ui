@@ -6,6 +6,7 @@ import {dispatchEvents} from './Support/DispatchEvents.js'
 
 const _config = {
   toastDuration: undefined,
+  forceRelativeUrls: false,
 }
 
 export class MoonShine {
@@ -20,6 +21,11 @@ export class MoonShine {
       getToastDuration: () => _config.toastDuration,
       setToastDuration: value => {
         _config.toastDuration = value
+      },
+
+      isForceRelativeUrls: () => _config.forceRelativeUrls,
+      forceRelativeUrls: condition => {
+        _config.forceRelativeUrls = condition
       },
     }
   }

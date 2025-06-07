@@ -1,7 +1,7 @@
 import {crudFormQuery} from '../Support/Forms.js'
 import sortableFunction from './Sortable.js'
 import {listComponentRequest} from '../Request/Sets.js'
-import {urlWithQuery} from '../Request/Core.js'
+import {urlWithQuery, prepareUrl} from '../Request/Core.js'
 import {dispatchEvents} from '../Support/DispatchEvents.js'
 
 export default (
@@ -212,7 +212,7 @@ export default (
     }
 
     axios
-      .get(t.asyncUrl + `&_key=${key}&_index=${index}`)
+      .get(prepareUrl(t.asyncUrl + `&_key=${key}&_index=${index}`))
       .then(response => {
         tr.outerHTML = response.data
         t.initColumnSelection()

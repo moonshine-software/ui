@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+import {prepareUrl} from '../Request/Core.js';
+
 // Modal/OffCanvas async content
 export default async function load(url, id) {
-  const {data, status} = await axios.get(url)
+  const {data, status} = await axios.get(prepareUrl(url))
 
   if (status === 200) {
     let containerElement = document.getElementById(id)

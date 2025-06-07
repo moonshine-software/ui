@@ -1,5 +1,6 @@
 import Sortable from 'sortablejs'
 import {filterAttributeStartsWith} from '../Support/Forms.js'
+import {prepareUrl} from '../Request/Core.js';
 
 export default (url = null, group = null, element = null, events = null, attributes = null) => ({
   init(onSort = null) {
@@ -22,7 +23,7 @@ export default (url = null, group = null, element = null, events = null, attribu
           formData.append('index', evt.newIndex)
           formData.append('data', this.toArray())
 
-          await axios.post(url, formData)
+          await axios.post(prepareUrl(url), formData)
         }
 
         if (typeof onSort === 'function') {
