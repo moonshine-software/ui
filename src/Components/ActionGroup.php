@@ -74,15 +74,4 @@ final class ActionGroup extends AbstractWithComponents
             'actions' => $this->getActions()->onlyVisible(),
         ];
     }
-
-    /**
-     * @return array<string, mixed>
-     * @throws Throwable
-     */
-    protected function systemViewData(): array
-    {
-        return [
-            ...parent::systemViewData(),
-        ];
-    }
 }

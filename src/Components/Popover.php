@@ -34,12 +34,15 @@ final class Popover extends MoonShineComponent
         ]);
     }
 
-    protected function viewData(): array
+    protected function prepareBeforeRender(): void
     {
         $this->customAttributes([
             AlpineJs::eventBlade(JsEvent::POPOVER_TOGGLED, $this->getName()) => 'toggle',
         ]);
+    }
 
+    protected function viewData(): array
+    {
         return [
             'slot' => $this->getSlot(),
         ];
