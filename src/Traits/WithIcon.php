@@ -15,6 +15,9 @@ trait WithIcon
 
     protected ?string $iconPath = null;
 
+    /**
+     * @param  non-empty-string  $icon
+     */
     public function icon(string $icon, bool $custom = false, ?string $path = null): static
     {
         $this->icon = $icon;
@@ -24,6 +27,13 @@ trait WithIcon
         return $this;
     }
 
+    /**
+     * @param  int  $size
+     * @param  Color|string  $color
+     * @param  string[]  $attributes
+     *
+     * @return string
+     */
     public function getIcon(
         int $size = 8,
         Color|string $color = '',

@@ -10,10 +10,16 @@ trait WithStorage
 {
     protected ?string $disk = null;
 
+    /**
+     * @var string[]|null
+     */
     protected ?array $options = null;
 
     protected string $dir = '/';
 
+    /**
+     * @param  non-empty-string  $dir
+     */
     public function dir(string $dir): static
     {
         $this->dir = $dir;
@@ -28,6 +34,9 @@ trait WithStorage
         }
     }
 
+    /**
+     * @param  non-empty-string  $disk
+     */
     public function disk(string $disk): static
     {
         $this->disk = $disk;
@@ -35,11 +44,17 @@ trait WithStorage
         return $this;
     }
 
+    /**
+     * @return   non-empty-string
+     */
     public function getDisk(): string
     {
         return $this->disk ?? $this->getCore()->getConfig()->getDisk();
     }
 
+    /**
+     * @param  string[]  $options
+     */
     public function options(array $options): static
     {
         $this->options = $options;
@@ -58,6 +73,9 @@ trait WithStorage
         ];
     }
 
+    /**
+     * @return   non-empty-string
+     */
     public function getDir(): string
     {
         return str($this->dir)
@@ -65,22 +83,34 @@ trait WithStorage
             ->value();
     }
 
+    /**
+     * @param  non-empty-string  $value
+     * @return   non-empty-string
+     */
     public function getStorageUrl(string $value): string
     {
         return $this->getCore()->getStorage(disk: $this->getDisk())->getUrl($value);
     }
 
+    /**
+     * @param  non-empty-string|string[]  $path
+     *
+     */
     public function deleteStorageFile(string|array $path): bool
     {
         return $this->getCore()->getStorage(disk: $this->getDisk())->delete($path);
     }
 
+    /**
+     * @param  non-empty-string  $dir
+     */
     public function deleteStorageDirectory(string $dir): bool
     {
         return $this->getCore()->getStorage(disk: $this->getDisk())->deleteDirectory($dir);
     }
 
     /**
+     * @param non-empty-string $dir
      * @return string[]
      */
     public function getStorageDirectories(string $dir): array
@@ -89,6 +119,7 @@ trait WithStorage
     }
 
     /**
+     * @param non-empty-string $dir
      * @return list<SplFileInfo>
      */
     public function getStorageFiles(string $dir): array
