@@ -33,7 +33,6 @@ use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Layout\Grid;
 use MoonShine\UI\Components\Link;
 use MoonShine\UI\Fields\Checkbox;
-use MoonShine\UI\Fields\Field;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Traits\HasAsync;
 use MoonShine\UI\Traits\Table\TableStates;
