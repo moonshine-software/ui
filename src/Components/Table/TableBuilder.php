@@ -118,9 +118,9 @@ final class TableBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(?DataWrapperContract $data, int $row, self $table): array  $callback
+     * @param  Closure(?DataWrapperContract $data, int $row, static $table): array  $callback
      */
-    public function trAttributes(Closure $callback): self
+    public function trAttributes(Closure $callback): static
     {
         $this->trAttributes[] = $callback;
 
@@ -136,9 +136,9 @@ final class TableBuilder extends IterableComponent implements
     }
 
     /**
-     * @param  Closure(?DataWrapperContract $data, int $row, int $cell, self $table): array  $callback
+     * @param  Closure(?DataWrapperContract $data, int $row, int $cell, static $table): array  $callback
      */
-    public function tdAttributes(Closure $callback): self
+    public function tdAttributes(Closure $callback): static
     {
         $this->tdAttributes[] = $callback;
 
