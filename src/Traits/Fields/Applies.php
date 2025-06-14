@@ -12,6 +12,8 @@ use MoonShine\Contracts\UI\FormElementContract;
 
 trait Applies
 {
+    protected static bool $silentApply = false;
+
     protected ?Closure $canApply = null;
 
     protected ?Closure $onApply = null;
@@ -23,6 +25,25 @@ trait Applies
     protected ?Closure $onAfterDestroy = null;
 
     protected ?Closure $onRefreshAfterApply = null;
+
+    /**
+     * Using a field without side effects (for example, maintaining relationships)
+     *
+     * @template D of mixed
+     * @param  Closure(): D  $callback
+     *
+     * @return D
+     */
+    public static function silentApply(Closure $callback): mixed
+    {
+        self::$silentApply = true;
+
+        $data = $callback();
+
+        self::$silentApply = false;
+
+        return $data;
+    }
 
     public function refreshAfterApply(?Closure $callback = null): static
     {
