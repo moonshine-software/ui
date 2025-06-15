@@ -261,6 +261,10 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     public function fillCast(mixed $value, ?DataCasterContract $cast = null, int $index = 0): static
     {
+        if($value instanceof DataWrapperContract) {
+            return $this->fillData($value, $index);
+        }
+
         $casted = $cast ? $cast->cast($value) : new MixedDataWrapper($value);
 
         return $this->fillData($casted, $index);
