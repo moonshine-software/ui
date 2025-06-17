@@ -251,24 +251,28 @@ export default (asyncUrl = '') => ({
       this.choicesInstance.setChoiceByValue(value)
     })
 
-    this.$el.addEventListener('change', () => {
-      this.isLoadedOptions = false
+    this.$el.addEventListener(
+      'change',
+      () => {
+        this.isLoadedOptions = false
 
-      this.$nextTick(() => {
-        const value = this.choicesInstance.getValue(true)
+        this.$nextTick(() => {
+          const value = this.choicesInstance.getValue(true)
 
-        if (this.isMultiple) {
-          const selectedValues = Array.isArray(value) ? value.map(String) : []
-          for (const option of this.$el.options) {
-            option.selected = selectedValues.includes(option.value)
+          if (this.isMultiple) {
+            const selectedValues = Array.isArray(value) ? value.map(String) : []
+            for (const option of this.$el.options) {
+              option.selected = selectedValues.includes(option.value)
+            }
+          } else {
+            this.$el.value = value ?? ''
           }
-        } else {
-          this.$el.value = value ?? ''
-        }
-      })
+        })
 
-      this.setDataValues()
-    }, false)
+        this.setDataValues()
+      },
+      false,
+    )
 
     if (asyncUrl) {
       this.$el.addEventListener(
