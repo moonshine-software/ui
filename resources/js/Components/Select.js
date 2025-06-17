@@ -15,6 +15,8 @@ export default (asyncUrl = '') => ({
   associatedWith: null,
   searchTerms: null,
   isLoadedOptions: false,
+  isMultiple: false,
+  morphClearValue: '',
   customOptions: {},
   resolvedOptions: [
     'silent',
@@ -66,6 +68,7 @@ export default (asyncUrl = '') => ({
 
   init() {
     this.placeholder = this.$el.getAttribute('placeholder')
+    this.isMultiple = this.$el.getAttribute('multiple')
     this.searchEnabled = !!this.$el.dataset.searchEnabled
     this.removeItemButton = !!this.$el.dataset.removeItemButton
     this.shouldSort = !!this.$el.dataset.shouldSort
@@ -234,10 +237,37 @@ export default (asyncUrl = '') => ({
 
     this.setDataValues()
 
+    this.$nextTick(() => {
+      const el = this.$el
+
+      if (el.value === null || el.value === undefined || el.value === '') {
+        return
+      }
+
+      let value = this.isMultiple
+        ? Array.from(el.selectedOptions).map(option => option.value)
+        : el.value
+
+      this.choicesInstance.setChoiceByValue(value)
+    })
+
     this.$el.addEventListener(
       'change',
       () => {
         this.isLoadedOptions = false
+
+        this.$nextTick(() => {
+          const value = this.choicesInstance.getValue(true)
+
+          if (this.isMultiple) {
+            const selectedValues = Array.isArray(value) ? value.map(String) : []
+            for (const option of this.$el.options) {
+              option.selected = selectedValues.includes(option.value)
+            }
+          } else {
+            this.$el.value = value ?? ''
+          }
+        })
 
         this.setDataValues()
       },
@@ -350,8 +380,9 @@ export default (asyncUrl = '') => ({
     }
   },
   morphClear(type) {
-    if (type.value) {
+    if (type.value && this.morphClearValue !== type.value) {
       this.choicesInstance.clearStore()
+      this.morphClearValue = type.value
     }
   },
   async asyncSearch() {

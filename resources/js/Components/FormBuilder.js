@@ -189,11 +189,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
       return
     }
 
-    if (hasSubmitAttribute) {
-      this.$el.dispatchEvent(new Event('submit'))
-    } else {
-      this.$el.submit()
-    }
+    this.$el.requestSubmit()
   },
   async(events = '', callback = {}) {
     const form = this.$el
