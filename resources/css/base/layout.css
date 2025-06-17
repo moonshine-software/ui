@@ -115,7 +115,7 @@
   }
 
   &-navigation {
-    @apply relative flex flex-wrap items-center justify-center gap-4 border-b border-gray-200 pb-4 dark:border-dark-200 md:flex-nowrap md:justify-between;
+    @apply relative flex flex-wrap items-center justify-end gap-4 border-b border-gray-200 pb-4 dark:border-dark-200 md:flex-nowrap md:justify-between;
   }
 
   &-content {

@@ -38,8 +38,8 @@
         "@alpinejs/mask": "^3.13",
         "@alpinejs/persist": "^3.13",
         "@popperjs/core": "^2.11",
-        "alpinejs": "^3.13",
-        "choices.js": "^11.0",
+        "alpinejs": "^3.14",
+        "choices.js": "^11.1",
         "sortablejs": "^1.15",
         "tippy.js": "^6.3"
     }
