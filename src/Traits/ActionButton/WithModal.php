@@ -77,7 +77,7 @@ trait WithModal
         Closure|string|null $button = null,
         Closure|array|null $fields = null,
         HttpMethod $method = HttpMethod::POST,
-        /** @var null|Closure(mixed): FormBuilderContract $formBuilder */
+        /** @var null|Closure(FormBuilderContract, mixed): FormBuilderContract $formBuilder */
         ?Closure $formBuilder = null,
         ?Closure $modalBuilder = null,
         Closure|string|null $name = null,
