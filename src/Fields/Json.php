@@ -393,6 +393,15 @@ class Json extends Field implements
         $collection = $this->prepareOnApply($collection);
 
         foreach ($this->getFields() as $field) {
+            if ($field instanceof File) {
+                $column = $field->getColumn();
+
+                $collection = array_map(static fn(array $data): array => [
+                    ...$data,
+                    $column => $data[$field->getHiddenColumn()] ?? null,
+                ], $collection);
+            }
+
             if ($field instanceof self) {
                 foreach ($collection as $index => $value) {
                     $column = $field->getColumn();

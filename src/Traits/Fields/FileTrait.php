@@ -237,21 +237,26 @@ trait FileTrait
     public function getHiddenRemainingValuesKey(): string
     {
         $column = str($this->getColumn())->explode('.')->last();
-        $hiddenColumn = str($this->getVirtualColumn())->explode('.')->last();
 
         return str($this->getRequestNameDot())
-            ->replaceLast($column, "hidden_$hiddenColumn")
+            ->replaceLast($column, $this->getHiddenColumn())
             ->value();
     }
 
     public function getHiddenRemainingValuesName(): string
     {
         $column = str($this->getColumn())->explode('.')->last();
-        $hiddenColumn = str($this->getVirtualColumn())->explode('.')->last();
 
         return str($this->getNameAttribute())
-            ->replaceLast($column, "hidden_$hiddenColumn")
+            ->replaceLast($column, $this->getHiddenColumn())
             ->value();
+    }
+
+    public function getHiddenColumn(): string
+    {
+        $column = (string)str($this->getVirtualColumn())->explode('.')->last();
+
+        return "hidden_$column";
     }
 
     public function getHiddenAttributes(): ComponentAttributesBagContract
@@ -334,12 +339,25 @@ trait FileTrait
             : [$this->getPathWithDir($values)];
     }
 
-    public function removeExcludedFiles(): void
+    /**
+     * @param  string[]|string|null  $newValue
+     *
+     * @return void
+     */
+    public function removeExcludedFiles(null|array|string $newValue = null): void
     {
         $values = collect(
             $this->toValue(withDefault: false),
         );
 
-        $values->diff($this->getRemainingValues())->each(fn (?string $file) => $file !== null ? $this->deleteFile($file) : null);
+        $values->diff($this->getRemainingValues())->each(
+            function (?string $file) use ($newValue) {
+                $old = array_filter(is_array($newValue) ? $newValue : [$newValue]);
+
+                if ($file !== null && ! in_array($file, $old, true)) {
+                    $this->deleteFile($file);
+                }
+            },
+        );
     }
 }
