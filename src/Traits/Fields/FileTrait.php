@@ -352,9 +352,9 @@ trait FileTrait
 
         $values->diff($this->getRemainingValues())->each(
             function (?string $file) use ($newValue): void {
-                $old = array_filter(is_array($newValue) ? $newValue : [$newValue]);
+                $old = array_filter(\is_array($newValue) ? $newValue : [$newValue]);
 
-                if ($file !== null && ! in_array($file, $old, true)) {
+                if ($file !== null && ! \in_array($file, $old, true)) {
                     $this->deleteFile($file);
                 }
             },
