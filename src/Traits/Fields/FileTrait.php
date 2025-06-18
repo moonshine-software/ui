@@ -196,7 +196,7 @@ trait FileTrait
     public function getAcceptExtension(): string
     {
         $extensions = array_map(
-            static fn($val): string => '.' . $val,
+            static fn ($val): string => '.' . $val,
             $this->allowedExtensions,
         );
 
@@ -335,7 +335,7 @@ trait FileTrait
 
         return $this->isMultiple()
             ? collect($values)
-                ->map(fn($value): string => $this->getPathWithDir($value))
+                ->map(fn ($value): string => $this->getPathWithDir($value))
                 ->toArray()
             : [$this->getPathWithDir($values)];
     }
@@ -353,9 +353,9 @@ trait FileTrait
 
         $values->diff($this->getRemainingValues())->each(
             function (?string $file) use ($newValue): void {
-                $old = array_filter(is_array($newValue) ? $newValue : [$newValue]);
+                $old = array_filter(\is_array($newValue) ? $newValue : [$newValue]);
 
-                if ($file !== null && ! in_array($file, $old, true)) {
+                if ($file !== null && ! \in_array($file, $old, true)) {
                     $this->deleteFile($file);
                 }
             },
