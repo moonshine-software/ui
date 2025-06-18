@@ -6,6 +6,7 @@ namespace MoonShine\UI;
 
 use MoonShine\AssetManager\Css;
 use MoonShine\AssetManager\Js;
+use MoonShine\Contracts\AssetManager\AssetElementContract;
 use MoonShine\Contracts\AssetManager\AssetManagerContract;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
 use MoonShine\Contracts\Core\DependencyInjection\CoreContract;
@@ -100,6 +101,9 @@ abstract class AbstractLayout implements LayoutContract
         //
     }
 
+    /**
+     * @return non-empty-array<AssetElementContract>
+     */
     protected function assets(): array
     {
         return [

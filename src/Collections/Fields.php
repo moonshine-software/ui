@@ -23,7 +23,7 @@ use MoonShine\UI\Fields\ID;
 use Throwable;
 
 /**
- * @template T of FieldContract
+ * @template T of FieldContract = FieldContract
  * @implements FieldsContract<T>
  */
 class Fields extends BaseCollection implements FieldsContract

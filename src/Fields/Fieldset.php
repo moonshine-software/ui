@@ -19,7 +19,7 @@ use Throwable;
 
 /**
  * @implements  HasFieldsContract<Fields|FieldsContract>
- * @method static static make(string|Closure|null $label, iterable|Closure|FieldsContract $fields = [])
+ * @method static static make(string|Closure|null $label = null, iterable|Closure|FieldsContract $fields = [])
  */
 class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContract, FieldsWrapperContract
 {
@@ -29,7 +29,7 @@ class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContr
 
     protected bool $withWrapper = false;
 
-    public function __construct(string|Closure|null $label, iterable|Closure|FieldsContract $fields = [])
+    public function __construct(string|Closure|null $label = null, iterable|Closure|FieldsContract $fields = [])
     {
         parent::__construct($label);
 
