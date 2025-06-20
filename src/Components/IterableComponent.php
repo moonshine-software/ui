@@ -9,36 +9,49 @@ use Illuminate\Support\Collection;
 use MoonShine\Contracts\Core\Paginator\PaginatorContract;
 use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
-use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
+use MoonShine\Contracts\UI\HasButtonsContract;
 use MoonShine\Contracts\UI\HasCasterContract;
+use MoonShine\Contracts\UI\HasPaginatorContract;
 use MoonShine\Contracts\UI\WithoutExtractionContract;
-use MoonShine\UI\Collections\ActionButtons;
+use MoonShine\UI\Concerns\HasButtons;
+use MoonShine\UI\Concerns\HasPaginator;
 use MoonShine\UI\Traits\HasDataCast;
 
 /**
- * @template TCaster of DataCasterContract
- * @template TWrapper of DataWrapperContract
+ * @template TData of mixed = mixed
+ * @template TCaster of DataCasterContract<TData> = DataCasterContract
+ * @template TWrapper of DataWrapperContract<TData> = DataWrapperContract
  *
- * @implements HasCasterContract<DataCasterContract, DataWrapperContract>
+ * @implements HasCasterContract<TCaster, TWrapper>
  */
-abstract class IterableComponent extends MoonShineComponent implements HasCasterContract, WithoutExtractionContract
+abstract class IterableComponent extends MoonShineComponent implements
+    HasCasterContract,
+    HasPaginatorContract,
+    HasButtonsContract,
+    WithoutExtractionContract
 {
+    /** @use HasDataCast<TData, TCaster, TWrapper> */
     use HasDataCast;
+    /** @use HasPaginator<TData> */
+    use HasPaginator;
+    use HasButtons;
 
+    /**
+     * @var iterable<TData>
+     */
     protected iterable $items = [];
 
+    /**
+     * @var iterable<TData>
+     */
     protected iterable $originalItems = [];
-
-    protected ?PaginatorContract $paginator = null;
-
-    protected iterable $buttons = [];
 
     protected ?Closure $itemsResolver = null;
 
     protected bool $itemsResolved = false;
 
     /**
-     * @param  Closure(iterable $items, static $ctx): iterable  $resolver
+     * @param  Closure(iterable<TData> $items, static $ctx): iterable<TData>  $resolver
      */
     public function itemsResolver(Closure $resolver): static
     {
@@ -47,6 +60,10 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
         return $this;
     }
 
+    /**
+     * @param  iterable<TData>  $items
+     *
+     */
     public function items(iterable $items = []): static
     {
         $this->items = $items;
@@ -67,11 +84,18 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
         }
     }
 
+    /**
+     * @api
+     * @return iterable<TData>
+     */
     public function getOriginalItems(): iterable
     {
         return $this->items;
     }
 
+    /**
+     * @return Collection<array-key, TData>
+     */
     public function getItems(): Collection
     {
         if ($this->itemsResolved) {
@@ -85,58 +109,5 @@ abstract class IterableComponent extends MoonShineComponent implements HasCaster
         $this->itemsResolved = true;
 
         return $this->items = (new Collection($this->items))->filter();
-    }
-
-    public function paginator(PaginatorContract $paginator): static
-    {
-        $this->paginator = $paginator;
-
-        return $this;
-    }
-
-    public function getPaginator(bool $async = false): ?PaginatorContract
-    {
-        if (! \is_null($this->paginator) && $async) {
-            return $this->paginator->async();
-        }
-
-        return $this->paginator;
-    }
-
-    public function hasPaginator(): bool
-    {
-        return ! \is_null($this->paginator);
-    }
-
-    public function isSimplePaginator(): bool
-    {
-        return $this->getPaginator()?->isSimple() ?? false;
-    }
-
-    public function buttons(iterable $buttons = []): static
-    {
-        $this->buttons = $buttons;
-
-        return $this;
-    }
-
-    public function hasButtons(): bool
-    {
-        return $this->buttons !== [];
-    }
-
-    public function getButtons(DataWrapperContract $data): ActionButtonsContract
-    {
-        return ActionButtons::make($this->buttons)
-            ->fill($data)
-            ->onlyVisible()
-            ->withoutBulk();
-    }
-
-    public function getBulkButtons(): ActionButtonsContract
-    {
-        return ActionButtons::make($this->buttons)
-            ->bulk($this->getName())
-            ->onlyVisible();
     }
 }

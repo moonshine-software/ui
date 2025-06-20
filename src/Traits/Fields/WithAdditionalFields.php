@@ -18,7 +18,7 @@ trait WithAdditionalFields
      * @return T
      * @throws Throwable
      */
-    public function getAdditionalFields(): FieldsContract
+    protected function getAdditionalFields(): FieldsContract
     {
         return $this->getCore()->getFieldsCollection($this->additionalFields);
     }
@@ -26,7 +26,7 @@ trait WithAdditionalFields
     /**
      * @throws Throwable
      */
-    public function hasAdditionalFields(): bool
+    protected function hasAdditionalFields(): bool
     {
         return $this->getAdditionalFields()->isNotEmpty();
     }

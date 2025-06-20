@@ -11,6 +11,7 @@ use MoonShine\Contracts\Core\ResourceContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use MoonShine\Contracts\UI\Collection\ComponentsContract;
+use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Core\Collections\Components;
 use MoonShine\Support\AlpineJs;
 use MoonShine\Support\DTOs\AsyncCallback;
@@ -26,9 +27,12 @@ use MoonShine\UI\Traits\WithLabel;
 use Throwable;
 
 /**
+ * @template TData of mixed = mixed
+ * @template TWrapper of DataWrapperContract<TData> = DataWrapperContract
+ *
  * @method static static make(Closure|string $label, Closure|string $url = '#', ?DataWrapperContract $data = null)
  *
- * @implements ActionButtonContract<Modal, OffCanvas>
+ * @implements ActionButtonContract<TData, TWrapper, Modal, OffCanvas>
  */
 class ActionButton extends MoonShineComponent implements
     ActionButtonContract,
@@ -70,6 +74,7 @@ class ActionButton extends MoonShineComponent implements
     public function __construct(
         Closure|string $label,
         protected Closure|string $url = '#',
+        /** @param null|TWrapper $data */
         protected ?DataWrapperContract $data = null,
     ) {
         parent::__construct();
@@ -78,7 +83,7 @@ class ActionButton extends MoonShineComponent implements
     }
 
     /**
-     * @param  (Closure(mixed $original, ?DataWrapperContract $casted, static $ctx): string)|string  $url
+     * @param  (Closure(TData $original, null|TWrapper $casted, static $ctx): string)|string  $url
      */
     public function setUrl(Closure|string $url): static
     {
@@ -128,7 +133,7 @@ class ActionButton extends MoonShineComponent implements
     }
 
     /**
-     * @param  Closure(?DataWrapperContract $data, ActionButtonContract $ctx): ?DataWrapperContract  $onBeforeSet
+     * @param  (Closure(null|TWrapper $data, ActionButtonContract $ctx): ?TWrapper)  $onBeforeSet
      */
     public function onBeforeSet(Closure $onBeforeSet): static
     {
@@ -138,7 +143,7 @@ class ActionButton extends MoonShineComponent implements
     }
 
     /**
-     * @param  Closure(?DataWrapperContract $data, ActionButtonContract $ctx): void  $onAfterSet
+     * @param  Closure(null|TWrapper $data, ActionButtonContract $ctx): void  $onAfterSet
      */
     public function onAfterSet(Closure $onAfterSet): static
     {
@@ -147,11 +152,18 @@ class ActionButton extends MoonShineComponent implements
         return $this;
     }
 
+    /**
+     * @return null|TWrapper
+     */
     public function getData(): ?DataWrapperContract
     {
         return $this->data;
     }
 
+    /**
+     * @param  null|TWrapper  $data
+     *
+     */
     public function setData(?DataWrapperContract $data = null): static
     {
         if (! \is_null($this->onBeforeSetCallback)) {
@@ -257,7 +269,7 @@ class ActionButton extends MoonShineComponent implements
     }
 
     /**
-     * @param array|(Closure(mixed $original): array) $params = []
+     * @param array|(Closure(TData $original): array) $params = []
      * @throws Throwable
      */
     public function method(
@@ -357,7 +369,7 @@ class ActionButton extends MoonShineComponent implements
         return $this->isInOffCanvas() || $this->isInModal();
     }
 
-    public function getComponent(): ?MoonShineComponent
+    public function getComponent(): ?ComponentContract
     {
         if ($this->isInModal()) {
             return $this->getModal();
@@ -393,7 +405,7 @@ class ActionButton extends MoonShineComponent implements
         return Components::make($this->hasComponents() ? [$this->getComponent()] : []);
     }
 
-    public function purgeAsyncTap(): bool
+    protected function purgeAsyncTap(): bool
     {
         return tap($this->isAsync(), fn () => $this->purgeAsync());
     }
@@ -427,6 +439,10 @@ class ActionButton extends MoonShineComponent implements
         }
     }
 
+    /**
+     * @param  TData  $data
+     *
+     */
     public function getUrl(mixed $data = null): string
     {
         return value($this->url, $data ?? $this->getData()?->getOriginal(), $this->getData(), $this);

@@ -6,6 +6,7 @@ namespace MoonShine\UI\Components\Table;
 
 use Closure;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
+use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
 use MoonShine\Contracts\UI\Collection\TableRowsContract;
@@ -40,9 +41,15 @@ use MoonShine\UI\Traits\WithFields;
 use Throwable;
 
 /**
+ * @template TData of mixed = mixed
+ * @template TCaster of DataCasterContract<TData> = DataCasterContract
+ * @template TWrapper of DataWrapperContract<TData> = DataWrapperContract
+ *
  * @method static static make(iterable $fields = [], iterable $items = [])
  *
  * @implements HasFieldsContract<Fields|FieldsContract>
+ * @implements TableBuilderContract<TData>
+ * @extends  IterableComponent<TData, TCaster, TWrapper>
  */
 final class TableBuilder extends IterableComponent implements
     TableBuilderContract,

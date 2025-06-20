@@ -7,6 +7,8 @@ namespace MoonShine\UI\Components;
 use Closure;
 use Illuminate\Support\Collection;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
+use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
+use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\HasAsyncContract;
@@ -18,9 +20,14 @@ use MoonShine\UI\Traits\WithFields;
 use Throwable;
 
 /**
+ * @template TData of mixed = mixed
+ * @template TCaster of DataCasterContract<TData> = DataCasterContract
+ * @template TWrapper of DataWrapperContract<TData> = DataWrapperContract
+ *
  * @method static static make(iterable $items = [], FieldsContract|iterable $fields = [])
  *
  * @implements HasFieldsContract<Fields|FieldsContract>
+ * @extends IterableComponent<TData,TCaster,TWrapper>
  */
 final class CardsBuilder extends IterableComponent implements
     HasFieldsContract,
@@ -230,6 +237,9 @@ final class CardsBuilder extends IterableComponent implements
             : value($this->{$column}, $data, $index, $this);
     }
 
+    /**
+     * @param  TData  $data
+     */
     protected function getMapper(mixed $data, FieldsContract $fields, int $index): array
     {
         $values = $fields->values()

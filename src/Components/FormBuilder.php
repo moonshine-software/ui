@@ -10,11 +10,13 @@ use MoonShine\Contracts\Core\CrudResourceContract;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\PageContract;
 use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
+use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\FormBuilderContract;
+use MoonShine\Contracts\UI\HasButtonsContract;
 use MoonShine\Contracts\UI\HasCasterContract;
 use MoonShine\Contracts\UI\HasFieldsContract;
 use MoonShine\Support\AlpineJs;
@@ -22,6 +24,7 @@ use MoonShine\Support\DTOs\AsyncCallback;
 use MoonShine\Support\Enums\FormMethod;
 use MoonShine\Support\Enums\JsEvent;
 use MoonShine\UI\Collections\ActionButtons;
+use MoonShine\UI\Concerns\HasButtons;
 use MoonShine\UI\Fields\Hidden;
 use MoonShine\UI\Traits\Fields\WithAdditionalFields;
 use MoonShine\UI\Traits\HasAsync;
@@ -30,15 +33,20 @@ use MoonShine\UI\Traits\WithFields;
 use Throwable;
 
 /**
- * @template TFields of FieldsContract
+ * @template TFields of FieldsContract = FieldsContract
+ * @template TData of mixed = mixed
+ * @template TCaster of DataCasterContract<TData> = DataCasterContract
+ * @template TWrapper of DataWrapperContract<TData> = DataWrapperContract
  * @method static static make(string $action = '', FormMethod $method = FormMethod::POST, FieldsContract|iterable $fields = [], mixed $values = [])
  *
  * @implements HasFieldsContract<TFields>
- *
+ * @implements FormBuilderContract<TData>
+ * @implements HasCasterContract<TCaster, TWrapper>
  */
 final class FormBuilder extends MoonShineComponent implements
     FormBuilderContract,
     HasCasterContract,
+    HasButtonsContract,
     HasFieldsContract
 {
     use HasAsync;
@@ -48,13 +56,15 @@ final class FormBuilder extends MoonShineComponent implements
      */
     use WithAdditionalFields;
     use HasDataCast;
+    use HasButtons;
     use WithFields;
 
     protected string $view = 'moonshine::components.form.builder';
 
+    /**
+     * @var TData
+     */
     protected mixed $values = [];
-
-    protected iterable $buttons = [];
 
     protected array $excludeFields = [
         '_redirect',
@@ -114,13 +124,6 @@ final class FormBuilder extends MoonShineComponent implements
         return $this->values ?? [];
     }
 
-    public function buttons(iterable $buttons = []): static
-    {
-        $this->buttons = $buttons;
-
-        return $this;
-    }
-
     protected function prepareFields(): FieldsContract
     {
         $fields = $this->getFields();
@@ -134,14 +137,6 @@ final class FormBuilder extends MoonShineComponent implements
         $fields->prepareAttributes();
 
         return $fields;
-    }
-
-    public function getButtons(): ActionButtonsContract
-    {
-        return ActionButtons::make($this->buttons)
-            ->fill($this->castData($this->getValues()))
-            ->onlyVisible()
-            ->withoutBulk();
     }
 
     public function action(string $action): self
@@ -214,6 +209,9 @@ final class FormBuilder extends MoonShineComponent implements
         ]);
     }
 
+    /**
+     * @param  (Closure(self $ctx): non-empty-string)|non-empty-string  $reactiveUrl
+     */
     public function reactiveUrl(Closure|string $reactiveUrl): self
     {
         $this->reactiveUrl = $reactiveUrl;
@@ -238,6 +236,11 @@ final class FormBuilder extends MoonShineComponent implements
         return $this;
     }
 
+    public function getMethod(): FormMethod
+    {
+        return $this->method;
+    }
+
     public function redirect(?string $uri = null): self
     {
         if (! \is_null($uri)) {
@@ -253,11 +256,6 @@ final class FormBuilder extends MoonShineComponent implements
         $this->additionalFields[] = Hidden::make('_without-redirect')->setValue(true);
 
         return $this;
-    }
-
-    public function getMethod(): FormMethod
-    {
-        return $this->method;
     }
 
     public function dispatchEvent(array|string $events, array $exclude = [], bool $withoutPayload = false): self
@@ -352,12 +350,12 @@ final class FormBuilder extends MoonShineComponent implements
         return $isAsync ? $this->async(events: $events) : $this->precognitive();
     }
 
-    public function getExcludedFields(): array
+    protected function getExcludedFields(): array
     {
         return $this->excludeFields;
     }
 
-    public function excludeFields(array $excludeFields): self
+    protected function excludeFields(array $excludeFields): self
     {
         $this->excludeFields = array_merge($this->excludeFields, $excludeFields);
 
@@ -375,10 +373,10 @@ final class FormBuilder extends MoonShineComponent implements
     }
 
     /**
-     * @param Closure(mixed $values, FieldsContract $fields): bool $apply
+     * @param Closure(TData $values, FieldsContract $fields): bool $apply
      * @param null|Closure(FieldContract $field): void $default
-     * @param null|Closure(mixed $values): mixed $before
-     * @param null|Closure(mixed $values): void $after
+     * @param null|Closure(TData $values): TData $before
+     * @param null|Closure(TData $values): void $after
      * @throws Throwable
      */
     public function apply(
@@ -454,6 +452,10 @@ final class FormBuilder extends MoonShineComponent implements
         }
     }
 
+    /**
+     * by default when using `showWen` hidden data is not sent,
+     * but this method changes the behavior and data is sent
+     */
     public function submitShowWhenAttribute(): self
     {
         return $this->customAttributes([
@@ -535,7 +537,7 @@ final class FormBuilder extends MoonShineComponent implements
             'precognitive' => $this->isPrecognitive(),
             'async' => $this->isAsync(),
             'asyncUrl' => $this->getAsyncUrl(),
-            'buttons' => $this->getButtons(),
+            'buttons' => $this->getButtons($this->castData($this->getValues())),
             'hideSubmit' => $this->isHideSubmit(),
             'submit' => $this->getSubmit(),
             'errors' => $this->getCore()->getRequest()->getFormErrors($this->getName()),
