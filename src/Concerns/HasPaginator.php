@@ -11,7 +11,7 @@ use MoonShine\Contracts\Core\Paginator\PaginatorContract;
  */
 trait HasPaginator
 {
-    /** @var PaginatorContract<TData>|null  */
+    /** @var PaginatorContract<TData>|null */
     protected ?PaginatorContract $paginator = null;
 
     /** @param PaginatorContract<TData> $paginator  */

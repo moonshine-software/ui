@@ -16,7 +16,7 @@ use MoonShine\Core\TypeCasts\MixedDataCaster;
  */
 trait HasDataCast
 {
-    /** @var TCaster|null  */
+    /** @var TCaster|null */
     protected ?DataCasterContract $cast = null;
 
     protected ?string $castKeyName = null;

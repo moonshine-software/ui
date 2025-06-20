@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Concerns;
 
-
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use MoonShine\Contracts\UI\Collection\ActionButtonsContract;
@@ -12,7 +11,7 @@ use MoonShine\UI\Collections\ActionButtons;
 
 trait HasButtons
 {
-    /** @var list<ActionButtonContract>|ActionButtonsContract  */
+    /** @var list<ActionButtonContract>|ActionButtonsContract */
     protected iterable $buttons = [];
 
     /**
