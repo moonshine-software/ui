@@ -542,7 +542,7 @@ class Json extends Field implements
                     ? [$key => $data['value']]
                     : [$data['key'] => $data['value']],
             ),
-        )->filter(fn ($value): bool => $this->filterEmpty($value))->toArray();
+        )->filter(fn ($value): bool => $this->filterEmpty($value))->sortKeys()->toArray();
     }
 
     public function isFilterEmpty(): bool
