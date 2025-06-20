@@ -537,12 +537,18 @@ class Json extends Field implements
 
         return $collection->when(
             $this->isKeyOrOnlyValue(),
-            fn ($data): Collection => $data->mapWithKeys(
+            fn (Collection $data): Collection => $data->mapWithKeys(
                 fn ($data, $key): array => $this->isOnlyValue()
                     ? [$key => $data['value']]
                     : [$data['key'] => $data['value']],
             ),
-        )->filter(fn ($value): bool => $this->filterEmpty($value))->toArray();
+        )
+            ->filter(fn ($value): bool => $this->filterEmpty($value))
+            ->when(
+                $this->isReorderable() && ! $this->isObjectMode() && ! $this->isKeyValue(),
+                static fn (Collection $data) => $data->sortKeys()
+            )
+            ->toArray();
     }
 
     public function isFilterEmpty(): bool

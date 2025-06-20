@@ -345,7 +345,7 @@ trait FileTrait
      *
      * @return void
      */
-    public function removeExcludedFiles(null|array|string $newValue = null): void
+    public function removeExcludedFilesPatched(null|array|string $newValue = null): void
     {
         $values = collect(
             $this->toValue(withDefault: false),
@@ -360,5 +360,14 @@ trait FileTrait
                 }
             },
         );
+    }
+
+    public function removeExcludedFiles(): void
+    {
+        $values = collect(
+            $this->toValue(withDefault: false),
+        );
+
+        $values->diff($this->getRemainingValues())->each(fn (?string $file) => $file !== null ? $this->deleteFile($file) : null);
     }
 }
