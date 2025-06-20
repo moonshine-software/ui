@@ -546,7 +546,7 @@ class Json extends Field implements
             ->filter(fn ($value): bool => $this->filterEmpty($value))
             ->when(
                 $this->isReorderable() && ! $this->isObjectMode() && ! $this->isKeyValue(),
-                static fn(Collection $data) => $data->sortKeys()
+                static fn (Collection $data) => $data->sortKeys()
             )
             ->toArray();
     }
