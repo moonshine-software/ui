@@ -396,7 +396,7 @@ class Json extends Field implements
             if ($field instanceof File) {
                 $column = $field->getColumn();
 
-                $collection = array_map(static fn(array $data): array => [
+                $collection = array_map(static fn (array $data): array => [
                     ...$data,
                     $column => $data[$field->getHiddenColumn()] ?? null,
                 ], $collection);
