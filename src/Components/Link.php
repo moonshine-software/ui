@@ -85,7 +85,7 @@ final class Link extends MoonShineComponent implements HasIconContract, HasLabel
     {
         return [
             'slot' => new ComponentSlot(
-                $this->getLabel(),
+                $this->getLabel() ?: $this->href,
             ),
             'icon' => new ComponentSlot(
                 $this->getIcon(4),
