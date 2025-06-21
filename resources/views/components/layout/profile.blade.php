@@ -41,16 +41,22 @@
 
             @if($menu === null)
                 @if($logOutRoute)
-                    <a href="{{ $logOutRoute }}"
-                       class="profile-exit"
-                       title="Logout"
-                    >
-                        <x-moonshine::icon
-                            icon="power"
-                            color="gray"
-                            size="6"
-                        />
-                    </a>
+                    <x-moonshine::form :action="$logOutRoute" :raw="true">
+                        <x-moonshine::form.input type="hidden" name="_method" value="delete" />
+
+                        <x-moonshine::form.button
+                            :raw="true"
+                            class="profile-exit"
+                            title="Logout"
+                            type="submit"
+                        >
+                            <x-moonshine::icon
+                                icon="power"
+                                color="gray"
+                                size="6"
+                            />
+                        </x-moonshine::form.button>
+                    </x-moonshine::form>
                 @endif
             @else
                 <x-moonshine::dropdown>
@@ -77,10 +83,19 @@
 
                     @if($logOutRoute)
                         <x-slot:footer>
-                            <x-moonshine::link-native href="{{ $logOutRoute }}">
-                                <x-moonshine::icon icon="power" />
-                                {{ $translates['logout'] ?? 'Log out' }}
-                            </x-moonshine::link-native>
+
+                            <x-moonshine::form :action="$logOutRoute" :raw="true">
+                                <x-moonshine::form.input type="hidden" name="_method" value="delete" />
+
+                                <x-moonshine::form.button
+                                    class="inline-flex items-center gap-1 max-w-full"
+                                    :raw="true"
+                                    type="submit"
+                                >
+                                    <x-moonshine::icon icon="power" />
+                                    {{ $translates['logout'] ?? 'Log out' }}
+                                </x-moonshine::form.button>
+                            </x-moonshine::form>
                         </x-slot:footer>
                     @endif
 
