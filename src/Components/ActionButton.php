@@ -30,7 +30,7 @@ use Throwable;
  * @template TData of mixed = mixed
  * @template TWrapper of DataWrapperContract<TData> = DataWrapperContract
  *
- * @method static static make(Closure|string $label, Closure|string $url = '#', ?DataWrapperContract $data = null)
+ * @method static static make(Closure|string $label = '', Closure|string $url = '#', ?DataWrapperContract $data = null)
  *
  * @implements ActionButtonContract<TData, TWrapper, Modal, OffCanvas>
  */
@@ -72,7 +72,7 @@ class ActionButton extends MoonShineComponent implements
     protected ?Closure $onAfterSetCallback = null;
 
     public function __construct(
-        Closure|string $label,
+        Closure|string $label = '',
         protected Closure|string $url = '#',
         /** @param null|TWrapper $data */
         protected ?DataWrapperContract $data = null,
