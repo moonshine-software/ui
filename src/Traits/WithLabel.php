@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits;
 
 use Closure;
+use Illuminate\Support\Str;
 
 trait WithLabel
 {
@@ -25,7 +26,7 @@ trait WithLabel
 
         if ($this->translatable) {
             return $this->getCore()->getTranslator()->get(
-                str($this->label)->when(
+                Str::of($this->label)->when(
                     $this->translatableKey,
                     fn ($str) => $str->prepend($this->translatableKey . '.')
                 )->value()

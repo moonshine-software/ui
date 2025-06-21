@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Components;
 
+use Illuminate\Support\Collection;
 use MoonShine\Support\Components\MoonShineComponentAttributeBag;
 use MoonShine\Support\DTOs\FileItem;
 
@@ -18,7 +19,7 @@ final class Thumbnails extends MoonShineComponent
         parent::__construct();
 
         if (\is_array($this->items)) {
-            $this->items = collect($this->items)
+            $this->items = Collection::make($this->items)
                 ->mapWithKeys(
                     static fn (string|array|FileItem $value, int $index): array => [
                         $index => $value instanceof FileItem

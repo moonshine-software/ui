@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits;
 
 use Closure;
+use Illuminate\Support\Collection;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -63,7 +64,7 @@ trait WithFields
     public function fields(FieldsContract|Closure|iterable $fields): static
     {
         if ($this->getCore()->runningInConsole()) {
-            $fields = collect(
+            $fields = Collection::make(
                 value($fields, $this)
             )
                 ->map(static fn (object $field): object => clone $field)

@@ -6,6 +6,7 @@ namespace MoonShine\UI\Collections;
 
 use Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\HasComponentsContract;
@@ -245,7 +246,7 @@ class Fields extends BaseCollection implements FieldsContract
                 $field = $modifyField;
             }
 
-            $name = str($parent ? $parent->getNameDot() : $field->getNameDot());
+            $name = Str::of($parent ? $parent->getNameDot() : $field->getNameDot());
 
             $level = $name->substrCount('$');
 
@@ -300,9 +301,9 @@ class Fields extends BaseCollection implements FieldsContract
                 return $field;
             }
 
-            $showWhenName = str($field->getIdentity())
+            $showWhenName = Str::of($field->getIdentity())
                 ->replace('_', '.')
-                ->toString();
+                ->value();
 
             return $field->modifyShowFieldName($showWhenName)
                 ->customAttributes([

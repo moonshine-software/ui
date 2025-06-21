@@ -6,6 +6,8 @@ namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Support\AlpineJs;
@@ -57,7 +59,7 @@ trait RangeTrait
             ->when(
                 $dataName,
                 static fn (ComponentAttributesBagContract $attr): ComponentAttributesBagContract => $attr->merge([
-                    'data-name' => str($dataName)->replaceLast('[]', "[$name]"),
+                    'data-name' => Str::of($dataName)->replaceLast('[]', "[$name]"),
                 ])
             );
     }
@@ -236,7 +238,7 @@ trait RangeTrait
 
     public function getErrors(): array
     {
-        $errors = collect(parent::getErrors());
+        $errors = new Collection(parent::getErrors());
 
         return [
             ...$errors,

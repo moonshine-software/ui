@@ -25,12 +25,12 @@ abstract class InputExtension extends MoonShineComponent
 
     public function getXData(): Collection
     {
-        return collect($this->xData);
+        return new Collection($this->xData);
     }
 
     public function getXInit(): Collection
     {
-        return collect($this->xInit);
+        return new Collection($this->xInit);
     }
 
     protected function prepareBeforeRender(): void

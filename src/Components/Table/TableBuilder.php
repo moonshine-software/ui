@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Components\Table;
 
 use Closure;
+use Illuminate\Support\Collection;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
@@ -136,7 +137,7 @@ final class TableBuilder extends IterableComponent implements
 
     public function getTrAttributes(?DataWrapperContract $data, int $row): array
     {
-        return collect($this->trAttributes)
+        return Collection::make($this->trAttributes)
             /** @phpstan-ignore-next-line  */
             ->flatMap(fn (Closure $callback) => value($callback, $data, $row, $this))
             ->toArray();
@@ -154,7 +155,7 @@ final class TableBuilder extends IterableComponent implements
 
     public function getTdAttributes(?DataWrapperContract $data, int $row, int $cell): array
     {
-        return collect($this->tdAttributes)
+        return Collection::make($this->tdAttributes)
             /** @phpstan-ignore-next-line  */
             ->flatMap(fn (Closure $callback) => value($callback, $data, $row, $cell, $this))
             ->toArray();

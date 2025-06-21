@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Fields;
 
 use BackedEnum;
+use Illuminate\Support\Collection;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeEnum;
 
 class Enum extends Select implements CanBeEnum
@@ -19,7 +20,7 @@ class Enum extends Select implements CanBeEnum
     {
         $this->attached = $class;
 
-        $values = collect($class::cases());
+        $values = new Collection($class::cases());
 
         $this->options(
             $values->mapWithKeys(static fn ($value): array => [

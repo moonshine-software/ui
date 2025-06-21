@@ -45,7 +45,7 @@ class Footer extends AbstractWithComponents
 
     public function getMenu(): Collection
     {
-        return collect($this->menu);
+        return new Collection($this->menu);
     }
 
     /**

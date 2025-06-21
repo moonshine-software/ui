@@ -74,7 +74,7 @@ class File extends Field implements FileableContract, RemovableContract
             return $data;
         }
 
-        collect($this->isMultiple() ? $this->toValue() : [$this->toValue()])
+        Collection::make($this->isMultiple() ? $this->toValue() : [$this->toValue()])
             ->each(fn ($file): bool => $this->deleteFile($file));
 
         $this->deleteDir();
@@ -84,7 +84,7 @@ class File extends Field implements FileableContract, RemovableContract
 
     protected function getFiles(): Collection
     {
-        return collect($this->getFullPathValues())
+        return Collection::make($this->getFullPathValues())
             ->mapWithKeys(fn (string $path, int $index): array => [
                 $index => new FileItem(
                     fullPath: $path,

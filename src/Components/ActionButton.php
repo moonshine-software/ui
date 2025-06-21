@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Components;
 
 use Closure;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Core\HasComponentsContract;
 use MoonShine\Contracts\Core\PageContract;
 use MoonShine\Contracts\Core\ResourceContract;
@@ -225,7 +226,7 @@ class ActionButton extends MoonShineComponent implements
     public function hotKeys(array $keys, bool $withBadge = false): static
     {
         $hotKeys = implode(',', $keys);
-        $badge = $withBadge ? str($hotKeys)
+        $badge = $withBadge ? Str::of($hotKeys)
             ->explode(',')
             ->map(function (string $key): string {
                 $key = trim($key);

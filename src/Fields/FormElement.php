@@ -7,6 +7,7 @@ namespace MoonShine\UI\Fields;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use MoonShine\Contracts\Core\TypeCasts\DataCasterContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
@@ -105,7 +106,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
         $this->setLabel($label ?? $this->getLabel());
         $this->setColumn(
-            trim($column ?? str($this->getLabel())->lower()->snake()->value()),
+            trim($column ?? Str::of($this->getLabel())->lower()->snake()->value()),
         );
 
         if (! \is_null($formatted)) {
@@ -115,9 +116,9 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     protected function getPropertyAttributes(): Collection
     {
-        return collect($this->propertyAttributes)->mapWithKeys(
+        return Collection::make($this->propertyAttributes)->mapWithKeys(
             function ($attr): array {
-                $property = (string) str($attr)->camel();
+                $property = (string) Str::of($attr)->camel();
 
                 return isset($this->{$property})
                     ? [$attr => $this->{$property}]
@@ -157,7 +158,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     public function getIdentity(?string $index = null): string
     {
-        return (string) str($this->getNameAttribute($index))
+        return (string) Str::of($this->getNameAttribute($index))
             ->replace(['[', ']'], '_')
             ->replaceMatches('/\${index\d+}/', '')
             ->replaceMatches('/_{2,}/', '_')
@@ -518,7 +519,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
     public function appendRequestKeyPrefix(string $value, ?string $prefix = null): static
     {
         $this->setRequestKeyPrefix(
-            str($value)->when(
+            Str::of($value)->when(
                 $prefix,
                 static fn ($str) => $str->prepend("$prefix."),
             )->value(),
@@ -583,7 +584,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
 
     public function getRequestNameDot(string|int|null $index = null): string
     {
-        return str($this->getNameDot())
+        return Str::of($this->getNameDot())
             ->when(
                 $this->getRequestKeyPrefix(),
                 fn (Stringable $str): Stringable => $str->prepend(
@@ -602,7 +603,7 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
             return $value;
         }
 
-        return str($value)->explode('.')
+        return Str::of($value)->explode('.')
             ->map(static fn ($part, $index): string => $index === 0 ? $part : "[$part]")
             ->implode('');
     }

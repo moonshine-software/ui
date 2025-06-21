@@ -6,6 +6,8 @@ namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use MoonShine\Contracts\UI\FieldContract;
 
@@ -38,7 +40,7 @@ trait WithQuickFormElementAttributes
         if ($this->showWhenState) {
             [$column, $value, $operator] = $this->showWhenData;
 
-            $this->showWhenCondition = collect($this->showWhenCondition)
+            $this->showWhenCondition = Collection::make($this->showWhenCondition)
                 ->reject(fn ($data, $index): bool => $data['object_id'] === spl_object_id($this))
                 ->toArray();
 
@@ -74,7 +76,7 @@ trait WithQuickFormElementAttributes
             return $this->nameAttribute;
         }
 
-        return (string) str($this->getColumn())
+        return (string) Str::of($this->getColumn())
             ->when(
                 ! \is_null($wrap),
                 fn (Stringable $str): Stringable => $str->prepend("$wrap.")
@@ -90,9 +92,9 @@ trait WithQuickFormElementAttributes
 
     public function generateNameFrom(?string ...$values): string
     {
-        return str('')
+        return Str::of('')
             ->pipe(static function (Stringable $str) use ($values) {
-                foreach (collect($values)->filter() as $value) {
+                foreach (Collection::make($values)->filter() as $value) {
                     $str = $str->append(".$value");
                 }
 
@@ -104,15 +106,15 @@ trait WithQuickFormElementAttributes
 
     public function getNameDot(): string
     {
-        $name = (string) str($this->getNameAttribute())->replace('[]', '');
+        $name = (string) Str::of($this->getNameAttribute())->replace('[]', '');
 
         parse_str($name, $array);
 
-        $result = collect(Arr::dot(array_filter($array)));
+        $result = new Collection(Arr::dot(array_filter($array)));
 
         return $result->isEmpty()
             ? $name
-            : (string) str($result->keys()->first());
+            : (string) Str::of($result->keys()->first());
     }
 
     public function setNameIndex(int|string $key, int $index = 0): static
@@ -126,7 +128,7 @@ trait WithQuickFormElementAttributes
 
     public function setId(string $id): static
     {
-        $this->setAttribute('id', str($id)
+        $this->setAttribute('id', Str::of($id)
             ->remove(['[', ']'])
             ->snake()
             ->value());

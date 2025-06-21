@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Fields;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use JsonException;
 use MoonShine\Contracts\UI\HasAsyncContract;
 use MoonShine\UI\Contracts\DefaultValueTypes\CanBeArray;
@@ -51,11 +52,11 @@ class Select extends Field implements
         $value = $this->toValue();
 
         if ($this->isMultiple()) {
-            $value = \is_string($value) && str($value)->isJson() ?
+            $value = \is_string($value) && Str::of($value)->isJson() ?
                 json_decode($value, true, 512, JSON_THROW_ON_ERROR)
                 : $value;
 
-            return collect($value)
+            return Collection::make($value)
                 ->when(
                     ! $this->isRawMode(),
                     fn ($collect): Collection => $collect->map(

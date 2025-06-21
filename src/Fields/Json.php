@@ -350,7 +350,7 @@ class Json extends Field implements
         }
 
         if ($this->isKeyOrOnlyValue() && ! $this->isFilterMode()) {
-            return collect($data)->map(fn ($data, $key): array => $this->extractKeyValue(
+            return Collection::make($data)->map(fn ($data, $key): array => $this->extractKeyValue(
                 $this->isOnlyValue() ? [$data] : [$key => $data],
             ))->values()->toArray();
         }
@@ -533,7 +533,7 @@ class Json extends Field implements
      */
     public function prepareOnApply(iterable $collection): array
     {
-        $collection = collect($collection);
+        $collection = new Collection($collection);
 
         return $collection->when(
             $this->isKeyOrOnlyValue(),
@@ -570,7 +570,7 @@ class Json extends Field implements
         }
 
         if (is_iterable($value) && filled($value)) {
-            return collect($value)
+            return Collection::make($value)
                 ->filter(fn ($v): bool => $this->filterEmpty($v))
                 ->isNotEmpty();
         }

@@ -6,6 +6,7 @@ namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\UI\ComponentAttributesBagContract;
 use MoonShine\Support\Components\MoonShineComponentAttributeBag;
 use MoonShine\Support\DTOs\FileItemExtra;
@@ -229,7 +230,7 @@ trait FileTrait
     {
         $dir = empty($this->getDir()) ? '' : $this->getDir() . '/';
 
-        return str($value)
+        return Str::of($value)
             ->remove($dir)
             ->prepend($dir)
             ->value();
@@ -237,25 +238,25 @@ trait FileTrait
 
     public function getHiddenRemainingValuesKey(): string
     {
-        $column = str($this->getColumn())->explode('.')->last();
+        $column = Str::of($this->getColumn())->explode('.')->last();
 
-        return str($this->getRequestNameDot())
+        return Str::of($this->getRequestNameDot())
             ->replaceLast($column, $this->getHiddenColumn())
             ->value();
     }
 
     public function getHiddenColumn(): string
     {
-        $column = (string)str($this->getVirtualColumn())->explode('.')->last();
+        $column = (string)Str::of($this->getVirtualColumn())->explode('.')->last();
 
         return "hidden_$column";
     }
 
     public function getHiddenRemainingValuesName(): string
     {
-        $column = str($this->getColumn())->explode('.')->last();
+        $column = Str::of($this->getColumn())->explode('.')->last();
 
-        return str($this->getNameAttribute())
+        return Str::of($this->getNameAttribute())
             ->replaceLast($column, $this->getHiddenColumn())
             ->value();
     }
@@ -280,7 +281,7 @@ trait FileTrait
 
     public function setRemainingValues(iterable $values): void
     {
-        $this->remainingValues = collect($values);
+        $this->remainingValues = new Collection($values);
     }
 
     public function getRemainingValues(): Collection
@@ -298,7 +299,7 @@ trait FileTrait
             return \call_user_func($this->remainingValuesResolver, $this);
         }
 
-        return collect(
+        return new Collection(
             $this->getCore()->getRequest()->get(
                 $this->getHiddenRemainingValuesKey(),
             ),
@@ -319,7 +320,7 @@ trait FileTrait
     protected function resolveValue(): mixed
     {
         if ($this->isMultiple() && ! $this->toValue(false) instanceof Collection) {
-            return collect($this->toValue(false));
+            return new Collection($this->toValue(false));
         }
 
         return parent::resolveValue();
@@ -334,7 +335,7 @@ trait FileTrait
         }
 
         return $this->isMultiple()
-            ? collect($values)
+            ? Collection::make($values)
                 ->map(fn ($value): string => $this->getPathWithDir($value))
                 ->toArray()
             : [$this->getPathWithDir($values)];
@@ -347,7 +348,7 @@ trait FileTrait
      */
     public function removeExcludedFiles(null|array|string $newValue = null): void
     {
-        $values = collect(
+        $values = new Collection(
             $this->toValue(withDefault: false),
         );
 

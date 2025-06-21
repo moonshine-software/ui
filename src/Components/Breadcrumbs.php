@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MoonShine\UI\Components;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 /** @method static static make(array $items = []) */
@@ -19,7 +21,7 @@ final class Breadcrumbs extends MoonShineComponent
 
     public function prepend(string $link, string $label = '', ?string $icon = null): self
     {
-        $this->items = collect($this->items)
+        $this->items = Collection::make($this->items)
             ->prepend($this->addItem($label, $icon), $link)
             ->toArray();
 
@@ -28,7 +30,7 @@ final class Breadcrumbs extends MoonShineComponent
 
     public function add(string $link, string $label = '', ?string $icon = null): self
     {
-        $this->items = collect($this->items)
+        $this->items = Collection::make($this->items)
             ->put($link, $this->addItem($label, $icon))
             ->toArray();
 
@@ -37,7 +39,7 @@ final class Breadcrumbs extends MoonShineComponent
 
     private function addItem(string $label, ?string $icon = null): string
     {
-        return str($label)
+        return Str::of($label)
             ->when(
                 $icon,
                 static fn (Stringable $str) => $str->append(":::$icon")
@@ -49,11 +51,11 @@ final class Breadcrumbs extends MoonShineComponent
     {
         parent::prepareBeforeRender();
 
-        $this->items = collect($this->items)->mapWithKeys(static fn (?string $title, string $url): array => [
+        $this->items = Collection::make($this->items)->mapWithKeys(static fn (?string $title, string $url): array => [
             $url => [
                 'url' => $url,
-                'title' => str($title)->before(':::'),
-                'icon' => str($title)->contains(':::') ? str($title)->after(':::')->value() : null,
+                'title' => Str::of($title)->before(':::'),
+                'icon' => Str::of($title)->contains(':::') ? Str::of($title)->after(':::')->value() : null,
             ],
         ])->toArray();
     }

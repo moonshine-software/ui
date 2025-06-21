@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\UI\Traits\Fields;
 
 use Closure;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\Contracts\UI\FieldContract;
@@ -60,7 +61,7 @@ trait Reactivity
         $this->isReactive = true;
         $this->reactiveCallback = $callback;
 
-        $attribute = str('x-model')
+        $attribute = Str::of('x-model')
             ->when(
                 $lazy,
                 static fn (Stringable $str) => $str->append('.lazy'),
