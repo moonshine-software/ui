@@ -32,9 +32,14 @@ export default () => ({
 
       const tr = pivot.querySelector('table > tbody > tr:last-child')
       tr.querySelector('.js-pivot-title').innerHTML = item.label
-      tr.dataset.rowKey = item.value
+
+      if(tr.dataset.rowKey) {
+        tr.dataset.rowKey = item.value
+      }
+
       const checker = tr.querySelector('.js-pivot-checker')
       checker.checked = true
+      checker.value = item.value
       checker.dispatchEvent(new Event('change'))
 
       this.$dispatch('table_reindex:' + tableName)
