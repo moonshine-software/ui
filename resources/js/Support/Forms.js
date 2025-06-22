@@ -124,9 +124,10 @@ export function crudFormQuery(formElements = null, maxLength = 50) {
       !name.startsWith('hidden_')
     ) {
       const value = inputGetValue(element)
-      const isBoolean = element.getAttribute('type') === 'checkbox' || element.getAttribute('type') === 'radio'
+      const isBoolean =
+        element.getAttribute('type') === 'checkbox' || element.getAttribute('type') === 'radio'
 
-      if(isBoolean && element.checked) {
+      if (isBoolean && element.checked) {
         values[inputFieldName(name)] = typeof element.value === 'boolean' ? 1 : element.value
       } else if (maxLength === false || value.length <= maxLength) {
         values[inputFieldName(name)] = value
