@@ -230,9 +230,11 @@ trait RangeTrait
         $this
             ->fromAttributes([
                 'name' => $this->getNameAttribute($this->getFromField()),
+                'data-sync-with' => $this->getNameAttribute($this->getToField()),
             ])
             ->toAttributes([
                 'name' => $this->getNameAttribute($this->getToField()),
+                'data-sync-with' => $this->getNameAttribute($this->getFromField()),
             ]);
     }
 

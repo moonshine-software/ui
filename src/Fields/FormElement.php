@@ -274,10 +274,15 @@ abstract class FormElement extends MoonShineComponent implements FormElementCont
     public function fill(mixed $value = null, ?DataWrapperContract $casted = null, int $index = 0): static
     {
         $wrapper = $this instanceof WrapperWithApplyContract || $this instanceof FieldsWrapperContract;
+        $empty = [];
 
-        return $this->resolveFill($wrapper ? $value : [
-            $this->getColumn() => $value,
-        ], $casted, $index);
+        return $this->resolveFill(
+            $wrapper
+                ? $value
+                : data_set($empty, $this->getColumn(), $value),
+            $casted,
+            $index
+        );
     }
 
     public function toRawValue(): mixed

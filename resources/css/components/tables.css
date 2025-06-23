@@ -125,7 +125,7 @@ table {
         }
 
         &:hover {
-          @apply shadow-sm;
+          @apply cursor-pointer shadow-sm;
 
           td::before {
             @apply pointer-events-none absolute inset-0 bg-zinc-800 opacity-5 dark:bg-zinc-400;

@@ -46,7 +46,15 @@ export function showWhenChange(fieldName, formId) {
   const showWhenFields = []
 
   this.whenFields.forEach(field => {
-    if (fieldName !== field.changeField) {
+    let inputElement = document.querySelector('#' + formId + ' [name="' + fieldName + '"]')
+
+    if (inputElement === null || inputElement === undefined) {
+      return
+    }
+
+    let syncWith = inputElement.dataset.syncWith
+
+    if (fieldName !== field.changeField && syncWith !== field.changeField) {
       return
     }
 
