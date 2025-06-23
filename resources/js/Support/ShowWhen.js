@@ -48,7 +48,7 @@ export function showWhenChange(fieldName, formId) {
   this.whenFields.forEach(field => {
     let inputElement = document.querySelector('#' + formId + ' [name="' + fieldName + '"]')
 
-    if(inputElement === null || inputElement === undefined) {
+    if (inputElement === null || inputElement === undefined) {
       return
     }
 
