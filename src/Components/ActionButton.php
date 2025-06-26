@@ -81,6 +81,7 @@ class ActionButton extends MoonShineComponent implements
         parent::__construct();
 
         $this->setLabel($label);
+        $this->withoutLoading();
     }
 
     /**
