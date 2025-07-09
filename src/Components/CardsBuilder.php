@@ -333,7 +333,7 @@ final class CardsBuilder extends IterableComponent implements
                 $this->isAsync()
             ),
             'async' => $this->isAsync(),
-            'asyncUrl' => $this->getAsyncUrl(),
+            'asyncUrl' => $this->getAsyncUrl() ?? value($this->prepareAsyncUrl(), $this),
             'colSpan' => $this->getColumnSpanValue(),
             'adaptiveColSpan' => $this->getAdaptiveColumnSpanValue(),
             'topLeft' => $this->getTopLeft(),
