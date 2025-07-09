@@ -174,7 +174,9 @@ abstract class Field extends FormElement implements FieldContract
 
     public function withoutWrapper(mixed $condition = null): static
     {
-        $this->withWrapper = value($condition, $this) ?? false;
+        $result = value($condition, $this) ?? true;
+
+        $this->withWrapper = !$result;
 
         return $this;
     }
