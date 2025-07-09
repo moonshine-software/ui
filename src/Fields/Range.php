@@ -35,7 +35,7 @@ class Range extends Field implements HasDefaultValueContract, CanBeArray, RangeF
         $min = data_get($this->getValue(), $this->getFromField(), $this->min);
         $max = data_get($this->getValue(), $this->getToField(), $this->max);
 
-        if(static::class !== self::class || !$this->isNullable()) {
+        if (static::class !== self::class || ! $this->isNullable()) {
             $min ??= $this->min ?? 0;
             $max ??= $this->max ?? $this->step;
         }
