@@ -224,7 +224,7 @@ export default (name = '', initData = {}, reactive = {}) => ({
         }
 
         if (!('redirect' in data)) {
-          submitState(form, false, false);
+          submitState(form, false, false)
         }
 
         return callback.afterResponse
