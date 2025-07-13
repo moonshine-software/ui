@@ -707,9 +707,7 @@ final class TableBuilder extends IterableComponent implements
                 $this->isAsync(),
             ),
             'async' => $this->isAsync(),
-            'asyncUrl' => $this->getAsyncUrl() ?? $this->getCore()->getRouter()->extractPageUri()
-                ? value($this->prepareAsyncUrl(), $this)
-                : null,
+            'asyncUrl' => $this->getAsyncUrl() ?? value($this->prepareAsyncUrl(), $this),
             'createButton' => $this->creatableButton,
             'headAttributes' => $this->headAttributes,
             'bodyAttributes' => $this->bodyAttributes,
