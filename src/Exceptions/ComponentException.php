@@ -8,7 +8,7 @@ use MoonShine\Core\Exceptions\MoonShineException;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Components\Tabs\Tab;
 
-final class MoonShineComponentException extends MoonShineException
+final class ComponentException extends MoonShineException
 {
     public static function tabsAreNotRendering(): self
     {
