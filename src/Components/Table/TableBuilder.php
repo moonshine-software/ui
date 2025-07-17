@@ -81,6 +81,8 @@ final class TableBuilder extends IterableComponent implements
 
     protected ?Closure $topRight = null;
 
+    protected bool $isWithoutKey = false;
+
     public function __construct(
         iterable $fields = [],
         iterable $items = [],
@@ -182,6 +184,13 @@ final class TableBuilder extends IterableComponent implements
     public function footAttributes(array $attributes): self
     {
         $this->footAttributes = $this->footAttributes->merge($attributes);
+
+        return $this;
+    }
+
+    public function withoutKey(): static
+    {
+        $this->isWithoutKey = true;
 
         return $this;
     }
@@ -304,7 +313,7 @@ final class TableBuilder extends IterableComponent implements
                             static fn (TableCellContract $td): TableCellContract => $tdAttributes($td)
                         ),
                     ]),
-                    key: $key,
+                    key: $this->isWithoutKey ? null : $key,
                     builder: $trAttributes
                 );
 
@@ -342,7 +351,7 @@ final class TableBuilder extends IterableComponent implements
 
             $rows->pushRow(
                 $cells,
-                $key,
+                key: $this->isWithoutKey ? null : $key,
                 builder: $trAttributes,
             );
 
