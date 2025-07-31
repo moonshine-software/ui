@@ -125,7 +125,7 @@ export function crudFormQuery(formElements = null, maxLength = 50) {
     ) {
       const value = inputGetValue(element)
 
-      if(value === undefined) {
+      if (value === undefined) {
         return
       }
 
