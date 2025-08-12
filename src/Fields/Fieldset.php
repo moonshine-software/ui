@@ -37,7 +37,7 @@ class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContr
 
         $this->getFields()
             ->onlyFields()
-            ->map(fn(FieldContract $field): FieldContract => $field->setParent($this));
+            ->map(fn (FieldContract $field): FieldContract => $field->setParent($this));
     }
 
     protected function resolveFill(array $raw = [], ?DataWrapperContract $casted = null, int $index = 0): static
