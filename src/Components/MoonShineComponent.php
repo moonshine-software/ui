@@ -97,4 +97,15 @@ abstract class MoonShineComponent extends Component implements
     {
         return $this->data();
     }
+
+    public function __clone(): void
+    {
+        $this->flushRenderCache();
+        $this->onClone();
+    }
+
+    protected function onClone(): void
+    {
+        //
+    }
 }

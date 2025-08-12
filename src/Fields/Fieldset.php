@@ -34,6 +34,10 @@ class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContr
         parent::__construct($label);
 
         $this->fields($fields);
+
+        $this->getFields()
+            ->onlyFields()
+            ->map(fn(FieldContract $field) => $field->setParent($this));
     }
 
     protected function resolveFill(array $raw = [], ?DataWrapperContract $casted = null, int $index = 0): static
@@ -47,14 +51,6 @@ class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContr
         $this->getFields()->fill($raw, $casted, $index);
 
         return $this;
-    }
-
-    protected function prepareFields(): FieldsContract
-    {
-        return $this
-            ->getFields()
-            ->fillClonedRecursively($this->getData()?->toArray() ?? [], $this->getData(), $this->getRowIndex())
-        ;
     }
 
     /**

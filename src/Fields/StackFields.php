@@ -133,7 +133,7 @@ class StackFields extends Field implements HasFieldsContract, FieldsWrapperContr
     /**
      * @throws Throwable
      */
-    public function __clone()
+    protected function onClone(): void
     {
         if (! $this->fields instanceof Closure) {
             $fields = [];
