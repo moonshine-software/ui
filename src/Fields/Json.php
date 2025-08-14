@@ -612,7 +612,7 @@ class Json extends Field implements
 
                 $apply = $callback($field, $values, $data);
 
-                if($field instanceof WrapperWithApplyContract) {
+                if ($field instanceof WrapperWithApplyContract) {
                     $applyValues[$index] = $apply;
 
                     continue;
