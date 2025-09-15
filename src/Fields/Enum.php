@@ -40,7 +40,7 @@ class Enum extends Select implements CanBeEnum
             return '';
         }
 
-        if (! $value instanceof $this->attached) {
+        if ($this->attached !== null && ! $value instanceof $this->attached) {
             $value = rescue(fn () => $this->attached::tryFrom($value)) ?? $value;
         }
 

@@ -53,6 +53,13 @@ class Fieldset extends Field implements HasFieldsContract, WrapperWithApplyContr
         return $this;
     }
 
+    protected function prepareFields(): FieldsContract
+    {
+        return $this
+            ->getFields()
+            ->fillClonedRecursively($this->getData()?->toArray() ?? [], $this->getData(), $this->getRowIndex());
+    }
+
     /**
      * @throws Throwable
      */
