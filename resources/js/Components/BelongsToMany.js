@@ -33,9 +33,7 @@ export default () => ({
       const tr = pivot.querySelector('table > tbody > tr:last-child')
       tr.querySelector('.js-pivot-title').innerHTML = item.label
 
-      if (tr.dataset.rowKey) {
-        tr.dataset.rowKey = item.value
-      }
+      tr.dataset.rowKey = item.value
 
       const checker = tr.querySelector('.js-pivot-checker')
       checker.checked = true
