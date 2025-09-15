@@ -707,7 +707,7 @@ class Json extends Field implements
 
         return $this->toValue() ?? $this->getPreparedFields()
             ->onlyFields()
-            ->mapWithKeys(fn (FieldContract $field) => [$field->getColumn() => null]);
+            ->mapWithKeys(fn (FieldContract $field): array => [$field->getColumn() => null]);
     }
 
     /**
